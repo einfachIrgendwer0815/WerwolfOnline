@@ -1,3 +1,5 @@
+@import '../globalScss';
+
 header {
   width: 100%;
   height: 3.5em;
@@ -10,53 +12,76 @@ header {
 
   z-index: 1000;
 
-  #header_logo,
-  #header_nav {
+  .logo,
+  .nav {
     display: inline-block;
   }
 
-  #header_logo {
+  .logo {
     height: 100%;
 
-    padding-left: 1em;
+    padding: {
+      left: 1em;
+    }
 
     span {
       float: left;
-      padding-top: 0.75em;
-      font-weight: bold;
-      font-size: 1.25em;
+      padding: {
+        top: 0.75em;
+      }
+      font: {
+        weight: bold;
+        size: 1.25em;
+      }
     }
 
     img {
       float: left;
-      padding-top: 0.5em;
-      padding-right: 0.75em;
+      padding: {
+        top: 0.5em;
+        right: 0.75em;
+      }
       height: 2.5em;
       width: 2.5em;
     }
   }
 
-  #header_nav {
+  .nav {
     float: right;
 
-    padding-right: 5em;
+    list-style: none;
 
-    padding-top: 0.975em;
-
-    font-weight: bold;
-    font-size: 1.05em;
-
-    span:first-child {
-      padding-right: 2em;
+    padding: {
+      top: 0.975em;
+      bottom: 0;
+      left: 0;
+      right: 5em;
     }
 
-    span {
-      display: inline-block;
-      transition: transform 200ms;
+    margin: 0;
+
+    font: {
+      weight: bold;
+      size: 1.05em;
     }
 
-    span:hover {
-      transform: scale(1.3);
+    li {
+      float: left;
+
+      $transition-value: padding 200ms;
+      @include vendorPrefix(transition, $transition-value);
+
+      &:first-child {
+        margin: {
+          right: 2em;
+        }
+      }
+
+      &:hover {
+        padding: {
+          top: 0.3em;
+        }
+      }
     }
   }
 }

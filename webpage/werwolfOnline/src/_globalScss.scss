@@ -1,0 +1,5 @@
+@mixin vendorPrefix($attribute, $value) {
+  @each $prefix in -webkit-, -moz-, -o-, -ms-, '' {
+    #{$prefix}#{$attribute}: $value;
+  }
+}
