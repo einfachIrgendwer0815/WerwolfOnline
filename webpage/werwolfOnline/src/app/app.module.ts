@@ -8,6 +8,7 @@ import { CreateRoomComponent } from './create-room/create-room.component';
 import { JoinRoomComponent } from './join-room/join-room.component';
 import { GameComponent } from './game/game.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     CreateRoomComponent,
     JoinRoomComponent,
     GameComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    HowToPlayComponent
   ],
   imports: [
     BrowserModule,

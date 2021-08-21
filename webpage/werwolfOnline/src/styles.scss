@@ -1,4 +1,8 @@
+@import 'globalScss';
+
 body {
   padding: 0;
   margin: 0;
+
+  @include vendorPrefix(user-select, none);
 }

@@ -99,7 +99,7 @@ header {
 
 .main {
   width: 100%;
-  height: calc(100vh - #{$header-height});
+  min-height: calc(100vh - #{$header-height});
 
   display: inline-block;
 
@@ -114,14 +114,15 @@ header {
   h1 {
     margin: {
       top: 0.7em;
+      bottom: 0;
     }
 
     padding: 0;
 
     $nameprefix: 'headlinetextflash';
-    $start: 1px 1px 8px black, 1px 1px 8px lightgrey;
-    $max: 1px 1px 8px black, 2px 2px 30px lightgrey;
-    $min: 2px 2px 12px black, 1px 1px 8px lightgrey;
+    $start: 1px 1px 12px black, 1px 1px 8px lightgrey;
+    $max: 1px 1px 12px black, 2px 2px 30px lightgrey;
+    $min: 1px 1px 12px black, 1px 1px 8px lightgrey;
     @include textflashMixin($nameprefix, $start, $max, $min);
 
     text: {
@@ -142,5 +143,34 @@ header {
     }
 
     color: white;
+  }
+
+  span {
+    text-align: center;
+
+    display: inline-block;
+
+    width: 100%;
+
+    margin: {
+      top: 10em;
+      bottom: 0;
+    }
+
+    font: {
+      family: 'Roboto';
+      size: 2em;
+      weight: 600;
+    }
+
+    color: #111;
+
+    @include vendorPrefix(transition, #{margin 200ms, width 200ms});
+
+    &:hover {
+      $margin: 2em;
+      margin-left: $margin;
+      width: calc(100% - #{$margin});
+    }
   }
 }
