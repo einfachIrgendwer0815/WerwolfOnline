@@ -1,0 +1,13 @@
+@mixin textflashMixin ($prefix, $startvalue, $maxvalue, $endvalue) {
+  @keyframes #{$prefix}-textflash {
+    0% {
+      text-shadow: $startvalue;
+    }
+    30% {
+      text-shadow: $maxvalue;
+    }
+    100% {
+      text-shadow: $endvalue;
+    }
+  }
+}
