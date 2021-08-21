@@ -1,0 +1,96 @@
+@import '../../globalScss';
+
+$header-height: 3.5em;
+
+header {
+  width: 100%;
+  height: $header-height;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  box-shadow: 1px 1px 3px lightgrey;
+
+  z-index: 1000;
+
+  .logo,
+  .nav {
+    display: inline-block;
+  }
+
+  .logo {
+    height: 100%;
+
+    padding: {
+      left: 1em;
+    }
+
+    span {
+      float: left;
+      padding: {
+        top: 0.75em;
+      }
+      font: {
+        weight: bold;
+        size: 1.25em;
+      }
+    }
+
+    img {
+      float: left;
+      padding: {
+        top: 0.5em;
+        right: 0.75em;
+      }
+      height: 2.5em;
+      width: 2.5em;
+    }
+  }
+
+  .nav {
+    float: right;
+
+    list-style: none;
+
+    padding: {
+      top: 0.975em;
+      bottom: 0;
+      left: 0;
+      right: 5em;
+    }
+
+    margin: 0;
+
+    font: {
+      weight: bold;
+      size: 1.05em;
+    }
+
+    li {
+      float: left;
+
+      $transition-value: padding 200ms;
+      @include vendorPrefix(transition, $transition-value);
+
+      &:first-child {
+        margin: {
+          right: 2em;
+        }
+      }
+
+      &:hover {
+        padding: {
+          top: 0.3em;
+        }
+      }
+    }
+  }
+}
+
+div {
+  &.spacer {
+    height: $header-height;
+    width: 100%;
+  }
+}
