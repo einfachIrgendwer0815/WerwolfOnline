@@ -6,9 +6,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 
 const routes: Routes = [
-  {path: '', component: MainPageComponent},
-  {path: 'howToPlay', component: HowToPlayComponent},
-  {path: '**', component: NotFoundComponent}
+  {path: '', component: MainPageComponent, data: {animation: 'MainPage'}},
+  {path: 'howToPlay', component: HowToPlayComponent, data: {animation: 'HowToPlay'}},
+  {path: '**', component: NotFoundComponent, data: {animation: 'NotFound'}}
 ];
 
 @NgModule({
