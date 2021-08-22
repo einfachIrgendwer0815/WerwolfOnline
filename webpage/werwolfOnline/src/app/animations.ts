@@ -29,7 +29,7 @@ export const moveRight = [
       animate('500ms ease-out', style({ left: '100%' }))
     ]),
     query(':enter', [
-      animate('800ms ease-out', style({ left: '0%' }))
+      animate('500ms ease-out', style({ left: '0%' }))
     ])
   ]),
   query(':enter', animateChild()),
@@ -64,7 +64,7 @@ export const moveLeft = [
       animate('500ms ease-out', style({ left: '-100%' }))
     ]),
     query(':enter', [
-      animate('800ms ease-out', style({ left: '0%' }))
+      animate('500ms ease-out', style({ left: '0%' }))
     ])
   ]),
   query(':enter', animateChild()),

@@ -110,66 +110,110 @@ header {
     size: cover;
   }
 
-  h1 {
-    margin: {
-      top: 0.7em;
-      bottom: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  .center {
+    h1 {
+      margin: 0;
+
+      padding: 0;
+
+      $nameprefix: 'headlinetextflash';
+      $start: 1px 1px 12px black, 1px 1px 8px lightgrey;
+      $max: 1px 1px 12px black, 2px 2px 30px lightgrey;
+      $min: 1px 1px 12px black, 1px 1px 8px lightgrey;
+
+      @include textflashMixin($nameprefix, $start, $max, $min);
+
+      text: {
+        align: center;
+        shadow: $min;
+      }
+
+      animation: {
+        name: #{$nameprefix}-textflash;
+        iteration-count: 1;
+        duration: 3s;
+      }
+
+      font: {
+        size: 9em;
+        family: 'Kalam';
+        weight: 400;
+      }
+
+      line-height: 0.8em;
+
+      color: white;
     }
 
-    padding: 0;
+    h2 {
+      font: {
+        size: 1.5em;
+        family: 'Kalam';
+      }
 
-    $nameprefix: 'headlinetextflash';
-    $start: 1px 1px 12px black, 1px 1px 8px lightgrey;
-    $max: 1px 1px 12px black, 2px 2px 30px lightgrey;
-    $min: 1px 1px 12px black, 1px 1px 8px lightgrey;
-    @include textflashMixin($nameprefix, $start, $max, $min);
+      color: lightgrey;
 
-    text: {
-      align: center;
-      shadow: $min;
+      margin: 0;
+      padding: 0;
+
+      text: {
+        align: center;
+      }
+
+      @include vendorPrefix(transition, #{color 400ms, text-shadow 400ms});
+
+      &:hover {
+        color: white;
+        text: {
+          shadow: 0px 0px 8px white;
+        }
+      }
     }
 
-    animation: {
-      name: #{$nameprefix}-textflash;
-      iteration-count: 1;
-      duration: 3s;
-    }
+    div {
+      width: 100%;
 
-    font: {
-      size: 9em;
-      family: 'Kalam';
-      weight: 400;
-    }
+      text: {
+        align: center;
+      }
 
-    color: white;
+      span {
+        display: inline-block;
+
+        margin: {
+          top: 5em;
+          bottom: 0;
+          left: 0;
+          right: 0;
+        }
+
+        font: {
+          family: 'Roboto';
+          size: 2em;
+          weight: 600;
+        }
+
+        color: #111;
+
+        text: {
+          shadow: 1px 1px 1px grey;
+        }
+
+        @include vendorPrefix(transition, #{color 1400ms, text-shadow 1400ms});
+
+        &:hover {
+          color: white;
+          text: {
+            shadow: 1px 1px 1px grey, 0px 0px 8px white;
+          }
+        }
+      }
+    }
   }
 
-  span {
-    text-align: center;
 
-    display: inline-block;
-
-    width: 100%;
-
-    margin: {
-      top: 10em;
-      bottom: 0;
-    }
-
-    font: {
-      family: 'Roboto';
-      size: 2em;
-      weight: 600;
-    }
-
-    color: #111;
-
-    @include vendorPrefix(transition, #{margin 200ms, width 200ms});
-
-    &:hover {
-      $margin: 2em;
-      margin-left: $margin;
-      width: calc(100% - #{$margin});
-    }
-  }
 }
