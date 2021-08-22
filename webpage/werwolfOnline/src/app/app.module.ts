@@ -10,6 +10,7 @@ import { JoinRoomComponent } from './join-room/join-room.component';
 import { GameComponent } from './game/game.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HowToPlayComponent } from './how-to-play/how-to-play.component';
+import { ImpressumComponent } from './impressum/impressum.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HowToPlayComponent } from './how-to-play/how-to-play.component';
     JoinRoomComponent,
     GameComponent,
     NotFoundComponent,
-    HowToPlayComponent
+    HowToPlayComponent,
+    ImpressumComponent
   ],
   imports: [
     BrowserModule,
