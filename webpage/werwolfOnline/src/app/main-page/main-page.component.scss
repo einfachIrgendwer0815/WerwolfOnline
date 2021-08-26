@@ -15,7 +15,8 @@
 
   .headlines {
     position: absolute;
-    top: 33%;
+    $top: 33%;
+    top: $top;
     left: 50%;
 
     @include vendorPrefix(user-select, none);
@@ -44,6 +45,15 @@
                   0px 0px 30px #AAA,
                   4px 4px 0px black;
         }
+
+        .lower {
+          $transition: opacity 100ms;
+          @include vendorPrefix (transition, $transition);
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
       }
 
       &.no2 {
@@ -59,13 +69,62 @@
         }
 
         color: #DDD;
+
+        $transition: text-shadow 200ms;
+        @include vendorPrefix(transition, $transition);
+
+        &:hover {
+          text: {
+            shadow:
+                    0px 0px 3px #AAA,
+                    0px 0px 5px #AAA,
+                    0px 0px 25px #AAA,
+                    1px 1px 3px black;
+          }
+        }
+
+        @keyframes flyInNo2 {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        animation: {
+          name: flyInNo2;
+          duration: 1s;
+          fill-mode: backwards;
+          delay: 1.8s;
+        }
       }
+    }
+
+    @keyframes flyIn {
+      0% {
+        top: 12%;
+        opacity: 0;
+      }
+      90% {
+        top: $top;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    animation: {
+      name: flyIn;
+      duration: 2s;
+      fill-mode: backwards;
     }
   }
 
   .buttonBox {
     position: absolute;
-    bottom: 18%;
+    $bottom: 18%;
+    bottom: $bottom;
     left: 50%;
 
     $transform: translate(-50%, -50%);
@@ -120,12 +179,16 @@
           size: 1.1em;
         }
 
-        $transition: transform 250ms;
+        $transition: transform 250ms, background-color 500ms, box-shadow 500ms;
         @include vendorPrefix(transition, $transition);
 
         &:hover {
           $transform: scale(1.15);
           @include vendorPrefix(transform, $transform);
+
+          background-color: black;
+
+          box-shadow: 0px 0px 4px black, 0px 0px 10px black;
         }
 
         &:active {
@@ -133,6 +196,25 @@
           @include vendorPrefix(transform, $transform);
         }
       }
+    }
+
+    @keyframes flyInButtons {
+      0% {
+        bottom: 2%;
+        opacity: 0;
+      }
+      60% {
+        bottom: $bottom;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    animation: {
+      name: flyInButtons;
+      duration: 1.8s;
+      fill-mode: backwards;
+      delay: 0.5s;
     }
   }
 }
