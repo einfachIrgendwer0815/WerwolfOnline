@@ -1,5 +1,51 @@
 @import '../../globalScss';
 
+
+@mixin headlineFlyInMixin ($startpos, $finalpos, $starttrans, $finaltrans) {
+  @keyframes headlineFlyIn {
+    0% {
+      top: $startpos;
+      @include vendorPrefix(transform, $starttrans);
+      opacity: 0;
+    }
+    50% {
+      top: $finalpos;
+      @include vendorPrefix(transform, $finaltrans);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin subheadingFlyInMixin {
+  @keyframes subheadingFlyIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin buttonsFlyInMixin ($startpos, $finalpos, $starttrans, $finaltrans) {
+  @keyframes buttonsFlyIn {
+    0% {
+      bottom: $startpos;
+      @include vendorPrefix(transform, $starttrans);
+      opacity: 0;
+    }
+    60% {
+      bottom: $finalpos;
+      @include vendorPrefix(transform, $finaltrans);
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
 #mainPage {
   padding: 0;
   margin: 0;
@@ -26,6 +72,13 @@
       width: 33%;
 
       text-align: center;
+
+      @include headlineFlyInMixin(10%, 33%, #{translate(-50%, 0%)}, #{translate(-50%, -50%)});
+
+      animation: {
+        name: headlineFlyIn;
+        duration: 2s;
+      }
 
       span {
         display: block;
@@ -58,6 +111,14 @@
         }
 
         color: grey;
+
+        @include subheadingFlyInMixin;
+        animation: {
+          name: subheadingFlyIn;
+          duration: 1s;
+          delay: 1s;
+          fill-mode: backwards;
+        }
       }
     }
 
@@ -69,6 +130,15 @@
       $transform: translate(-50%, -50%);
       @include vendorPrefix(transform, $transform);
 
+      @include buttonsFlyInMixin (5%, 12%, #{translate(-50%, 0%)}, #{translate(-50%,-50%)});
+
+      animation: {
+        name: buttonsFlyIn;
+        duration: 1.8s;
+        delay: 1.75s;
+        fill-mode: backwards;
+      }
+
       width: 33%;
 
       .button {
@@ -77,7 +147,7 @@
         }
 
         background: {
-          color: lightblue;
+          color: #f09b51;
         }
 
         padding: {
@@ -87,7 +157,7 @@
           right: 0.6em;
         }
 
-        border-radius: 2px;
+        border-radius: 8px;
 
       }
 
