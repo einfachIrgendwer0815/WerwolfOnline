@@ -46,6 +46,21 @@
   }
 }
 
+@mixin buttonsColorMixin ($startcolor, $endcolor){
+  @keyframes buttonsColor {
+    0% {
+      background: {
+        color: $startcolor;
+      }
+    }
+    100% {
+      background: {
+        color: $endcolor;
+      }
+    }
+  }
+}
+
 #mainPage {
   padding: 0;
   margin: 0;
@@ -150,6 +165,14 @@
           color: #f09b51;
         }
 
+        @include buttonsColorMixin (white, #f09b51);
+        animation: {
+          name: buttonsColor;
+          duration: 1s;
+          delay: 2s;
+          fill-mode: backwards;
+        }
+
         padding: {
           top: 0.4em;
           bottom: 0.4em;
@@ -159,6 +182,20 @@
 
         border-radius: 8px;
 
+        $transition: letter-spacing 0.5s, transform 50ms, background-color 0.5s;
+        @include vendorPrefix (transition, $transition);
+
+        &:hover {
+          letter-spacing: 0.2em;
+          background: {
+            color: lightblue;
+          }
+        }
+
+        &:active {
+          $transform: scale(0.9);
+          @include vendorPrefix (transform, $transform);
+        }
       }
 
       .arrow {
