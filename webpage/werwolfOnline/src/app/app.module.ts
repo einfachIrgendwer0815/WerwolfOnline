@@ -9,6 +9,8 @@ import { PlayComponent } from './play/play.component';
 import { JoinComponent } from './play/join/join.component';
 import { CreateComponent } from './play/create/create.component';
 import { PlayMainComponent } from './play/play-main/play-main.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { PlayMainComponent } from './play/play-main/play-main.component';
     PlayComponent,
     JoinComponent,
     CreateComponent,
-    PlayMainComponent
+    PlayMainComponent,
+    NotFoundComponent,
+    HowToPlayComponent,
   ],
   imports: [
     BrowserModule,
