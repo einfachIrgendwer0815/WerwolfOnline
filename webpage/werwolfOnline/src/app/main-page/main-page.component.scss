@@ -1,0 +1,220 @@
+@import '../../globalScss';
+
+#mainPage {
+  width: 100%;
+  min-height: 100vh;
+
+  background: {
+    color: black;
+    image: url('/assets/background.jpg');
+    size: cover;
+    position: bottom center;
+  }
+
+  position: relative;
+
+  .headlines {
+    position: absolute;
+    $top: 33%;
+    top: $top;
+    left: 50%;
+
+    @include vendorPrefix(user-select, none);
+
+    $transform: translate(-50%,-50%);
+    @include vendorPrefix(transform, $transform);
+
+    color: white;
+
+    .headline {
+      display: block;
+
+      font: {
+        family: 'Turret Road';
+        weight: 600;
+      }
+
+      &.no1 {
+        font: {
+          size: 8em;
+        }
+
+        text: {
+          shadow: 0px 0px 3px white,
+                  0px 0px 10px #CCC,
+                  0px 0px 30px #AAA,
+                  4px 4px 0px black;
+        }
+
+        .lower {
+          $transition: opacity 100ms;
+          @include vendorPrefix (transition, $transition);
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+
+      &.no2 {
+        text: {
+          align: center;
+          shadow: 0px 0px 3px #AAA,
+                  0px 0px 5px #AAA,
+                  1px 1px 3px black;
+        }
+
+        font: {
+          size: 1.8em;
+        }
+
+        color: #DDD;
+
+        $transition: text-shadow 200ms;
+        @include vendorPrefix(transition, $transition);
+
+        &:hover {
+          text: {
+            shadow:
+                    0px 0px 3px #AAA,
+                    0px 0px 5px #AAA,
+                    0px 0px 25px #AAA,
+                    1px 1px 3px black;
+          }
+        }
+
+        @keyframes flyInNo2 {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+
+        animation: {
+          name: flyInNo2;
+          duration: 1s;
+          fill-mode: backwards;
+          delay: 1.8s;
+        }
+      }
+    }
+
+    @keyframes flyIn {
+      0% {
+        top: 12%;
+        opacity: 0;
+      }
+      90% {
+        top: $top;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    animation: {
+      name: flyIn;
+      duration: 2s;
+      fill-mode: backwards;
+    }
+  }
+
+  .buttonBox {
+    position: absolute;
+    $bottom: 18%;
+    bottom: $bottom;
+    left: 50%;
+
+    $transform: translate(-50%, -50%);
+    @include vendorPrefix(transform, $transform);
+
+    ul {
+      list-style: none;
+
+      margin: 0;
+      padding: 0;
+
+      width: 100%;
+
+      li {
+        float: left;
+
+        color: white;
+
+        margin: {
+          left: 2em;
+        }
+
+        &:first-child {
+          margin: {
+            left: 0;
+          }
+        }
+
+        $innerPadding: 0.6em;
+        $innerPaddingLR: $innerPadding + ($innerPadding/4);
+        padding: {
+          top: $innerPadding;
+          bottom: $innerPadding;
+          left: $innerPaddingLR;
+          right: $innerPaddingLR;
+        }
+
+        border: {
+          radius: 3px;
+        }
+
+        background-color: green;
+
+        box: {
+          shadow: 0px 0px 4px green,
+                  0px 0px 10px green,
+                  1px 1px 3px black;
+        }
+
+        font: {
+          family: 'Roboto';
+          size: 1.1em;
+        }
+
+        $transition: transform 250ms, background-color 500ms, box-shadow 500ms;
+        @include vendorPrefix(transition, $transition);
+
+        &:hover {
+          $transform: scale(1.15);
+          @include vendorPrefix(transform, $transform);
+
+          background-color: black;
+
+          box-shadow: 0px 0px 4px black, 0px 0px 10px black;
+        }
+
+        &:active {
+          $transform: scale(1.05);
+          @include vendorPrefix(transform, $transform);
+        }
+      }
+    }
+
+    @keyframes flyInButtons {
+      0% {
+        bottom: 2%;
+        opacity: 0;
+      }
+      60% {
+        bottom: $bottom;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    animation: {
+      name: flyInButtons;
+      duration: 1.8s;
+      fill-mode: backwards;
+      delay: 0.5s;
+    }
+  }
+}
