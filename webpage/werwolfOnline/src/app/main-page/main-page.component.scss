@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '../../globalScss';
 
 #mainPage {
@@ -154,7 +156,7 @@
         }
 
         $innerPadding: 0.6em;
-        $innerPaddingLR: $innerPadding + ($innerPadding/4);
+        $innerPaddingLR: $innerPadding + math.div($innerPadding, 4);
         padding: {
           top: $innerPadding;
           bottom: $innerPadding;
