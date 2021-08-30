@@ -11,15 +11,15 @@ import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
-  {path: '', component: MainPageComponent},
-  {path: 'game', component: GameComponent},
-  {path: 'play', component: PlayComponent, children: [
-    {path: '', component: PlayMainComponent},
-    {path: 'join', component: JoinComponent},
-    {path: ' create', component: CreateComponent}
+  {path: '', component: MainPageComponent, data: {animation: 'MainPage'}},
+  {path: 'game', component: GameComponent, data: {animation: 'Game'}},
+  {path: 'play', component: PlayComponent, data: {animation: 'Play'}, children: [
+    {path: '', component: PlayMainComponent, data: {animation: 'PlayMain'}},
+    {path: 'join', component: JoinComponent, data: {animation: 'PlayJoin'}},
+    {path: 'create', component: CreateComponent, data: {animation: 'PlayCreate'}}
   ]},
-  {path: 'howToPlay', component: HowToPlayComponent},
-  {path: '**', component: NotFoundComponent}
+  {path: 'howToPlay', component: HowToPlayComponent, data: {animation: 'HowToPlay'}},
+  {path: '**', component: NotFoundComponent, data: {animation: 'NotFound'}}
 ];
 
 @NgModule({
