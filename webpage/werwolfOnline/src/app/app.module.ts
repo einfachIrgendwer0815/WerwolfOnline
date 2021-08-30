@@ -12,6 +12,7 @@ import { CreateComponent } from './play/create/create.component';
 import { PlayMainComponent } from './play/play-main/play-main.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HowToPlayComponent } from './how-to-play/how-to-play.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HowToPlayComponent } from './how-to-play/how-to-play.component';
     PlayMainComponent,
     NotFoundComponent,
     HowToPlayComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { CreateComponent } from './play/create/create.component';
 import { PlayMainComponent } from './play/play-main/play-main.component';
 import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {path: '', component: MainPageComponent, data: {animation: 'MainPage'}},
@@ -18,6 +19,7 @@ const routes: Routes = [
     {path: 'join', component: JoinComponent, data: {animation: 'PlayJoin'}},
     {path: 'create', component: CreateComponent, data: {animation: 'PlayCreate'}}
   ]},
+  {path: 'about', component: AboutComponent, data: {animation: 'About'}},
   {path: 'howToPlay', component: HowToPlayComponent, data: {animation: 'HowToPlay'}},
   {path: '**', component: NotFoundComponent, data: {animation: 'NotFound'}}
 ];

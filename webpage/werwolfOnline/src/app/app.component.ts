@@ -9,6 +9,8 @@ const routeTransAnim = trigger('routeAnimation', [
   transition('MainPage <=> Play', overlay),
   transition('MainPage => HowToPlay', slideRight),
   transition('HowToPlay => MainPage', overlayLeft),
+  transition('MainPage => About', slideLeft),
+  transition('About => MainPage', overlayRight),
   transition('* <=> NotFound', overlay),
   transition('Play <=> Game', overlay)
 ])
