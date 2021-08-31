@@ -4,6 +4,8 @@
 @import '../variables';
 
 #playMain {
+  position: relative;
+
   width: 100%;
   min-height: calc(100vh - #{$header-height});
 
@@ -21,4 +23,117 @@
   background-color: $background-color;
 
   color: $font-color;
+
+  .choose {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    @include vendorPrefix(transform, translate(-50%,-50%));
+
+    border: {
+      width: 1px;
+      style: solid;
+      color: $border-color;
+      radius: 10px;
+    }
+
+    $padding: 1.5em;
+    padding: {
+      top: $padding;
+      bottom: $padding;
+      left: $padding;
+      right: $padding;
+    }
+
+    .headline {
+      width: 100%;
+      text-align: center;
+
+      display: block;
+
+      font: {
+        size: 2em;
+        family: 'Roboto';
+      }
+
+      margin: {
+        bottom: .1em;
+      }
+    }
+
+    .description {
+      width: 100%;
+
+      text-align: center;
+
+      display: block;
+
+      color: $font-color-3;
+
+      font: {
+        family: 'Roboto';
+      }
+
+      margin: {
+        bottom: 1.2em;
+      }
+    }
+
+    .divider {
+      width: 100%;
+      display: block;
+
+      text-align: center;
+
+      font: {
+        size: .9em;
+        family: 'Roboto';
+      }
+      color: $font-color-2;
+
+      $margin: 1em;
+      margin: {
+        top: $margin;
+        bottom: $margin;
+      }
+    }
+
+    .op1, .op2 {
+      span {
+        background: {
+          color: $background-color-orange;
+        }
+
+        display: inline-block;
+        text-align: center;
+
+        $padding: 0.5em;
+
+        width: calc(100% - #{$padding*2});
+
+        padding: {
+          top: $padding;
+          bottom: $padding;
+          left: $padding;
+          right: $padding;
+        }
+
+        border: {
+          radius: 7px;
+        }
+
+        @include vendorPrefix(transition, #{transform 400ms, color 400ms});
+
+        &:hover {
+          @include vendorPrefix(transform, scale(1.1));
+          color: black;
+
+          &:active {
+            @include vendorPrefix(transform, scale(1.05));
+          }
+        }
+      }
+    }
+  }
 }
