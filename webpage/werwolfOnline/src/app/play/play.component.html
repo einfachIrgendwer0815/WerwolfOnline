@@ -2,5 +2,7 @@
   <header>
     <fa-icon class="back" routerLink="/" [icon]="arrowBack"></fa-icon>
   </header>
-  <router-outlet></router-outlet>
+  <div [@test]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
 </div>
