@@ -1,11 +1,19 @@
 @import '../../../globalStyleData';
 @import '../../../globalScss';
 
+@import '../variables';
+
 #playMain {
   width: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - #{$header-height});
 
-  margin: 0;
+  margin: {
+    top: $header-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
   padding: 0;
 
   display: inline-block;
