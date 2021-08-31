@@ -13,6 +13,7 @@ import { PlayMainComponent } from './play/play-main/play-main.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { AboutComponent } from './about/about.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AboutComponent } from './about/about.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
