@@ -1,0 +1,19 @@
+@import '../../../globalScss';
+@import '../../../globalStyleData';
+
+@import '../variables';
+
+#playJoin {
+  display: inline-block;
+
+  width: 100%;
+  min-height: calc(100vh - #{$header-height});
+
+  margin: {
+    top: $header-height;
+  }
+
+  background-color: $background-color;
+
+  color: $font-color;
+}
