@@ -7,9 +7,9 @@ import { slideRight, slideLeft, overlay, overlayLeft, overlayRight } from './ani
 
 const routeTransAnim = trigger('routeAnimation', [
   transition('MainPage <=> Play', overlay),
-  transition('MainPage => HowToPlay', slideRight),
+  transition('MainPage => HowToPlay', overlayRight),
   transition('HowToPlay => MainPage', overlayLeft),
-  transition('MainPage => About', slideLeft),
+  transition('MainPage => About', overlayLeft),
   transition('About => MainPage', overlayRight),
   transition('* <=> NotFound', overlay),
   transition('Play <=> Game', overlay)

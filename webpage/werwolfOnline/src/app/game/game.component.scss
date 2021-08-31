@@ -1,0 +1,15 @@
+@import '../../globalScss';
+@import '../../globalStyleData';
+
+#game {
+  display: inline-block;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: {
+    color: $background-color;
+  }
+
+  color: $font-color;
+}
