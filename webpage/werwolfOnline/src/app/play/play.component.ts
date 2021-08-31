@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import { LinkService } from '../services/linkService/link.service';
+
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { trigger, transition } from '@angular/animations';
@@ -23,7 +25,7 @@ import { slideRight, slideLeft, overlay, overlayLeft, overlayRight } from '../an
 export class PlayComponent implements OnInit {
   arrowBack = faChevronLeft;
 
-  constructor() { }
+  constructor(public linkService: LinkService) { }
 
   ngOnInit(): void {
   }

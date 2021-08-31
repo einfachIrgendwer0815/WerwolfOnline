@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LinkService } from '../../services/linkService/link.service';
 
 @Component({
   selector: 'app-join',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JoinComponent implements OnInit {
 
-  constructor() { }
+  constructor(private linkService: LinkService) {
+    this.linkService.setLink("/play");
+  }
 
   ngOnInit(): void {
   }

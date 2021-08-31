@@ -1,6 +1,6 @@
 <div id="play">
   <header>
-    <fa-icon class="back" routerLink="/" [icon]="arrowBack"></fa-icon>
+    <fa-icon class="back" [routerLink]="linkService.link" [icon]="arrowBack"></fa-icon>
   </header>
   <div [@test]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>

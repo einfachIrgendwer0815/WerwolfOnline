@@ -15,6 +15,8 @@ import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { AboutComponent } from './about/about.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { LinkService } from './services/linkService/link.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +36,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BrowserAnimationsModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [LinkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
