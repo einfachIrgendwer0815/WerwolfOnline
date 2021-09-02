@@ -4,8 +4,6 @@
 @import '../variables';
 
 #playCreate {
-  display: inline-block;
-
   width: 100%;
   min-height: calc(100vh - #{$header-height});
 
