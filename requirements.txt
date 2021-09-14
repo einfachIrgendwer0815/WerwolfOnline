@@ -1,2 +1,3 @@
 flask
 Flask-Session
+sqlIntuitive
