@@ -72,7 +72,7 @@ export const overlay = [
   ])
 ]
 
-export const overlayLeft = [
+export const overlayLeftIn = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -92,7 +92,30 @@ export const overlayLeft = [
   query(':enter', animateChild())
 ]
 
-export const overlayRight = [
+export const overlayLeftOut = [
+  style({ position: 'relative' }),
+  query(':enter, :leave', [
+    style({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%'
+    })
+  ]),
+  query(':enter', [
+    style({ left: '0%' , 'z-index': 9000})
+  ]),
+  query(':leave', [
+    style({ 'z-index': 10000 })
+  ]),
+  query(':leave', animateChild()),
+  query(':leave', [
+    animate('1500ms ease-in-out', style({ left: '-100%' }))
+  ]),
+  query(':enter', animateChild())
+]
+
+export const overlayRightIn = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -108,6 +131,29 @@ export const overlayRight = [
   query(':leave', animateChild()),
   query(':enter', [
     animate('1500ms ease-in-out', style({ left: '0%' }))
+  ]),
+  query(':enter', animateChild())
+]
+
+export const overlayRightOut = [
+  style({ position: 'relative' }),
+  query(':enter, :leave', [
+    style({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%'
+    })
+  ]),
+  query(':enter', [
+    style({ 'z-index': 9000 })
+  ]),
+  query(':leave', [
+    style({ 'z-index': 10000})
+  ]),
+  query(':leave', animateChild()),
+  query(':leave', [
+    animate('1500ms ease-in-out', style({ left: '100%' }))
   ]),
   query(':enter', animateChild())
 ]
