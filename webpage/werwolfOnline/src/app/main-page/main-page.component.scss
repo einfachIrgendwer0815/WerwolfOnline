@@ -282,10 +282,26 @@
           $transform: scale(1.05);
           @include vendorPrefix(transform, $transform);
         }
+
+        animation: {
+          name: lightOn;
+          duration: 2s;
+          delay: calc(.75s + var(--delay, 0s));
+          fill-mode: backwards;
+        }
+
+        @keyframes lightOn {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
       }
     }
 
-    @keyframes flyInButtons {
+  /*  @keyframes flyInButtons {
       0% {
         bottom: 2%;
         opacity: 0;
@@ -302,6 +318,6 @@
       duration: 1.8s;
       fill-mode: backwards;
       delay: 0.5s;
-    }
+    }*/
   }
 }
