@@ -1,0 +1,64 @@
+{
+  "host": "localhost",
+  "username": "werwolf",
+  "password": "super secret",
+  "database": "werwolfDb",
+  "tables": {
+    "user": {
+      "name": "User",
+      "columns": [
+        {
+          "name": "id",
+          "type": "int primary key auto_increment"
+        },
+        {
+          "name": "nickname",
+          "type": "varchar(50)"
+        },
+        {
+          "name": "volume",
+          "type": "int"
+        }
+      ]
+    },
+    "room": {
+      "name": "Room",
+      "columns": [
+        {
+          "name": "name",
+          "type": "varchar(50)"
+        },
+        {
+          "name": "id",
+          "type": "int"
+        },
+        {
+          "name": "code",
+          "type": "varchar(16)"
+        },
+        {
+          "name": "player",
+          "type": "varchar(300)"
+        },
+        {
+          "name": "state",
+          "type": "int"
+        },
+        {
+          "name": "nextstate",
+          "type": "int"
+        }
+      ]
+    },
+    "game": {
+      "name": "Game",
+      "columns": [
+        {
+          "name": "roomId",
+          "type": "int",
+          "foreignkey": "Room(id)"
+        }
+      ]
+    }
+  }
+}
