@@ -1,4 +1,4 @@
 import sqlIntuitive.dbSystems
-import customDecorators
+from modules import customDecorators
 
 dbSystem = customDecorators.Singleton(sqlIntuitive.dbSystems.MySqlDbSystem)

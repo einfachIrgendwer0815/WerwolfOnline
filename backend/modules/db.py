@@ -1,5 +1,5 @@
-import decoratedClasses
-import config
+from modules import decoratedClasses
+from modules import config
 
 config.read_DB_DATA()
 
