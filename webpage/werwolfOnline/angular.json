@@ -15,6 +15,15 @@
       },
       "root": "",
       "sourceRoot": "src",
+      "i18n": {
+        "sourceLocale": "de",
+        "locales": {
+          "en": {
+            "translation": "src/locales/messages.en.xlf",
+            "baseHref": ""
+          },
+        }
+      },
       "prefix": "app",
       "architect": {
         "build": {
@@ -64,6 +73,24 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "de": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "localize": ["de"]
+            },
+            "en": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "localize": ["en"]
             }
           },
           "defaultConfiguration": "production"
@@ -76,6 +103,12 @@
             },
             "development": {
               "browserTarget": "werwolfOnline:build:development"
+            },
+            "de": {
+              "browserTarget": "werwolfOnline:build:de"
+            },
+            "en": {
+              "browserTarget": "werwolfOnline:build:en"
             }
           },
           "defaultConfiguration": "development"
