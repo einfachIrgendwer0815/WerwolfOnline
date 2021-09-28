@@ -1,13 +1,8 @@
 <div id="mainPage">
   <div class="headlines">
     <span class="headline no1">
-      <span class="lower" [class]="getAnimationClass(0)">W</span>
-      <span class="lower" [class]="getAnimationClass(1)">e</span>
-      <span class="lower" [class]="getAnimationClass(2)">r</span>
-      <span class="lower" [class]="getAnimationClass(3)">w</span>
-      <span class="lower" [class]="getAnimationClass(4)">o</span>
-      <span class="lower" [class]="getAnimationClass(5)">l</span>
-      <span class="lower" [class]="getAnimationClass(6)">f</span>
+      <span style="display: none" #wordobj count=7>Werwolf</span>
+      <span *ngFor="let e of [].constructor(parseInt(wordobj.getAttribute('count'))); let i = index" class="lower" [class]="genAnimClass()">{{ wordobj.innerText[i] }}</span>
     </span>
     <span class="headline no2">- für den Browser -</span>
   </div>
