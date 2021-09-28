@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="de" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="gameNameLength" datatype="html">
+        <source>7</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="gameName" datatype="html">
+        <source>Werwolf</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/not-found/not-found.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7800741068731184810" datatype="html">
+        <source>- für den Browser -</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="636159930865319203" datatype="html">
+        <source>Regeln</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5910783682214000943" datatype="html">
+        <source>Spielen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7496197606946267369" datatype="html">
+        <source>Über</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7314994221254878088" datatype="html">
+        <source>Diese Seite konnte nicht gefunden werden.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/not-found/not-found.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7070792224026857010" datatype="html">
+        <source>Zur Startseite</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/not-found/not-found.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7691334547973329387" datatype="html">
+        <source>Los geht`s!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="707178767943180301" datatype="html">
+        <source>bitte wähle eine Option aus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4603019156076034805" datatype="html">
+        <source>Einem Raum beitreten</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5957179294600561972" datatype="html">
+        <source>ODER</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5253519888396449475" datatype="html">
+        <source>Raum erstellen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

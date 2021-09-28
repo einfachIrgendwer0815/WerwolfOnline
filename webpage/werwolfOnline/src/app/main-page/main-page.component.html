@@ -1,15 +1,15 @@
 <div id="mainPage">
   <div class="headlines">
     <span class="headline no1">
-      <span style="display: none" #wordobj count=7>Werwolf</span>
+      <span style="display: none" #wordobj count=7 i18n="@@gameName" i18n-count="@@gameNameLength">Werwolf</span>
       <span *ngFor="let e of [].constructor(parseInt(wordobj.getAttribute('count'))); let i = index" class="lower" [class]="genAnimClass()">{{ wordobj.innerText[i] }}</span>
     </span>
-    <span class="headline no2">- für den Browser -</span>
+    <span class="headline no2" i18n>- für den Browser -</span>
   </div>
   <div class="buttonBox">
     <ul>
-      <li routerLink="/howToPlay">Regeln</li>
-      <li routerLink="/play">Spielen</li>
-      <li routerLink="/about">Über</li>
+      <li routerLink="/howToPlay" i18n>Regeln</li>
+      <li routerLink="/play" i18n>Spielen</li>
+      <li routerLink="/about" i18n>Über</li>
     </ul>
 </div>
