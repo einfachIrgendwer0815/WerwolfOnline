@@ -16,8 +16,9 @@ jwt = JWTManager(app)
 
 @app.route('/token/auth', methods=['GET'])
 def auth():
-    access_token = create_access_token(identity=datetime.now().strftime('%d-%b-%H:%M:%S'))
-    refresh_token = create_refresh_token(identity=datetime.now().strftime('%d-%b-%H:%M:%S'))
+    identity = f'{request.remote_addr}-{datetime.now().strftime("%d-%b-%H:%M:%S")}'
+    access_token = create_access_token(identity=identity)
+    refresh_token = create_refresh_token(identity=identity)
 
     resp = jsonify({'access_token': access_token, 'refresh_token': refresh_token})
 
