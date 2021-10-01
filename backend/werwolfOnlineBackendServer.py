@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token, create_refresh_token, set_access_cookies, set_refresh_cookies
 
 import json
+import random
+import string
 
 from modules import gameControl
 
@@ -20,7 +22,8 @@ jwt = JWTManager(app)
 
 @app.route('/token/auth', methods=['GET'])
 def auth():
-    identity = f'{request.remote_addr}-{datetime.now().strftime("%d-%b-%H:%M:%S")}'
+    randomValue = ''.join([random.choice(string.ascii_letters) for _ in range(5)])
+    identity = f'{request.remote_addr}-{datetime.now().strftime("%d-%b-%H:%M:%S")}-{randomValue}'
     access_token = create_access_token(identity=identity)
     refresh_token = create_refresh_token(identity=identity)
 
