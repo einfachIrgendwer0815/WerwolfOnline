@@ -6,8 +6,8 @@ from datetime import timedelta
 
 from modules import gameControl
 from modules import functions
-from modules import tokenRoutes
-from modules import appRoutes
+from modules.routes import tokenRoutes
+from modules.routes import appRoutes
 
 app = Flask(__name__)
 app.gameControl = gameControl.GameControl()
