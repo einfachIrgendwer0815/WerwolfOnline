@@ -11,6 +11,8 @@ import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AboutComponent } from './about/about.component';
 
+import { environment } from '../environments/environment';
+
 const routes: Routes = [
   {path: '', component: MainPageComponent, data: {animation: 'MainPage'}},
   {path: 'game', component: GameComponent, data: {animation: 'Game'}},
@@ -25,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: environment.useHashLocation})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
