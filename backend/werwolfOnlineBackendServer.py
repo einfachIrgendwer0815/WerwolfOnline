@@ -1,13 +1,10 @@
 from flask import Flask, request, jsonify
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token, create_refresh_token, set_access_cookies, set_refresh_cookies
+from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 
 import json
-import random
-import string
 
 from modules import gameControl
-
-from datetime import datetime
+from modules import functions
 
 app = Flask(__name__)
 app.gameControl = gameControl.GameControl()
@@ -20,16 +17,27 @@ with open('jwt_secret_key.json') as jsonFile:
 
 jwt = JWTManager(app)
 
-@app.route('/token/auth', methods=['GET'])
-def auth():
-    randomValue = ''.join([random.choice(string.ascii_letters) for _ in range(5)])
-    identity = f'{request.remote_addr}-{datetime.now().strftime("%d-%b-%H:%M:%S")}-{randomValue}'
-    access_token = create_access_token(identity=identity)
-    refresh_token = create_refresh_token(identity=identity)
+@app.route('/api/token/generate', methods=['GET'])
+def getToken():
+    access_token = functions.genToken()
 
-    resp = jsonify({'access_token': access_token, 'refresh_token': refresh_token})
+    resp = jsonify(access_token=access_token)
 
     return resp, 200
+
+@app.route('/api/token/reGenToken', methods=['GET'])
+@jwt_required()
+def getNewToken():
+    access_token = functions.genToken(identity=get_jwt_identity())
+
+    resp = jsonify(access_token=access_token)
+
+    return resp, 200
+
+@app.route('/api/token/getIdentity', methods=['GET'])
+@jwt_required()
+def getIdentity():
+    return jsonify(identity=get_jwt_identity(), token=request.args['jwt'])
 
 if __name__ == "__main__":
     app.run(debug=True)
