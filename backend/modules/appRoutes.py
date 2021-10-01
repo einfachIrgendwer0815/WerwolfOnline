@@ -4,21 +4,21 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from modules import functions
 
 def getToken():
-    access_token = functions.genToken()
+    access_token, refresh_token = functions.genToken()
 
-    resp = jsonify(access_token=access_token)
+    resp = jsonify(access_token=access_token, refresh_token=refresh_token)
 
     return resp, 200
 
-@jwt_required()
+@jwt_required(refresh=True)
 def getNewToken():
-    access_token = functions.genToken(identity=get_jwt_identity())
+    access_token, refresh_token = functions.genToken(identity=get_jwt_identity())
 
-    resp = jsonify(access_token=access_token)
+    resp = jsonify(access_token=access_token, refresh_token=refresh_token)
 
     return resp, 200
 
-@jwt_required()
+@jwt_required(refresh=False)
 def getIdentity():
     return jsonify(identity=get_jwt_identity(), token=request.args['jwt'])
 
