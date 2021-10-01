@@ -1,7 +1,11 @@
 from flask import request, jsonify
-from flask_jwt_extended import get_jwt_identity, jwt_required
+from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
+
+import json
 
 from modules import functions
+
+from datetime import datetime, timedelta, timezone
 
 def getToken():
     access_token, refresh_token = functions.genToken()
@@ -20,7 +24,20 @@ def getNewToken():
 
 @jwt_required(refresh=False)
 def getIdentity():
-    return jsonify(identity=get_jwt_identity(), token=request.args['jwt'])
+    return jsonify(identity=get_jwt_identity(), token=request.args['jwt'], refresh=refreshNecessary())
+
+def refreshNecessary():
+    try:
+        exp_timestamp = get_jwt()['exp']
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            return True
+
+        return False
+
+    except (RuntimeError, KeyError):
+        return False
 
 def configureRoutes(app):
     global getToken
