@@ -8,6 +8,7 @@ from modules import gameControl
 from modules import functions
 from modules.routes import tokenRoutes
 from modules.routes import appRoutes
+from modules.routes.api import playerRoutes
 
 app = Flask(__name__)
 app.gameControl = gameControl.GameControl()
@@ -24,6 +25,7 @@ jwt = JWTManager(app)
 
 tokenRoutes.configureRoutes(app)
 appRoutes.configureRoutes(app)
+playerRoutes.configureRoutes(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
