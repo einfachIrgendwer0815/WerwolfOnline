@@ -7,6 +7,7 @@ from datetime import timedelta
 from modules import gameControl
 from modules import functions
 from modules import tokenRoutes
+from modules import appRoutes
 
 app = Flask(__name__)
 app.gameControl = gameControl.GameControl()
@@ -22,6 +23,7 @@ with open('jwt_secret_key.json') as jsonFile:
 jwt = JWTManager(app)
 
 tokenRoutes.configureRoutes(app)
+appRoutes.configureRoutes(app)
 
 if __name__ == "__main__":
     app.run(debug=True)
