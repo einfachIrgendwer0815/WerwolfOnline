@@ -1,6 +1,8 @@
 from flask import request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
+GAME_CONTROL = None
+
 @jwt_required()
 def isPlayerRegistered():
     return '', 200
@@ -18,6 +20,8 @@ def updatePlayerExpireTimestamp():
     return '', 200
 
 def configureRoutes(app):
+    GAME_CONTROL = app.gameControl
+    
     global isPlayerRegistered
     isPlayerRegistered = app.route('/api/player/isRegistered', methods=['GET'])(isPlayerRegistered)
 

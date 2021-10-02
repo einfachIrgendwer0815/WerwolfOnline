@@ -1,6 +1,8 @@
 from flask import request, jsonify
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
+GAME_CONTROL = None
+
 @jwt_required()
 def joinRoom():
     return '', 200
@@ -18,6 +20,8 @@ def roomData():
     return '', 200
 
 def configureRoutes(app):
+    GAME_CONTROL = app.gameControl
+    
     global joinRoom
     joinRoom = app.route('/api/room/join', methods=['GET', 'POST'])(joinRoom)
 
