@@ -1,1 +1,1 @@
-from modules.routes_.api import playerRoutes, tokenRoutes
+from modules.routes_.api import playerRoutes, tokenRoutes, roomRoutes, gameRoutes
