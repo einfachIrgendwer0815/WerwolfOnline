@@ -12,8 +12,9 @@ def gameData():
     return '', 200
 
 def configureRoutes(app):
+    global GAME_CONTROL
     GAME_CONTROL = app.gameControl
-    
+
     global gameState
     gameState = app.route('/api/game/state', methods=['GET'])(gameState)
 

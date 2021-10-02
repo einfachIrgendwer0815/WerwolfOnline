@@ -20,8 +20,9 @@ def roomData():
     return '', 200
 
 def configureRoutes(app):
+    global GAME_CONTROL
     GAME_CONTROL = app.gameControl
-    
+
     global joinRoom
     joinRoom = app.route('/api/room/join', methods=['GET', 'POST'])(joinRoom)
 

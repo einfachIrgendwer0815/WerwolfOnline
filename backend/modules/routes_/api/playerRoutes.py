@@ -20,8 +20,9 @@ def updatePlayerExpireTimestamp():
     return '', 200
 
 def configureRoutes(app):
+    global GAME_CONTROL
     GAME_CONTROL = app.gameControl
-    
+
     global isPlayerRegistered
     isPlayerRegistered = app.route('/api/player/isRegistered', methods=['GET'])(isPlayerRegistered)
 
