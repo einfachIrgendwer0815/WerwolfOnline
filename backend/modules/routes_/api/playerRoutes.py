@@ -5,11 +5,17 @@ GAME_CONTROL = None
 
 @jwt_required()
 def isPlayerRegistered():
-    return '', 200
+    return jsonify(isRegistered=GAME_CONTROL.isPlayerRegistered(get_jwt_identity())), 200
 
 @jwt_required()
 def registerPlayer():
-    return '', 200
+    identity = get_jwt_identity()
+    expireTimestamp = get_jwt()['exp']
+
+    if GAME_CONTROL.isPlayerRegistered(identity) == False:
+        GAME_CONTROL.registerPlayer(identity, expireTimestamp)
+
+    return jsonify(identity=identity, expireTimestamp=expireTimestamp), 200
 
 @jwt_required()
 def unregisterPlayer():

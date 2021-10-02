@@ -11,6 +11,7 @@ from modules import routes
 app = Flask(__name__)
 app.gameControl = gameControl.GameControl()
 app.gameControl.start()
+app.gameControl.prepareTables()
 
 app.config['JWT_TOKEN_LOCATION'] = ['query_string']
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=14)
