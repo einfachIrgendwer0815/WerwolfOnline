@@ -36,7 +36,6 @@ class GameControl():
 
     def isPlayerRegistered(self, identity):
         resp = self.__dbSystem.select_from('Player', ['identity'], {'identity': identity})
-        print(resp)
         if len(resp) > 0:
             return True
 
