@@ -40,3 +40,9 @@ class GameControl():
             return True
 
         return False
+
+    def unregisterPlayer(self, identity):
+        self.__dbSystem.delete_from('Player', {'identity': identity})
+
+    def updatePlayerExpireTimestamp(self, identity, newExpire):
+        self.__dbSystem.update('Player', {'expireTimestamp': newExpire}, {'identity': identity})

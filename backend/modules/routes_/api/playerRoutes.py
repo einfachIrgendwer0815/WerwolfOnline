@@ -19,11 +19,13 @@ def registerPlayer():
 
 @jwt_required()
 def unregisterPlayer():
-    return '', 200
+    GAME_CONTROL.unregisterPlayer(get_jwt_identity())
+    return jsonify(), 200
 
 @jwt_required()
 def updatePlayerExpireTimestamp():
-    return '', 200
+    GAME_CONTROL.updatePlayerExpireTimestamp(get_jwt_identity(), get_jwt()['exp'])
+    return jsonify(), 200
 
 def configureRoutes(app):
     global GAME_CONTROL
