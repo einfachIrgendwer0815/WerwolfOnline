@@ -22,7 +22,7 @@ def getNewToken():
 
 @jwt_required(refresh=False)
 def getIdentity():
-    return jsonify(identity=get_jwt_identity(), token=request.args['jwt'], refresh=functions.refreshNecessary())
+    return jsonify(identity=get_jwt_identity(), token=request.args['jwt'], refresh=functions.refreshNecessary(), expireTimestamp=get_jwt()['exp'])
 
 def configureRoutes(app):
     global getToken

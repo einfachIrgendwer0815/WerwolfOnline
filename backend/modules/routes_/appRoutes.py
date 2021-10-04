@@ -3,7 +3,7 @@ from flask import request, redirect, render_template, url_for
 import re
 
 def index():
-    if re.match('de.*', request.accept_languages.best):
+    if request.accept_languages.best != None and re.match('de.*', request.accept_languages.best):
         return redirect('/de')
     return redirect('/en')
 
