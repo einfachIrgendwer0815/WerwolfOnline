@@ -1,11 +1,13 @@
 from flask import request, jsonify, abort
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
+from modules import functions
+
 GAME_CONTROL = None
 
 @jwt_required()
 def isPlayerRegistered():
-    return jsonify(isRegistered=GAME_CONTROL.isPlayerRegistered(get_jwt_identity())), 200
+    return jsonify(isRegistered=GAME_CONTROL.isPlayerRegistered(get_jwt_identity()), refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
 def registerPlayer():
@@ -15,17 +17,17 @@ def registerPlayer():
     if GAME_CONTROL.isPlayerRegistered(identity) == False:
         GAME_CONTROL.registerPlayer(identity, expireTimestamp)
 
-    return jsonify(identity=identity, expireTimestamp=expireTimestamp), 200
+    return jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
 def unregisterPlayer():
     GAME_CONTROL.unregisterPlayer(get_jwt_identity())
-    return jsonify(), 200
+    return jsonify(refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
 def updatePlayerExpireTimestamp():
     GAME_CONTROL.updatePlayerExpireTimestamp(get_jwt_identity(), get_jwt()['exp'])
-    return jsonify(), 200
+    return jsonify(refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
 def setNickname():
@@ -36,7 +38,7 @@ def setNickname():
         nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 20 else jsonData['nickname'][0:20]
         GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
 
-    return jsonify(), 200
+    return jsonify(refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
 def setVolumeSetting():
@@ -50,7 +52,7 @@ def setVolumeSetting():
         elif jsonData['volume'] > 1:
             volume = 1
         GAME_CONTROL.setVolumeSetting(get_jwt_identity(), volume)
-    return jsonify(), 200
+    return jsonify(refresh=functions.refreshNecessary()), 200
 
 def configureRoutes(app):
     global GAME_CONTROL
