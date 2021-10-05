@@ -107,6 +107,8 @@
         }
 
         span:not(.spacer) {
+          display: block;
+          text-align: center;
           font: {
             weight: bold;
             family: 'Roboto';
@@ -124,7 +126,7 @@
           margin: {
             top: 0.4em;
             bottom: 1em;
-            left: 0.6em;
+            left: 0em;
             right: 0;
           }
           line-height: 1.2em;
