@@ -21,7 +21,7 @@ class GameControl():
         if self.__running != True:
             return
 
-        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'game': 'varchar(10)'})
+        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'game': 'varchar(10)', 'nickname': 'varchar(20)', 'volumeSetting': 'float'})
 
     def stop(self):
         if self.__running != True:
@@ -46,3 +46,9 @@ class GameControl():
 
     def updatePlayerExpireTimestamp(self, identity, newExpire):
         self.__dbSystem.update('Player', {'expireTimestamp': newExpire}, {'identity': identity})
+
+    def setPlayerNickname(self, identity, nickname):
+        self.__dbSystem.update('Player', {'nickname': nickname}, {'identity': identity})
+
+    def setVolumeSetting(self, identity, volume):
+        self.__dbSystem.update('Player', {'volumeSetting': volume}, {'identity': identity})
