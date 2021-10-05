@@ -13,6 +13,47 @@
 
   color: $font-color;
 
+  .back {
+    color: lightgrey;
+
+    position: absolute;
+    top: 3%;
+    right: 3%;
+
+    font: {
+      size: 1.75em;
+    }
+
+    animation: {
+      name: appear;
+      duration: 1s;
+      delay: 7s;
+      fill-mode: both;
+    }
+
+    @include vendorPrefix(transition, #{right 200ms, padding 200ms});
+
+    &:hover {
+      right: 2%;
+      padding: {
+        left: 1%;
+      }
+    }
+
+    @keyframes appear {
+      0% {
+        opacity: 0;
+        transform: rotate(-800deg);
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        transform: rotate(0);
+      }
+    }
+  }
+
   h1 {
     text-align: center;
     margin: 0;
