@@ -15,8 +15,9 @@ import { PlayMainComponent } from './play/play-main/play-main.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { AboutComponent } from './about/about.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SettingsComponent } from './play/settings/settings.component';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LinkService } from './services/linkService/link.service';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { LinkService } from './services/linkService/link.service';
     NotFoundComponent,
     HowToPlayComponent,
     AboutComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

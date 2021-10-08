@@ -10,6 +10,7 @@ import { PlayMainComponent } from './play/play-main/play-main.component';
 import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AboutComponent } from './about/about.component';
+import { SettingsComponent } from './play/settings/settings.component';
 
 import { environment } from '../environments/environment';
 
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'play', component: PlayComponent, data: {animation: 'Play'}, children: [
     {path: '', component: PlayMainComponent, data: {animation: 'PlayMain'}},
     {path: 'join', component: JoinComponent, data: {animation: 'PlayJoin'}},
-    {path: 'create', component: CreateComponent, data: {animation: 'PlayCreate'}}
+    {path: 'create', component: CreateComponent, data: {animation: 'PlayCreate'}},
+    {path: 'settings', component: SettingsComponent, data: {animation: 'PlaySettings'}}
   ]},
   {path: 'about', component: AboutComponent, data: {animation: 'About'}},
   {path: 'howToPlay', component: HowToPlayComponent, data: {animation: 'HowToPlay'}},
