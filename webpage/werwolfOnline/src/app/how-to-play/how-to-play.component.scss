@@ -74,7 +74,7 @@
 
     animation: {
       name: flyInAndSolidfy;
-      duration: 1s;
+      duration: 2s;
       delay: 1.4s;
       fill-mode: both;
     }
@@ -132,7 +132,7 @@
         animation: {
           name: slideIn;
           duration: 1s;
-          delay: calc(3s + var(--item-delay));
+          delay: calc(4s + var(--item-delay));
           fill-mode: backwards;
         }
 
