@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
 
-  useHashLocation: false
+  useHashLocation: false,
+  serverName: 'http://localhost:5000'
 };
 
 /*
