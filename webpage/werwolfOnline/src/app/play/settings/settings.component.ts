@@ -17,6 +17,7 @@ import { generateToken } from '../../../apiInterfaces/token';
 export class SettingsComponent implements OnInit {
   access_token: string | undefined;
   refresh_token: string | undefined;
+  authenticated: boolean = false;
 
   constructor(private linkService: LinkService, private client: HttpClient, private cookieService: CookieService) {
     this.linkService.setLink("/");

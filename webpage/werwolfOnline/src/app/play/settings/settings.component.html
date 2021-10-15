@@ -1,3 +1,18 @@
 <div id="playSettings">
-  <p>play-settings works!</p>
+  <div class="centered">
+    <div id="unauthenticatedBlock" *ngIf="!authenticated; else authenticatedContent">
+      <span class="headline">Bevor es los geht...</span>
+      <span class="description">...ein paar Einstellungen...</span>
+      <form onsubmit="return false;">
+        <input type="text" name="nickname" placeholder="Nickname" class="namefield" />
+        <label class="customLabel">Läutstärke (0%)</label>
+        <input type="range" min=0 max=100 value=0 name="volume" class="customSlider" />
+        <input type="submit" value="Speichern" class="customSubmit" />
+      </form>
+    </div>
+    <ng-template #authenticatedContent>
+      <div id="authenticatedBlock">
+      </div>
+    </ng-template>
+  </div>
 </div>
