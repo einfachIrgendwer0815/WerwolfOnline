@@ -3,15 +3,16 @@
     <div id="unauthenticatedBlock" *ngIf="!authenticated; else authenticatedContent">
       <span class="headline">Bevor es los geht...</span>
       <span class="description">...ein paar Einstellungen...</span>
-      <form onsubmit="return false;">
-        <input type="text" name="nickname" placeholder="Nickname" class="namefield" />
-        <label class="customLabel">Läutstärke (0%)</label>
-        <input type="range" min=0 max=100 value=0 name="volume" class="customSlider" />
-        <input type="submit" value="Speichern" class="customSubmit" />
-      </form>
+      <div>
+        <input type="text" name="nickname" placeholder="Nickname" class="namefield" [formControl]="nickname" />
+        <label class="customLabel">Läutstärke ({{ volume.value | number: '3.0' }}%)</label>
+        <input type="range" min=0 max=100 value=0 name="volume" class="customSlider" [formControl]="volume" />
+        <input type="button" value="Speichern" class="customSubmit" (click)="save()" />
+      </div>
     </div>
     <ng-template #authenticatedContent>
       <div id="authenticatedBlock">
+        <span>Warten auf Server...</span>
       </div>
     </ng-template>
   </div>

@@ -19,6 +19,7 @@ import { slideRight, slideLeft, overlay, overlayLeftIn, overlayRightIn, overlayR
       transition("PlayMain => PlayCreate", overlayLeftIn),
       transition("PlayJoin => PlayMain", overlayRightOut),
       transition("PlayCreate => PlayMain", overlayRightOut),
+      transition("PlaySettings => PlayMain", overlay),
     ])
   ]
 })

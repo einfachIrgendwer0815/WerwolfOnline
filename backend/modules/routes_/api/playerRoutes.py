@@ -49,8 +49,8 @@ def setVolumeSetting():
         volume = jsonData['volume']
         if jsonData['volume'] < 0:
             volume = 0
-        elif jsonData['volume'] > 1:
-            volume = 1
+        elif jsonData['volume'] > 100:
+            volume = 100
         GAME_CONTROL.setVolumeSetting(get_jwt_identity(), volume)
     return jsonify(refresh=functions.refreshNecessary()), 200
 
