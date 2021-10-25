@@ -19,7 +19,7 @@ def refreshNecessary():
     try:
         exp_timestamp = get_jwt()['exp']
         now = datetime.now(timezone.utc)
-        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=10))
         if target_timestamp > exp_timestamp:
             return True
 

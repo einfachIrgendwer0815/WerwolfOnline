@@ -14,8 +14,8 @@ app.gameControl.start()
 app.gameControl.prepareTables()
 
 app.config['JWT_TOKEN_LOCATION'] = ['query_string']
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=14)
-app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=14)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=12)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(hours=12)
 
 with open('jwt_secret_key.json') as jsonFile:
     app.config['JWT_SECRET_KEY'] = json.load(jsonFile)['key']
