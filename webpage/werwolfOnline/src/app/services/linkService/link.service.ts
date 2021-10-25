@@ -10,6 +10,6 @@ export class LinkService {
 
   setLink(value: string) {
     this.link = value;
-    console.log(value);
+    //console.log(value);
   }
 }
