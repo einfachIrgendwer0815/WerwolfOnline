@@ -27,7 +27,7 @@ export class AppComponent {
   title = 'werwolfOnline';
 
   prepareRoute(outlet: RouterOutlet) {
-    console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation);
+    //console.log(outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation);
     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 }

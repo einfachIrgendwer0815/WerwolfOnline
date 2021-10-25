@@ -5,6 +5,7 @@ import { FormControl } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
 import { LinkService } from '../../services/linkService/link.service';
+import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -25,15 +26,14 @@ export class SettingsComponent implements OnInit {
   nickname = new FormControl('');
   volume = new FormControl(0);
 
-  constructor(private linkService: LinkService, private client: HttpClient, private cookieService: CookieService, private router: Router) {
+  constructor(private tokenStorage: TokenStorageService, private linkService: LinkService, private client: HttpClient, private cookieService: CookieService, private router: Router) {
     this.linkService.setLink("/");
   }
 
-  ngOnInit(): void {
-    if (this.cookieService.check('token') == true) {
-      this.loadTokens();
-      this.authenticated = true;
+  async ngOnInit(): Promise<void> {
+    await this.tokenStorage.validateTokenFromCookie();
 
+    if (this.tokenStorage.token_valid == true) {
       this.router.navigate(['/play']);
     }
   }
@@ -56,6 +56,7 @@ export class SettingsComponent implements OnInit {
                         data => {
                           this.cookieService.set('token', this.access_token as string);
                           this.cookieService.set('token_refresh', this.refresh_token as string);
+                          this.tokenStorage.setToken(this.access_token as string, this.refresh_token as string);
                           this.router.navigate(['/play']);
                         }, err => {
                           this.authenticated = false;
