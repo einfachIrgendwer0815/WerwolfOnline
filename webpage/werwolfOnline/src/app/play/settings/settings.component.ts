@@ -38,39 +38,38 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  save() {
-    this.authenticated = true;
-    this.generateTokens()
-      .subscribe(
-        data => {
-          this.access_token = data.access_token;
-          this.refresh_token = data.refresh_token;
+  async save(): Promise<void> {
+    var genTokens: generateToken = await this.generateTokens().toPromise();
+    this.access_token = genTokens.access_token;
+    this.refresh_token = genTokens.refresh_token;
 
-          this.registerPlayer()
-            .subscribe(data => {
-              this.setNickname()
-                .subscribe(
-                  data => {
-                    this.setVolume()
-                      .subscribe(
-                        data => {
-                          this.tokenStorage.setToken(this.access_token as string, this.refresh_token as string);
-                          this.router.navigate(['/play']);
-                        }, err => {
-                          this.authenticated = false;
-                        }
-                      );
-                  }, err => {
-                    this.authenticated = false;
-                  }
-                );
-            }, err => {
-              this.authenticated = false;
-            });
-        }, err => {
-          this.authenticated = false;
-        }
-      )
+    var regPlayer: string | void = await this.registerPlayer().toPromise()
+      .catch(err => this.errorHandler(err));
+
+    if (typeof regPlayer == "undefined") {
+      return;
+    }
+
+    var setNick: string | void = await this.setNickname().toPromise()
+      .catch(err => this.errorHandler(err));
+
+    var setVol: string | void = await this.setVolume().toPromise()
+      .catch(err => this.errorHandler(err));
+
+    if (typeof setNick == "undefined" || typeof setVol == "undefined") {
+      return;
+    }
+
+    this.tokenStorage.setToken(this.access_token as string, this.refresh_token as string);
+    this.authenticated = true;
+
+    this.router.navigate(['/play']);
+  }
+
+  errorHandler(err: any): void {
+    if (environment.production == false) {
+      console.log(err);
+    }
   }
 
   generateTokens(): Observable<generateToken> {

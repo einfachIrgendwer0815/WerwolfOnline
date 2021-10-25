@@ -11,6 +11,7 @@ def isPlayerRegistered():
 
 @jwt_required()
 def registerPlayer():
+    #abort(404)
     identity = get_jwt_identity()
     expireTimestamp = get_jwt()['exp']
 
