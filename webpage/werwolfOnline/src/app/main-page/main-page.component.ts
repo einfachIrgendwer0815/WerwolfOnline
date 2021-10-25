@@ -22,7 +22,7 @@ export class MainPageComponent implements OnInit {
   genAnimClass(): string {
     var thisClasses: string = '';
 
-    if (this.genRandomNumber(1, 5) < 4) {
+    if (this.genRandomNumber(1, 5) < 3) {
       thisClasses = 'animate';
 
       thisClasses += ' anim' + this.genRandomNumber(1,3).toString();
