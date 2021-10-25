@@ -54,8 +54,6 @@ export class SettingsComponent implements OnInit {
                     this.setVolume()
                       .subscribe(
                         data => {
-                          this.cookieService.set('token', this.access_token as string);
-                          this.cookieService.set('token_refresh', this.refresh_token as string);
                           this.tokenStorage.setToken(this.access_token as string, this.refresh_token as string);
                           this.router.navigate(['/play']);
                         }, err => {
