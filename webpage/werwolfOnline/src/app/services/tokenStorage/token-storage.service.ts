@@ -16,6 +16,7 @@ export class TokenStorageService {
   token_availableInCookie: boolean | undefined;
   token_valid: boolean = false;
   token_set: boolean = false;
+  token_validation_sent: boolean = false;
 
   constructor(private cookieService: CookieService, private client: HttpClient) { }
 
@@ -35,6 +36,11 @@ export class TokenStorageService {
   }
 
   async validateToken(): Promise<void> {
+    if (this.token_validation_sent == true) {
+      return;
+    }
+
+    this.token_validation_sent = true;
     var data = await this.client.get("http://localhost:5000/api/token/getIdentity?jwt=" + this.token, {observe: "body", responseType: 'json'})
       .toPromise()
       .catch(err => {
