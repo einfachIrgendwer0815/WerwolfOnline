@@ -16,7 +16,7 @@
   .back {
     color: lightgrey;
 
-    position: absolute;
+    position: fixed;
     top: 3%;
     right: 3%;
 
@@ -31,7 +31,7 @@
       fill-mode: both;
     }
 
-    @include vendorPrefix(transition, #{right 200ms, padding 200ms});
+    @include vendorPrefix(transition, #{right 200ms, padding 200ms, opacity 500ms});
 
     &:hover {
       right: 2%;

@@ -106,7 +106,10 @@ export const overlayLeftOut = [
     style({ left: '0%' , 'z-index': 9000})
   ]),
   query(':leave', [
-    style({ 'z-index': 10000 })
+    style({ 'z-index': 10000 }),
+    query('.back', [
+      style({ position: 'absolute' })
+    ])
   ]),
   query(':leave', animateChild()),
   query(':leave', [

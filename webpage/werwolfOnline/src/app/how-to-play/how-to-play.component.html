@@ -1,5 +1,6 @@
 <div id="howToPlay">
-  <fa-icon class="back" routerLink="/" [icon]="arrowBack"></fa-icon>
+  <fa-icon class="back" (click)="goBack()" [icon]="arrowBack"></fa-icon>
+  <!--<fa-icon class="back" routerLink="/" [icon]="arrowBack"></fa-icon>!-->
   <h1 i18n>Wie wird gespielt?</h1>
   <main>
     <ul>
