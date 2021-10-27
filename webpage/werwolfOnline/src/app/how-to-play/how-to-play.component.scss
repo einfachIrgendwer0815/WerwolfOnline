@@ -125,10 +125,6 @@
         }
         padding: 0;
 
-        position: relative;
-        top: 0%;
-        left: 0%;
-
         animation: {
           name: slideIn;
           duration: 1s;
@@ -138,11 +134,11 @@
 
         @keyframes slideIn {
           0% {
-            top: 5%;
+            transform: translateY(5vh);
             opacity: 0;
           }
           100% {
-            top: 0%;
+            transform: translateY(0);
             opacity: 1;
           }
         }
