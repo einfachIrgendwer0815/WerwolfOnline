@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
 import { LinkService } from '../../services/linkService/link.service';
@@ -23,7 +23,10 @@ export class SettingsComponent implements OnInit {
   refresh_token: string | undefined;
   authenticated: boolean = false;
 
-  nickname = new FormControl('');
+  nickname = new FormControl('', [
+    Validators.required,
+    Validators.minLength(3)
+  ]);
   volume = new FormControl(0);
 
   constructor(private tokenStorage: TokenStorageService, private linkService: LinkService, private client: HttpClient, private cookieService: CookieService, private router: Router) {
@@ -39,7 +42,17 @@ export class SettingsComponent implements OnInit {
   }
 
   async save(): Promise<void> {
-    var genTokens: generateToken = await this.generateTokens().toPromise();
+    if (!this.nickname.valid) {
+      return;
+    }
+    this.authenticated = true;
+    var genTokens: generateToken | void = await this.generateTokens().toPromise()
+      .catch(err => this.errorHandler(err));
+
+    if (typeof genTokens == "undefined") {
+      return;
+    }
+    
     this.access_token = genTokens.access_token;
     this.refresh_token = genTokens.refresh_token;
 
@@ -61,7 +74,6 @@ export class SettingsComponent implements OnInit {
     }
 
     this.tokenStorage.setToken(this.access_token as string, this.refresh_token as string);
-    this.authenticated = true;
 
     this.router.navigate(['/play']);
   }
@@ -69,6 +81,7 @@ export class SettingsComponent implements OnInit {
   errorHandler(err: any): void {
     if (environment.production == false) {
       console.log(err);
+      this.authenticated = false;
     }
   }
 

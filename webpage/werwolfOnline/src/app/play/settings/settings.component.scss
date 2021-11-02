@@ -106,24 +106,37 @@
     }
 
     &:not(:placeholder-shown) {
-      border: {
-        bottom: 2px solid #0A0;
+      &.valid {
+        border: {
+          bottom: 2px solid #0A0;
+        }
+
+        &:hover,
+        &:focus {
+          border: {
+            bottom: 2px solid #7D7;
+          }
+        }
       }
 
-      &:hover,
-      &:focus {
+      &.invalid {
         border: {
-          bottom: 2px solid #7D7;
+          bottom: 2px solid #A00;
+        }
+
+        &:hover,
+        &:focus {
+          border: {
+            bottom: 2px solid #D77;
+          }
         }
       }
     }
 
-    &:placeholder-shown {
-      &:hover,
-      &:focus {
-        border: {
-          bottom: 2px solid white;
-        }
+    &:hover,
+    &:focus {
+      border: {
+        bottom: 2px solid white;
       }
     }
 
