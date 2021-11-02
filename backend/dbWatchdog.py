@@ -1,4 +1,5 @@
 from modules import db
+from sqlIntuitive.conditionEnums import ComparisonTypes
 
 import threading
 import time
@@ -30,10 +31,7 @@ class WatchdogThread(threading.Thread):
             dbSystem.create_cursor()
 
             timestamp = int(datetime.timestamp(datetime.now(timezone.utc)))
-            sql = f"DELETE FROM Player where expireTimestamp<={timestamp};"
-
-            dbSystem.cursor.execute(sql)
-            dbSystem.dbCon.commit()
+            dbSystem.delete_from("Player",{'expireTimestamp': {'value': timestamp, 'comparison': ComparisonTypes.LESS_THAN_OR_EQUAL_TO}})
 
             dbSystem.close_connection()
 
