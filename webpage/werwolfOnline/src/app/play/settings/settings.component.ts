@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 import { generateToken } from '../../../apiInterfaces/token';
+import { fullRegister } from '../../../apiInterfaces/player';
 
 @Component({
   selector: 'app-settings',
@@ -56,7 +57,7 @@ export class SettingsComponent implements OnInit {
     this.access_token = genTokens.access_token;
     this.refresh_token = genTokens.refresh_token;
 
-    var regPlayer: string | void = await this.registerPlayer().toPromise()
+    var regPlayer: fullRegister | void = await this.registerPlayer().toPromise()
       .catch(err => this.errorHandler(err));
 
     if (typeof regPlayer == "undefined") {
@@ -80,8 +81,8 @@ export class SettingsComponent implements OnInit {
     return req;
   }
 
-  registerPlayer(): Observable<string> {
-    var req = this.client.post<string>(environment.serverName + '/api/player/fullRegister?jwt=' + this.access_token, {nickname: this.nickname.value, volume: this.volume.value}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
+  registerPlayer(): Observable<fullRegister> {
+    var req = this.client.post<fullRegister>(environment.serverName + '/api/player/fullRegister?jwt=' + this.access_token, {nickname: this.nickname.value, volume: this.volume.value}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
 
     return req;
   }

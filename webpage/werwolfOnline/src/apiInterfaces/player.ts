@@ -4,3 +4,9 @@ export interface registrationInformation {
   nicknameSet: boolean;
   volumeSet: boolean;
 }
+
+export interface fullRegister {
+  identity: string;
+  expireTimestamp: number;
+  refresh: boolean;
+}
