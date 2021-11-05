@@ -44,7 +44,7 @@ def fullRegisterPlayer():
 
     jsonData = request.get_json()
 
-    nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 20 else jsonData['nickname'][0:20]
+    nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 35 else jsonData['nickname'][0:35]
     GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
 
     GAME_CONTROL.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
@@ -73,7 +73,7 @@ def setNickname():
     if not functions.jsonHasField(jsonData, 'nickname'):
         functions.returnAbortMissingParameter('nickname')
 
-    nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 20 else jsonData['nickname'][0:20]
+    nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 35 else jsonData['nickname'][0:35]
     GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
 
     return jsonify(refresh=functions.refreshNecessary()), 200

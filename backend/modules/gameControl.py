@@ -21,7 +21,7 @@ class GameControl():
         if self.__running != True:
             return
 
-        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'game': 'varchar(10)', 'nickname': 'varchar(20)', 'volumeSetting': 'int'})
+        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'game': 'varchar(10)', 'nickname': 'varchar(35)', 'volumeSetting': 'int'})
 
     def stop(self):
         if self.__running != True:

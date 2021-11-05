@@ -25,12 +25,12 @@ export class SettingsComponent implements OnInit {
   refresh_token: string | undefined;
   authenticated: boolean = false;
 
-  maxNameLength: number = 20;
+  maxNameLength: number = 35;
 
   nickname = new FormControl('', [
     Validators.required,
     Validators.minLength(3),
-    Validators.maxLength(20)
+    Validators.maxLength(this.maxNameLength)
   ]);
   volume = new FormControl(0);
 
