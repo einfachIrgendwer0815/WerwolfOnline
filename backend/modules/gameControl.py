@@ -47,6 +47,22 @@ class GameControl():
     def updatePlayerExpireTimestamp(self, identity, newExpire):
         self.__dbSystem.update('Player', {'expireTimestamp': newExpire}, {'identity': identity})
 
+    def getPlayerNickname(self, identity):
+        res = self.__dbSystem.select_from('Player', ['nickname'], {'identity': identity})
+
+        if len(res) > 0 and res[0][0] != None:
+            return True
+        else:
+            return False
+
+    def getVolumeSetting(self, identity):
+        res = self.__dbSystem.select_from('Player', ['volumeSetting'], {'identity': identity})
+
+        if len(res) > 0 and res[0][0] != None:
+            return True
+        else:
+            return False
+
     def setPlayerNickname(self, identity, nickname):
         self.__dbSystem.update('Player', {'nickname': nickname}, {'identity': identity})
 

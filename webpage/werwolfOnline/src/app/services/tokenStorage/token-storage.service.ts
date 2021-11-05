@@ -6,6 +6,8 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { environment } from '../../../environments/environment';
 
+import { registrationInformation } from '../../../apiInterfaces/player';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,12 +43,12 @@ export class TokenStorageService {
     }
 
     this.token_validation_sent = true;
-    var data = await this.client.get("http://localhost:5000/api/token/getIdentity?jwt=" + this.token, {observe: "body", responseType: 'json'})
+    var data = await this.client.get<registrationInformation>("http://localhost:5000/api/player/isRegistered?jwt=" + this.token, {observe: "body", responseType: 'json'})
       .toPromise()
       .catch(err => {
         this.token_valid = false;
       });
-    if(typeof data != "undefined") {
+    if(typeof data != "undefined" && data.isRegistered == true && data.nicknameSet == true && data.volumeSet == true) {
       this.token_valid = true;
     }
   }

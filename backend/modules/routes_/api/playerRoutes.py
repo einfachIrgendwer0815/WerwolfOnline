@@ -7,7 +7,12 @@ GAME_CONTROL = None
 
 @jwt_required()
 def isPlayerRegistered():
-    return jsonify(isRegistered=GAME_CONTROL.isPlayerRegistered(get_jwt_identity()), refresh=functions.refreshNecessary()), 200
+    return jsonify(
+        isRegistered=GAME_CONTROL.isPlayerRegistered(get_jwt_identity()),
+        nicknameSet=GAME_CONTROL.getPlayerNickname(get_jwt_identity()),
+        volumeSet=GAME_CONTROL.getVolumeSetting(get_jwt_identity()),
+        refresh=functions.refreshNecessary()
+    ), 200
 
 @jwt_required()
 def registerPlayer():
