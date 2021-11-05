@@ -6,6 +6,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { LinkService } from '../../services/linkService/link.service';
 import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
+import { PlayerManagementService } from '../../services/playerManagement/player-management.service';
 
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
@@ -30,7 +31,13 @@ export class SettingsComponent implements OnInit {
   ]);
   volume = new FormControl(0);
 
-  constructor(private tokenStorage: TokenStorageService, private linkService: LinkService, private client: HttpClient, private cookieService: CookieService, private router: Router) {
+  constructor(
+    private player: PlayerManagementService,
+    private tokenStorage: TokenStorageService,
+    private linkService: LinkService,
+    private cookieService: CookieService,
+    private router: Router
+  ) {
     this.linkService.setLink("/");
   }
 
@@ -47,7 +54,7 @@ export class SettingsComponent implements OnInit {
       return;
     }
     this.authenticated = true;
-    var genTokens: generateToken | void = await this.generateTokens().toPromise()
+    var genTokens: generateToken | void = await this.player.generateTokens()
       .catch(err => this.errorHandler(err));
 
     if (typeof genTokens == "undefined") {
@@ -57,7 +64,7 @@ export class SettingsComponent implements OnInit {
     this.access_token = genTokens.access_token;
     this.refresh_token = genTokens.refresh_token;
 
-    var regPlayer: fullRegister | void = await this.registerPlayer().toPromise()
+    var regPlayer: fullRegister | void = await this.player.fullRegister(this.access_token, this.nickname.value, this.volume.value)
       .catch(err => this.errorHandler(err));
 
     if (typeof regPlayer == "undefined") {
@@ -74,17 +81,6 @@ export class SettingsComponent implements OnInit {
       console.log(err);
       this.authenticated = false;
     }
-  }
-
-  generateTokens(): Observable<generateToken> {
-    var req = this.client.get<generateToken>(environment.serverName + '/api/token/generate', {observe: 'body', responseType: 'json'});
-    return req;
-  }
-
-  registerPlayer(): Observable<fullRegister> {
-    var req = this.client.post<fullRegister>(environment.serverName + '/api/player/fullRegister?jwt=' + this.access_token, {nickname: this.nickname.value, volume: this.volume.value}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
-
-    return req;
   }
 
   loadTokens() {

@@ -20,7 +20,10 @@ import { AboutComponent } from './about/about.component';
 import { SettingsComponent } from './play/settings/settings.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { LinkService } from './services/linkService/link.service';
+import { TokenStorageService } from './services/tokenStorage/token-storage.service';
+import { PlayerManagementService } from './services/playerManagement/player-management.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,7 @@ import { LinkService } from './services/linkService/link.service';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [LinkService, CookieService],
+  providers: [LinkService, CookieService, TokenStorageService, PlayerManagementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
