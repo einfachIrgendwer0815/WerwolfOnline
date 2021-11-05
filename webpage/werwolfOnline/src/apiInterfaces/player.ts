@@ -10,3 +10,7 @@ export interface fullRegister {
   expireTimestamp: number;
   refresh: boolean;
 }
+
+export interface defaultReturn {
+  refresh: boolean;
+}
