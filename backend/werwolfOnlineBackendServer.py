@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 import json
 from datetime import timedelta
@@ -9,6 +10,7 @@ from modules import functions
 from modules import routes
 
 app = Flask(__name__)
+CORS(app)
 app.gameControl = gameControl.GameControl()
 app.gameControl.start()
 app.gameControl.prepareTables()

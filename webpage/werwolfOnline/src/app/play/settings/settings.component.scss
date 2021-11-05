@@ -64,12 +64,37 @@
     }
   }
 
+  .nicknameInput {
+    display: flex;
+    width: 100%;
+
+    span {
+      position: relative;
+
+      transform: translateX(-3em) translateY(0.7em);
+
+      width: 0;
+      height: 0;
+
+      color: $placeholder-color-2;
+      font: {
+        size: 0.8em;
+        family: 'Roboto';
+      }
+    }
+  }
+
   .namefield {
     @include vendorPrefix(appearance, none);
 
-    $padding: 0.5em;
+    $padding-left: 0.5em;
+    $padding-right: 3.5em;
 
-    width: calc(100% - (#{$padding}*2));
+    width: calc(100% - #{$padding-left} - #{$padding-right});
+
+    position: relative;
+    top: 0;
+    left: 0;
 
     border: {
       top: none;
@@ -79,8 +104,8 @@
     }
 
     padding: {
-      left: 0.5em;
-      right: 0.5em;
+      left: $padding-left;
+      right: $padding-right;
       bottom: 0.4em;
     }
 

@@ -4,7 +4,10 @@
       <span class="headline">Bevor es los geht...</span>
       <span class="description">...ein paar Einstellungen...</span>
       <div>
-        <input type="text" name="nickname" placeholder="Nickname" class="namefield" [class]="nickname.valid ? 'valid' : 'invalid'" [formControl]="nickname" />
+        <div class="nicknameInput">
+          <input type="text" name="nickname" placeholder="Nickname" [maxLength]="maxNameLength" class="namefield" [class]="nickname.valid ? 'valid' : 'invalid'" [formControl]="nickname" />
+          <span>{{ nickname.value.length }}/{{ maxNameLength }}</span>
+        </div>
         <label class="customLabel">Läutstärke ({{ volume.value | number: '3.0' }}%)</label>
         <input type="range" min=0 max=100 value=0 name="volume" class="customSlider" [formControl]="volume" />
         <input type="button" value="Speichern" class="customSubmit" (click)="save()" />
