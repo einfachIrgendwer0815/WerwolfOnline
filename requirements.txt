@@ -1,3 +1,4 @@
 flask
 flask_jwt_extended
+flask-cors
 sqlIntuitive>=0.5.0
