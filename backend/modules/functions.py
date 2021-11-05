@@ -1,5 +1,5 @@
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt
-from flask import request
+from flask import request, abort
 from datetime import datetime, timezone, timedelta
 
 import random
@@ -27,3 +27,23 @@ def refreshNecessary():
 
     except (RuntimeError, KeyError):
         return False
+
+def jsonHasField(jsonText, fieldName):
+    if fieldName not in jsonText.keys():
+        return False
+
+    return True
+
+def returnAbortMissingParameter(parameterName, code=401):
+    abort(401, f'Missing POST parameter \'{parameterName}\'.')
+
+def returnAbortInvalidJson(code=401):
+    abort(401, 'Invalid JSON posted.')
+
+def validateVolume(volume):
+    if volume < 0:
+        return 0
+    elif volume > 100:
+        return 100
+
+    return volume

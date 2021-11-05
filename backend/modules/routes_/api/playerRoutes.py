@@ -26,6 +26,34 @@ def registerPlayer():
     return jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
+def fullRegisterPlayer():
+    identity = get_jwt_identity()
+    expireTimestamp = get_jwt()['exp']
+
+    if (jsonData := request.get_json()) == None:
+        functions.returnAbortInvalidJson()
+
+    if not functions.jsonHasField(jsonData, 'nickname'):
+        functions.returnAbortMissingParameter('nickname')
+
+    if not functions.jsonHasField(jsonData, 'volume'):
+        functions.returnAbortMissingParameter('volume')
+
+    if GAME_CONTROL.isPlayerRegistered(identity) == False:
+        GAME_CONTROL.registerPlayer(identity, expireTimestamp)
+
+    jsonData = request.get_json()
+
+    nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 20 else jsonData['nickname'][0:20]
+    GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
+
+    GAME_CONTROL.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
+
+    res = jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary())
+
+    return res, 200
+
+@jwt_required()
 def unregisterPlayer():
     GAME_CONTROL.unregisterPlayer(get_jwt_identity())
     return jsonify(refresh=functions.refreshNecessary()), 200
@@ -37,27 +65,30 @@ def updatePlayerExpireTimestamp():
 
 @jwt_required()
 def setNickname():
-    if (jsonData := request.get_json()) == None or 'nickname' not in jsonData.keys():
-        abort(401, 'Missing nickname POST parameter.')
+    jsonData = request.get_json()
+    if jsonData == None:
+        functions.returnAbortInvalidJson()
 
-    else:
-        nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 20 else jsonData['nickname'][0:20]
-        GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
+
+    if not functions.jsonHasField(jsonData, 'nickname'):
+        functions.returnAbortMissingParameter('nickname')
+
+    nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 20 else jsonData['nickname'][0:20]
+    GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
 
     return jsonify(refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
 def setVolumeSetting():
-    if (jsonData := request.get_json()) == None or 'volume' not in jsonData.keys():
-        abort(401, 'Missing volume POST parameter.')
+    jsonData = request.get_json()
+    if jsonData == None:
+        functions.returnAbortInvalidJson()
 
-    else:
-        volume = jsonData['volume']
-        if jsonData['volume'] < 0:
-            volume = 0
-        elif jsonData['volume'] > 100:
-            volume = 100
-        GAME_CONTROL.setVolumeSetting(get_jwt_identity(), volume)
+    if not functions.jsonHasField(jsonData, 'volume'):
+        return functions.returnAbortMissingParameter('volume')
+
+    GAME_CONTROL.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
+
     return jsonify(refresh=functions.refreshNecessary()), 200
 
 def configureRoutes(app):
@@ -69,6 +100,9 @@ def configureRoutes(app):
 
     global registerPlayer
     registerPlayer = app.route('/api/player/register', methods=['GET','POST'])(registerPlayer)
+
+    global fullRegisterPlayer
+    fullRegisterPlayer = app.route('/api/player/fullRegister', methods=['GET', 'POST'])(fullRegisterPlayer)
 
     global unregisterPlayer
     unregisterPlayer = app.route('/api/player/unregister', methods=['GET'])(unregisterPlayer)

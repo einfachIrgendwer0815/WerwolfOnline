@@ -52,7 +52,7 @@ export class SettingsComponent implements OnInit {
     if (typeof genTokens == "undefined") {
       return;
     }
-    
+
     this.access_token = genTokens.access_token;
     this.refresh_token = genTokens.refresh_token;
 
@@ -60,16 +60,6 @@ export class SettingsComponent implements OnInit {
       .catch(err => this.errorHandler(err));
 
     if (typeof regPlayer == "undefined") {
-      return;
-    }
-
-    var setNick: string | void = await this.setNickname().toPromise()
-      .catch(err => this.errorHandler(err));
-
-    var setVol: string | void = await this.setVolume().toPromise()
-      .catch(err => this.errorHandler(err));
-
-    if (typeof setNick == "undefined" || typeof setVol == "undefined") {
       return;
     }
 
@@ -91,18 +81,8 @@ export class SettingsComponent implements OnInit {
   }
 
   registerPlayer(): Observable<string> {
-    var req = this.client.get<string>(environment.serverName + '/api/player/register?jwt=' + this.access_token, {observe: 'body', responseType: 'json'});
+    var req = this.client.post<string>(environment.serverName + '/api/player/fullRegister?jwt=' + this.access_token, {nickname: this.nickname.value, volume: this.volume.value}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
 
-    return req;
-  }
-
-  setNickname(): Observable<string> {
-    var req = this.client.post<string>(environment.serverName + '/api/player/setNickname?jwt=' + this.access_token, {nickname: this.nickname.value}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
-    return req;
-  }
-
-  setVolume(): Observable<string> {
-    var req = this.client.post<string>(environment.serverName + '/api/player/setVolume?jwt=' + this.access_token, {volume: (this.volume.value)}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
     return req;
   }
 
