@@ -1,4 +1,4 @@
-import { trigger, transition, style, query, animateChild, group, animate } from '@angular/animations';
+import { trigger, transition, style, query, animateChild, group, stagger, animate } from '@angular/animations';
 
 export const slideRight = [
   style({ position: 'relative' }),
@@ -86,8 +86,13 @@ export const overlayLeftIn = [
     style({ left: '100%' , 'z-index': 10000})
   ]),
   query(':leave', animateChild()),
-  query(':enter', [
-    animate('1500ms ease-in-out', style({ left: '0%' }))
+  group([
+    query(':leave', [
+      animate('1500ms ease-in-out', style({ opacity: 0 }))
+    ]),
+    query(':enter', [
+      animate('1500ms ease-in-out', style({ left: '0%' }))
+    ]),
   ]),
   query(':enter', animateChild())
 ]
@@ -103,7 +108,7 @@ export const overlayLeftOut = [
     })
   ]),
   query(':enter', [
-    style({ left: '0%' , 'z-index': 9000})
+    style({ left: '0%' , 'z-index': 9000, opacity: 0})
   ]),
   query(':leave', [
     style({ 'z-index': 10000 }),
@@ -112,8 +117,13 @@ export const overlayLeftOut = [
     ])
   ]),
   query(':leave', animateChild()),
-  query(':leave', [
-    animate('1500ms ease-in-out', style({ left: '-100%' }))
+  group([
+    query(':enter', [
+      animate('1700ms ease-in-out', style({ opacity: 1 }))
+    ]),
+    query(':leave', [
+      animate('1500ms ease-in-out', style({ left: '-100%' }))
+    ]),
   ]),
   query(':enter', animateChild())
 ]
@@ -132,9 +142,15 @@ export const overlayRightIn = [
     style({ left: '-100%', 'z-index': 10000 })
   ]),
   query(':leave', animateChild()),
-  query(':enter', [
-    animate('1500ms ease-in-out', style({ left: '0%' }))
+  group([
+    query(':leave', [
+      animate('1500ms ease-in-out', style({ opacity: 0 }))
+    ]),
+    query(':enter', [
+      animate('1500ms ease-in-out', style({ left: '0%' }))
+    ]),
   ]),
+
   query(':enter', animateChild())
 ]
 
@@ -149,14 +165,19 @@ export const overlayRightOut = [
     })
   ]),
   query(':enter', [
-    style({ 'z-index': 9000 })
+    style({ 'z-index': 9000, opacity: 0 })
   ]),
   query(':leave', [
     style({ 'z-index': 10000})
   ]),
   query(':leave', animateChild()),
-  query(':leave', [
-    animate('1500ms ease-in-out', style({ left: '100%' }))
+  group([
+    query(':enter', [
+      animate('1500ms ease-in-out', style({ opacity: 1 }))
+    ]),
+    query(':leave', [
+      animate('1500ms ease-in-out', style({ left: '100%' }))
+    ]),
   ]),
   query(':enter', animateChild())
 ]
