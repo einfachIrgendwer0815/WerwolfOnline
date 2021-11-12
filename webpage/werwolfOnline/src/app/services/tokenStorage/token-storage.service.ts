@@ -78,7 +78,7 @@ export class TokenStorageService {
     this.token_set = true;
     this.token_valid = true;
 
-    this.cookieService.set('token', token);
-    this.cookieService.set('token_refresh', token_refresh);
+    this.cookieService.set('token', token, { path: '/' });
+    this.cookieService.set('token_refresh', token_refresh, { path: '/' });
   }
 }
