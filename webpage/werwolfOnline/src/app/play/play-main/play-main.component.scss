@@ -133,5 +133,37 @@
         }
       }
     }
+
+    .line {
+      border-color: $line-color;
+
+      padding: 0;
+
+      $margin: 1em;
+      margin: {
+        top: $margin;
+        bottom: $margin;
+      }
+    }
+
+    .rules {
+      font: {
+        family: 'Roboto';
+        size: 1.2em;
+      }
+
+      &.description {
+        text: {
+          decoration: underline;
+        }
+
+        font: {
+          size: 1em;
+        }
+
+        margin-top: 0.1em;
+        margin-bottom: 0;
+      }
+    }
   }
 }
