@@ -106,6 +106,10 @@
         display: inline-block;
         text-align: center;
 
+        font: {
+          family: 'Roboto';
+        }
+
         $padding: 0.5em;
 
         width: calc(100% - #{$padding*2});
