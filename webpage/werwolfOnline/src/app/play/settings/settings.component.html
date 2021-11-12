@@ -1,21 +1,21 @@
 <div id="playSettings">
   <div class="centered">
     <div id="unauthenticatedBlock" *ngIf="!authenticated; else authenticatedContent">
-      <span class="headline">Bevor es los geht...</span>
-      <span class="description">...ein paar Einstellungen...</span>
+      <span class="headline" i18n>Bevor es los geht...</span>
+      <span class="description" i18n>...ein paar Einstellungen...</span>
       <div>
         <div class="nicknameInput">
-          <input type="text" name="nickname" placeholder="Nickname" [maxLength]="maxNameLength" class="namefield" [class]="nickname.valid ? 'valid' : 'invalid'" [formControl]="nickname" />
+          <input type="text" name="nickname" i18n-placeholder placeholder="Nickname" [maxLength]="maxNameLength" class="namefield" [class]="nickname.valid ? 'valid' : 'invalid'" [formControl]="nickname" />
           <span>{{ nickname.value.length }}/{{ maxNameLength }}</span>
         </div>
-        <label class="customLabel">Läutstärke ({{ volume.value | number: '3.0' }}%)</label>
+        <label class="customLabel" i18n>Läutstärke ({{ volume.value | number: '3.0' }}%)</label>
         <input type="range" min=0 max=100 value=0 name="volume" class="customSlider" [formControl]="volume" />
-        <input type="button" value="Speichern" class="customSubmit" (click)="save()" />
+        <input type="button" i18n-value value="Speichern" class="customSubmit" (click)="save()" />
       </div>
     </div>
     <ng-template #authenticatedContent>
       <div id="authenticatedBlock">
-        <span>Warten auf Server...</span>
+        <span i18n>Warten auf Server...</span>
       </div>
     </ng-template>
   </div>

@@ -1,18 +1,157 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="de" datatype="plaintext" original="ng2.template">
+  <file target-language="en" datatype="plaintext" original="ng2.template" source-language="en">
+    <header>
+      <phase-group>
+        <phase contact-name="bob" tool-id="lokalize-20.12.3" contact-email="jdflkgjadöflg" phase-name="approval-1" process-name="approval" date="2021-11-12"/>
+      </phase-group>
+      <tool tool-id="lokalize-20.12.3" tool-name="Lokalize" tool-version="20.12.3"/>
+    </header>
     <body>
-      <trans-unit id="gameNameLength" datatype="html">
+      <trans-unit datatype="html" id="1388948412142700964">
+        <source>Wie wird gespielt?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="2174081997251509952">
+        <source>Ziel des Spiels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="5759256473140988285">
+        <source>Das Ziel des Spiels ist es für die Werwölfe, alle Dorfbewohner zu töten. Für die Dorfbewohner gilt es, alle Werwölfe ausfindig zu machen.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="5126546327335746132">
+        <source>Ablauf</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="5893997560096794731">
+        <source>Zu Beginn wird jede/r Spieler/in eine Rolle zugewiesen, die er/sie geheim halten muss. (für Auflistung der Rollen siehe unten)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="3694413314747945143">
+        <source>Eine Besonderheit hat die Rolle des Bürgermeisters oder der Bürgermeisterin. Diese Rolle wird einem/r Spieler/in zusätzlich zugeteillt. Der/die Bürgermeister/in hat bei der täglichen Abstimmung zwei Stimmen.(Dazu später mehr)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">14,15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="7008852096320131525">
+        <source>Nach dem jede(r) Spieler/in Kenntnis von seiner/ihrer Karte genommen hat, beginnt die erste Spielrunde.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="763502933464806675">
+        <source>Jede Spielrunde besteht aus zwei Phasen, dem Tag und der Nacht.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="1218941271413727474">
+        <source>In der Nacht</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="8191361980332811035">
+        <source>Alle Spieler/innen mit einer Fähigkeit können nun nacheinander ihre besonderen Spielzüge ausführen.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="3757779711339559926">
+        <source>Bsp.:<x id="LINE_BREAK" equiv-text="&lt;br />" ctype="lb"/><x id="START_TAG_SPAN" equiv-text="&lt;span class=&quot;spacer&quot;>" ctype="x-span"/>Als erstes kann der/die Dieb/in zwei Rollen belieber Spieler/innen (auch von sich selbst) tauschen.<x id="CLOSE_TAG_SPAN" equiv-text="&lt;/span>" ctype="x-span"/><x id="LINE_BREAK" equiv-text="&lt;br />" ctype="lb"/><x id="START_TAG_SPAN" equiv-text="&lt;span class=&quot;spacer&quot;>" ctype="x-span"/>Danach kann der Armor ein Pärchen bestimmen.<x id="CLOSE_TAG_SPAN" equiv-text="&lt;/span>" ctype="x-span"/><x id="LINE_BREAK" equiv-text="&lt;br />" ctype="lb"/><x id="START_TAG_SPAN" equiv-text="&lt;span class=&quot;spacer&quot;>" ctype="x-span"/>usw. bis alle Funktionsrollen ihren Zug machen konnten.<x id="CLOSE_TAG_SPAN" equiv-text="&lt;/span>" ctype="x-span"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">22,25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="8054228401210876599">
+        <source>Danach endet die Nacht und der Tag beginnt.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="6429823845920780231">
+        <source>Nun scheiden alle, die in der Nacht getöt wurden aus.<x id="LINE_BREAK" equiv-text="&lt;br />" ctype="lb"/> Eventuelle rollenspezifische Ereignisse beim Tod dieser Rolle werden nun angewendet. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="2852895870571516577">
+        <source>Am Tag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="3106233924704273680">
+        <source>Als erstes kann nun jede/r Spieler/in (auch die Werwölfe und alle, die keine Funktionsrolle haben) eine/n andere/n auf den Verdacht hin, dass diese/r ein Werwolf ist, anklagen.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">34,35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="6350602761988823015">
+        <source>Ist dies erledigt, kann jede/r Spieler/in seine Stimme an eine/n der Angeklagten abgegen.<x id="LINE_BREAK" equiv-text="&lt;br />" ctype="lb"/> Der/die Angeklagte mit den meisten Stimmen wird getötet und scheidet somit ebenfalls aus.<x id="LINE_BREAK" equiv-text="&lt;br />" ctype="lb"/> Auch jetzt werden rollenspezifische Ereignisse beim Tod dieser Angeklagten Person durchgeführt. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">36,39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="8065850154931169747">
+        <source>Danach beginnt die Nacht erneut, bis das Spielende eintritt.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="8163834263664291786">
+        <source>Spielende</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="2501769753959817719">
+        <source>Das Spiel endet, wenn mehr Werwölfe am Leben sind als Dorfbewohner/innen (+ Hexe). Dann haben die Werwölfe gewonnen.<x id="LINE_BREAK" equiv-text="&lt;br />" ctype="lb"/> Gibt es keine Werwölfe mehr, die am Leben sind, endet das Spiel ebenfalls. Nun gewinnen allerdings die Dorfbewohner bzw. alle, die keine Werwölfe sind. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/how-to-play/how-to-play.component.html</context>
+          <context context-type="linenumber">44,46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="gameNameLength" approved="yes">
         <source>7</source>
-        <target>8</target>
+        <target state="signed-off" phase-name="approval-1" equiv-trans="yes">8</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="gameName" datatype="html">
+      <trans-unit datatype="html" id="gameName" approved="yes">
         <source>Werwolf</source>
-        <target>Werewolf</target>
+        <target state="signed-off" phase-name="approval-1">Werewolf</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
           <context context-type="linenumber">4</context>
@@ -22,92 +161,156 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7800741068731184810" datatype="html">
+      <trans-unit datatype="html" id="7800741068731184810" approved="yes">
         <source>- für den Browser -</source>
-        <target>- browser edition -</target>
+        <target state="signed-off" phase-name="approval-1">- browser edition -</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="636159930865319203" datatype="html">
+      <trans-unit datatype="html" id="636159930865319203" approved="yes">
         <source>Regeln</source>
-        <target>How to play</target>
+        <target state="signed-off" phase-name="approval-1">How to play</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
           <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5910783682214000943" datatype="html">
+      <trans-unit datatype="html" id="5910783682214000943" approved="yes">
         <source>Spielen</source>
-        <target>Play</target>
+        <target state="signed-off" phase-name="approval-1">Play</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7496197606946267369" datatype="html">
+      <trans-unit datatype="html" id="7496197606946267369" approved="yes">
         <source>Über</source>
-        <target>About</target>
+        <target state="signed-off" phase-name="approval-1">About</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/main-page/main-page.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7314994221254878088" datatype="html">
+      <trans-unit datatype="html" id="7314994221254878088" approved="yes">
         <source>Diese Seite konnte nicht gefunden werden.</source>
-        <target>This page could not be found.</target>
+        <target state="signed-off" phase-name="approval-1">This page could not be found.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/not-found/not-found.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7070792224026857010" datatype="html">
+      <trans-unit datatype="html" id="7070792224026857010" approved="yes">
         <source>Zur Startseite</source>
-        <target>Back to homepage</target>
+        <target state="signed-off" phase-name="approval-1">Back to homepage</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/not-found/not-found.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7691334547973329387" datatype="html">
+      <trans-unit datatype="html" id="7691334547973329387" approved="yes">
         <source>Los geht`s!</source>
-        <target>Let's go!</target>
+        <target state="signed-off" phase-name="approval-1">Let's go!</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="707178767943180301" datatype="html">
+      <trans-unit datatype="html" id="707178767943180301" approved="yes">
         <source>bitte wähle eine Option aus</source>
-        <target>please choose an option</target>
+        <target state="signed-off" phase-name="approval-1">choose an option</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4603019156076034805" datatype="html">
+      <trans-unit datatype="html" id="4603019156076034805" approved="yes">
         <source>Einem Raum beitreten</source>
-        <target>Join a room</target>
+        <target state="signed-off" phase-name="approval-1">Join a room</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5957179294600561972" datatype="html">
+      <trans-unit datatype="html" id="5957179294600561972" approved="yes">
         <source>ODER</source>
-        <target>OR</target>
+        <target state="signed-off" phase-name="approval-1">OR</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5253519888396449475" datatype="html">
+      <trans-unit datatype="html" id="5253519888396449475" approved="yes">
         <source>Raum erstellen</source>
-        <target>Create a room</target>
+        <target state="signed-off" phase-name="approval-1">Create a room</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
           <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="6897700347024486593" approved="yes">
+        <source>Schon die Regeln gelesen?</source>
+        <target state="signed-off" phase-name="approval-1">Already read the rules?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="9216706220264085069" approved="yes">
+        <source>zu den Regeln</source>
+        <target state="signed-off" phase-name="approval-1">to the rules</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/play-main/play-main.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="1563809723671464645" approved="yes">
+        <source>Bevor es los geht...</source>
+        <target state="signed-off" phase-name="approval-1">Before you can start...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/settings/settings.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="1020652233840088653" approved="yes">
+        <source>...ein paar Einstellungen...</source>
+        <target state="signed-off" phase-name="approval-1">...a few setting...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/settings/settings.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="5506569422969383542" approved="yes">
+        <source>Nickname</source>
+        <target state="signed-off" phase-name="approval-1">Nickname</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/settings/settings.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="8225612565659163446" approved="yes">
+        <source>Läutstärke (<x id="INTERPOLATION" equiv-text="{{ volume.value | number: '3.0' }}"/>%)</source>
+        <target state="signed-off" phase-name="approval-1">Volume (<x id="INTERPOLATION" equiv-text="{{ volume.value | number: '3.0' }}"/>%)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/settings/settings.component.html</context>
+          <context context-type="linenumber">11,12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="2854123663314832793" approved="yes">
+        <source>Speichern</source>
+        <target state="signed-off" phase-name="approval-1">Save</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/settings/settings.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit datatype="html" id="6332346145564155793" approved="yes">
+        <source>Warten auf Server...</source>
+        <target state="signed-off" phase-name="approval-1">Waiting for server...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/play/settings/settings.component.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
     </body>
