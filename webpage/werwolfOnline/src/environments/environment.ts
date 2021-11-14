@@ -6,7 +6,38 @@ export const environment = {
   production: false,
 
   useHashLocation: false,
-  serverName: 'http://localhost:5000'
+  serverName: 'http://localhost:5000',
+
+  api: {
+    route: '/api',
+    directAccess: false,
+
+    player: {
+      route: '/player',
+      directAccess: false,
+
+      registrationInformation: {
+        route: '/isRegistered',
+        directAccess: true,
+        requiresJWT: true
+      },
+      fullRegistration: {
+        route: '/fullRegister',
+        directAccess: true,
+        requiresJWT: true
+      }
+    },
+    token: {
+      route: '/token',
+      directAccess: false,
+
+      generate: {
+        route: '/generate',
+        directAccess: true,
+        requiresJWT: false
+      }
+    }
+  }
 };
 
 /*

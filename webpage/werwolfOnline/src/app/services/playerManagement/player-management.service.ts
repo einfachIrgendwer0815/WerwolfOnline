@@ -20,7 +20,8 @@ export class PlayerManagementService {
   }
 
   generateTokensObservable(): Observable<generateToken> {
-    var req = this.client.get<generateToken>(environment.serverName + '/api/token/generate', {observe: 'body', responseType: 'json'});
+    var url: string = environment.serverName + environment.api.route + environment.api.token.route + environment.api.token.generate.route;
+    var req = this.client.get<generateToken>(url, {observe: 'body', responseType: 'json'});
     return req;
   }
 
@@ -29,7 +30,11 @@ export class PlayerManagementService {
   }
 
   fullRegisterObservable(access_token: string, nickname: string, volume: number): Observable<fullRegister> {
-    var req = this.client.post<fullRegister>(environment.serverName + '/api/player/fullRegister?jwt=' + access_token, {nickname: nickname, volume: volume}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
+    var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.fullRegistration.route;
+    if (environment.api.player.fullRegistration.requiresJWT == true) {
+      url = url + "?jwt=" + access_token;
+    }
+    var req = this.client.post<fullRegister>(url, {nickname: nickname, volume: volume}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
     return req;
   }
 }

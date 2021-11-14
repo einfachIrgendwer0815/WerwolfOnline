@@ -43,7 +43,11 @@ export class TokenStorageService {
     }
 
     this.token_validation_sent = true;
-    var data = await this.client.get<registrationInformation>("http://localhost:5000/api/player/isRegistered?jwt=" + this.token, {observe: "body", responseType: 'json'})
+    var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.registrationInformation.route;
+    if (environment.api.player.registrationInformation.requiresJWT == true) {
+      url = url + "?jwt=" + this.token;
+    }
+    var data = await this.client.get<registrationInformation>(url, {observe: "body", responseType: 'json'})
       .toPromise()
       .catch(err => {
         this.token_valid = false;
