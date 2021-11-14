@@ -18,7 +18,7 @@ import { fullRegister } from '../../../apiInterfaces/player';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss', './scss/unauthenticatedBlock.scss', './scss/unauthenticatedBlock/namefield.scss']
 })
 export class SettingsComponent implements OnInit {
   access_token: string | undefined;

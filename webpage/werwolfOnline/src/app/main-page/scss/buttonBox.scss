@@ -1,0 +1,102 @@
+@use "sass:math";
+
+@import '../../../globalScss';
+
+#mainPage {
+  .buttonBox {
+    position: absolute;
+    $bottom: 18%;
+    bottom: $bottom;
+    left: 50%;
+
+    $transform: translate(-50%, -50%);
+    @include vendorPrefix(transform, $transform);
+
+    ul {
+      list-style: none;
+
+      margin: 0;
+      padding: 0;
+
+      width: 100%;
+
+      li {
+        float: left;
+
+        color: white;
+
+        margin: {
+          left: 2em;
+        }
+
+        &:first-child {
+          margin: {
+            left: 0;
+          }
+        }
+
+        $innerPadding: 0.6em;
+        $innerPaddingLR: $innerPadding + math.div($innerPadding, 4);
+        padding: {
+          top: $innerPadding;
+          bottom: $innerPadding;
+          left: $innerPaddingLR;
+          right: $innerPaddingLR;
+        }
+
+        border: {
+          radius: 3px;
+        }
+
+        background-color: green;
+
+        box: {
+          shadow: 0px 0px 4px green,
+                  0px 0px 10px green,
+                  1px 1px 3px black;
+        }
+
+        font: {
+          family: 'Roboto';
+          size: 1.1em;
+        }
+
+        $transition: transform 250ms, background-color 500ms, box-shadow 500ms;
+        @include vendorPrefix(transition, $transition);
+
+        &:hover {
+          $transform: scale(1.15);
+          @include vendorPrefix(transform, $transform);
+
+          background-color: black;
+
+          box-shadow: 0px 0px 4px black, 0px 0px 10px black;
+        }
+
+        &:active {
+          $transform: scale(1.05);
+          @include vendorPrefix(transform, $transform);
+        }
+      }
+    }
+
+    @keyframes flyInButtons {
+      0% {
+        bottom: 2%;
+        opacity: 0;
+      }
+      60% {
+        bottom: $bottom;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    animation: {
+      name: flyInButtons;
+      duration: 1.8s;
+      fill-mode: backwards;
+      delay: 2s;
+    }
+  }
+}

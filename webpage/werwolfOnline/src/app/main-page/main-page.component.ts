@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.scss']
+  styleUrls: ['./main-page.component.scss', './scss/headlines.scss', './scss/headlines/no1.scss', './scss/buttonBox.scss']
 })
 export class MainPageComponent implements OnInit {
   constructor() { }
