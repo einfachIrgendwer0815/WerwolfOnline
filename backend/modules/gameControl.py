@@ -21,7 +21,10 @@ class GameControl():
         if self.__running != True:
             return
 
-        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'game': 'varchar(10)', 'nickname': 'varchar(35)', 'volumeSetting': 'int'})
+        self.__dbSystem.create_table('Games', {'name': 'varchar(10)', 'activeRoles': 'int', 'actionType': 'int'}, primaryKeys=['name'])
+        self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
+        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'nickname': 'varchar(35)', 'volumeSetting': 'int'}, uniqueColumns=['identity'], foreignKeys={'room': 'Rooms(name)'})
+        self.__dbSystem.create_table('PlayerData', {'identity': 'varchar(40)', 'role': 'int', 'votedFor': 'varchar(40)', 'skipsVoting': 'int'}, uniqueColumns=['identity'], foreignKeys={'identity': 'Player(identity)', 'votedFor': 'Player(identity)'})
 
     def stop(self):
         if self.__running != True:
