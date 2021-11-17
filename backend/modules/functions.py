@@ -47,3 +47,8 @@ def validateVolume(volume):
         return 100
 
     return volume
+
+def generateName(length=10):
+    chars = string.ascii_letters + string.digits
+
+    return ''.join([random.choice(chars) for _ in range(length)])

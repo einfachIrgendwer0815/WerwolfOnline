@@ -1,6 +1,8 @@
 from modules import db
 from modules import customDecorators
 
+from modules import functions
+
 @customDecorators.Singleton
 class GameControl():
     def __init__(self):
@@ -71,3 +73,48 @@ class GameControl():
 
     def setVolumeSetting(self, identity, volume):
         self.__dbSystem.update('Player', {'volumeSetting': volume}, {'identity': identity})
+
+    def createRoom(self, name=None, maxRetries=5, retryNo=0):
+        name = (name if name != None else functions.generateName())
+        res = self.__dbSystem.select_from('Rooms', ['name'], {'name': name})
+
+        if len(res) == 0:
+            self.__dbSystem.insert_into('Rooms', {'name': name})
+            return True, name
+
+        if retryNo >= maxRetries:
+            return False, None
+        else:
+            return self.createRoom(retryNo=retryNo+1)
+
+    def joinRoom(self, identity, roomName):
+        res = self.__dbSystem.select_from('Rooms', ['name'], {'name': roomName})
+
+        if len(res) == 0:
+            return False
+
+        res = self.__dbSystem.select_from('Player', ['room'], {'identity': identity})
+
+        if len(res) >= 0 and res[0][0] != None:
+            if res[0][0] != roomName:
+                self.leaveRoom(identity)
+        elif len(res) == 0:
+            return False
+
+        self.__dbSystem.update('Player', {'room': roomName}, {'identity': identity})
+
+        return True
+
+    def leaveRoom(self, identity):
+        res = self.__dbSystem.select_from('Player', ['room'], conditions={'identity': identity})
+
+        room = None
+        if len(res) > 0:
+            room = res[0][0]
+
+        if room != None:
+            self.__dbSystem.update('Player', {'room': None}, {'identity': identity})
+
+            res = self.__dbSystem.select_from('Player', ['room'], conditions={'room': room})
+            if len(res) == 0:
+                self.__dbSystem.delete_from('Rooms', conditions={'name': room})
