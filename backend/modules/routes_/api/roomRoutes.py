@@ -12,10 +12,9 @@ def joinRoom():
     if jsonData == None:
         functions.returnAbortInvalidJson()
 
-    if not functions.jsonHasField(jsonData, 'roomName'):
-        functions.returnAbortMissingParameter('roomName')
+    roomName = (jsonData['roomName'] if functions.jsonHasField(jsonData, 'roomName') else None)
 
-    if GAME_CONTROL.joinRoom(get_jwt_identity(), jsonData['roomName']) == True:
+    if GAME_CONTROL.joinRoom(get_jwt_identity(), roomName) == True:
         return jsonify(refresh=functions.refreshNecessary(), succesfull=True)
     else:
         return jsonify(refresh=functions.refreshNecessary(), succesfull=False)
@@ -25,15 +24,6 @@ def leaveRoom():
     GAME_CONTROL.leaveRoom(get_jwt_identity())
 
     return jsonify(refresh=functions.refreshNecessary()), 200
-
-@jwt_required()
-def createRoom():
-    state, room = GAME_CONTROL.createRoom()
-
-    if state == False:
-        return jsonify(refresh=functions.refreshNecessary()), 500
-    else:
-        return jsonify(refresh=functions.refreshNecessary(), roomName=room), 200
 
 @jwt_required()
 def roomMembers():
@@ -48,9 +38,6 @@ def configureRoutes(app):
 
     global leaveRoom
     leaveRoom = app.route('/api/room/leave', methods=['GET'])(leaveRoom)
-
-    global createRoom
-    createRoom = app.route('/api/room/create', methods=['GET'])(createRoom)
 
     global roomMembers
     roomMembers = app.route('/api/room/members', methods=['GET'])(roomMembers)

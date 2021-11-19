@@ -25,7 +25,7 @@ class GameControl():
 
         self.__dbSystem.create_table('Games', {'name': 'varchar(10)', 'activeRoles': 'int', 'actionType': 'int'}, primaryKeys=['name'])
         self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
-        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'nickname': 'varchar(35)', 'volumeSetting': 'int'}, uniqueColumns=['identity'], foreignKeys={'room': 'Rooms(name)'})
+        self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'roomAdmin': 'boolean', 'nickname': 'varchar(35)', 'volumeSetting': 'int'}, uniqueColumns=['identity'], foreignKeys={'room': 'Rooms(name)'})
         self.__dbSystem.create_table('PlayerData', {'identity': 'varchar(40)', 'role': 'int', 'votedFor': 'varchar(40)', 'skipsVoting': 'int'}, uniqueColumns=['identity'], foreignKeys={'identity': 'Player(identity)', 'votedFor': 'Player(identity)'})
 
     def stop(self):
@@ -87,11 +87,24 @@ class GameControl():
         else:
             return self.createRoom(retryNo=retryNo+1)
 
-    def joinRoom(self, identity, roomName):
-        res = self.__dbSystem.select_from('Rooms', ['name'], {'name': roomName})
+    def joinRoom(self, identity, roomName=None):
+        asAdmin = False
+        if roomName == None:
+            success, roomName = self.createRoom()
+            if success == False:
+                return False
 
-        if len(res) == 0:
-            return False
+            asAdmin = True
+
+        else:
+            res = self.__dbSystem.select_from('Rooms', ['name'], {'name': roomName})
+
+            if len(res) == 0:
+                success, roomName = self.createRoom(name=roomName)
+                if success == False:
+                    return False
+
+                asAdmin = True
 
         res = self.__dbSystem.select_from('Player', ['room'], {'identity': identity})
 
@@ -101,20 +114,29 @@ class GameControl():
         elif len(res) == 0:
             return False
 
-        self.__dbSystem.update('Player', {'room': roomName}, {'identity': identity})
+        self.__dbSystem.update('Player', {'room': roomName, 'roomAdmin': asAdmin}, {'identity': identity})
 
         return True
 
     def leaveRoom(self, identity):
-        res = self.__dbSystem.select_from('Player', ['room'], conditions={'identity': identity})
+        res = self.__dbSystem.select_from('Player', ['room', 'roomAdmin'], conditions={'identity': identity})
 
         room = None
+        asAdmin = False
         if len(res) > 0:
             room = res[0][0]
+            asAdmin = (False if res[0][1] == None else res[0][1])
 
         if room != None:
-            self.__dbSystem.update('Player', {'room': None}, {'identity': identity})
+            self.__dbSystem.update('Player', {'room': None, 'roomAdmin': None}, {'identity': identity})
 
             res = self.__dbSystem.select_from('Player', ['room'], conditions={'room': room})
             if len(res) == 0:
                 self.__dbSystem.delete_from('Rooms', conditions={'name': room})
+
+            else:
+                if asAdmin == True:
+                    res = self.__dbSystem.select_from('Player', ['identity'], conditions={'room': room})
+
+                    if len(res) > 0:
+                        self.__dbSystem.update('Player', {'roomAdmin': True}, conditions={'identity': res[0][0]})
