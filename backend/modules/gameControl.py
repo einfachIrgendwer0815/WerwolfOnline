@@ -148,3 +148,23 @@ class GameControl():
 
                     if len(res) > 0:
                         self.__dbSystem.update('Player', {'roomAdmin': True}, conditions={'identity': res[0][0]})
+
+    def getRoomCode(self, identity):
+        res = self.__dbSystem.select_from('Player', ['room'], conditions={'identity': identity})
+
+        if len(res) == 0 or res[0][0] == None:
+            return None
+
+        return res[0][0]
+
+    def getRoomMembers(self, identity):
+        room = self.getRoomCode(identity)
+        if room == None:
+            return []
+
+        res = self.__dbSystem.select_from('Player', ['nickname'], conditions={'room': room})
+
+        if len(res) == 0:
+            return []
+
+        return [i[0] for i in res]

@@ -26,8 +26,17 @@ def leaveRoom():
     return jsonify(refresh=functions.refreshNecessary()), 200
 
 @jwt_required()
+def getRoomCode():
+    return jsonify(
+        roomCode=GAME_CONTROL.getRoomCode(get_jwt_identity()),
+        refresh=functions.refreshNecessary()
+    ), 200
+
+@jwt_required()
 def roomMembers():
-    return '', 200
+    members = GAME_CONTROL.getRoomMembers(get_jwt_identity())
+
+    return jsonify(members=members, refresh=functions.refreshNecessary()), 200
 
 def configureRoutes(app):
     global GAME_CONTROL
@@ -41,3 +50,6 @@ def configureRoutes(app):
 
     global roomMembers
     roomMembers = app.route('/api/room/members', methods=['GET'])(roomMembers)
+
+    global getRoomCode
+    getRoomCode = app.route('/api/room/code', methods=['GET'])(getRoomCode)
