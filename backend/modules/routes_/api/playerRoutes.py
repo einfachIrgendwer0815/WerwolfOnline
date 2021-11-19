@@ -11,6 +11,7 @@ def isPlayerRegistered():
         isRegistered=GAME_CONTROL.isPlayerRegistered(get_jwt_identity()),
         nicknameSet=GAME_CONTROL.getPlayerNickname(get_jwt_identity()),
         volumeSet=GAME_CONTROL.getVolumeSetting(get_jwt_identity()),
+        inRoom=GAME_CONTROL.isPlayerInRoom(get_jwt_identity()),
         refresh=functions.refreshNecessary()
     ), 200
 

@@ -10,7 +10,7 @@ def joinRoom():
     jsonData = request.get_json()
 
     if jsonData == None:
-        functions.returnAbortInvalidJson()
+        jsonData = {}
 
     roomName = (jsonData['roomName'] if functions.jsonHasField(jsonData, 'roomName') else None)
 

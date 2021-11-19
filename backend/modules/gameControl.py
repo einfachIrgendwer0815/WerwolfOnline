@@ -74,6 +74,14 @@ class GameControl():
     def setVolumeSetting(self, identity, volume):
         self.__dbSystem.update('Player', {'volumeSetting': volume}, {'identity': identity})
 
+    def isPlayerInRoom(self, identity):
+        res = self.__dbSystem.select_from('Player', ['room'], {'identity': identity})
+
+        if len(res) > 0 and res[0][0] != None:
+            return True
+        else:
+            return False
+
     def createRoom(self, name=None, maxRetries=5, retryNo=0):
         name = (name if name != None else functions.generateName())
         res = self.__dbSystem.select_from('Rooms', ['name'], {'name': name})
