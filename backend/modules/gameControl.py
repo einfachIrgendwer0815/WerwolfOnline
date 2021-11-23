@@ -56,17 +56,17 @@ class GameControl():
         res = self.__dbSystem.select_from('Player', ['nickname'], {'identity': identity})
 
         if len(res) > 0 and res[0][0] != None:
-            return True
+            return res[0][0]
         else:
-            return False
+            return None
 
     def getVolumeSetting(self, identity):
         res = self.__dbSystem.select_from('Player', ['volumeSetting'], {'identity': identity})
 
         if len(res) > 0 and res[0][0] != None:
-            return True
+            return res[0][0]
         else:
-            return False
+            return None
 
     def setPlayerNickname(self, identity, nickname):
         self.__dbSystem.update('Player', {'nickname': nickname}, {'identity': identity})

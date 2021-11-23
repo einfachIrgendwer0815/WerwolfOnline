@@ -8,6 +8,9 @@ blueprint = Blueprint('room', __name__, url_prefix='/room')
 @blueprint.route('/join', methods=['GET', 'POST'])
 @jwt_required()
 def joinRoom():
+    if current_app.gameControl.getPlayerNickname(get_jwt_identity()) == None:
+        return jsonify(refresh=functions.refreshNecessary(), succesfull=False)
+
     jsonData = request.get_json()
 
     if jsonData == None:
