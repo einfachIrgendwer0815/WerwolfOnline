@@ -1,3 +1,5 @@
 tmp/
 static/
 templates/
+
+jwt_secret_key.override.json
