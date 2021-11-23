@@ -52,7 +52,7 @@ export class TokenStorageService {
       .catch(err => {
         this.token_valid = false;
       });
-    if(typeof data != "undefined" && data.isRegistered == true && data.nicknameSet == true && data.volumeSet == true) {
+    if(typeof data != "undefined" && data.isRegistered == true && typeof data.nicknameSet == "string" && typeof data.volumeSet == "number") {
       this.token_valid = true;
     }
   }
