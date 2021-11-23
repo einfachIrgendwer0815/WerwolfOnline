@@ -47,6 +47,7 @@ class GameControl():
         return False
 
     def unregisterPlayer(self, identity):
+        self.leaveRoom(identity)
         self.__dbSystem.delete_from('Player', {'identity': identity})
 
     def updatePlayerExpireTimestamp(self, identity, newExpire):
