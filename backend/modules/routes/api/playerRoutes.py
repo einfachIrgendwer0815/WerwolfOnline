@@ -1,31 +1,34 @@
-from flask import request, jsonify, abort
+from flask import request, jsonify, abort, Blueprint, current_app
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
 from modules import functions
 
-GAME_CONTROL = None
+blueprint = Blueprint('player', __name__, url_prefix='/player')
 
+@blueprint.route('/isRegistered', methods=['GET'])
 @jwt_required()
 def isPlayerRegistered():
     return jsonify(
-        isRegistered=GAME_CONTROL.isPlayerRegistered(get_jwt_identity()),
-        nicknameSet=GAME_CONTROL.getPlayerNickname(get_jwt_identity()),
-        volumeSet=GAME_CONTROL.getVolumeSetting(get_jwt_identity()),
-        inRoom=GAME_CONTROL.isPlayerInRoom(get_jwt_identity()),
+        isRegistered=current_app.gameControl.isPlayerRegistered(get_jwt_identity()),
+        nicknameSet=current_app.gameControl.getPlayerNickname(get_jwt_identity()),
+        volumeSet=current_app.gameControl.getVolumeSetting(get_jwt_identity()),
+        inRoom=current_app.gameControl.isPlayerInRoom(get_jwt_identity()),
         refresh=functions.refreshNecessary()
     ), 200
 
+@blueprint.route('/register', methods=['GET', 'POST'])
 @jwt_required()
 def registerPlayer():
     #abort(404)
     identity = get_jwt_identity()
     expireTimestamp = get_jwt()['exp']
 
-    if GAME_CONTROL.isPlayerRegistered(identity) == False:
-        GAME_CONTROL.registerPlayer(identity, expireTimestamp)
+    if current_app.gameControl.isPlayerRegistered(identity) == False:
+        current_app.gameControl.registerPlayer(identity, expireTimestamp)
 
     return jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary()), 200
 
+@blueprint.route('/fullRegister', methods=['GET', 'POST'])
 @jwt_required()
 def fullRegisterPlayer():
     identity = get_jwt_identity()
@@ -40,30 +43,33 @@ def fullRegisterPlayer():
     if not functions.jsonHasField(jsonData, 'volume'):
         functions.returnAbortMissingParameter('volume')
 
-    if GAME_CONTROL.isPlayerRegistered(identity) == False:
-        GAME_CONTROL.registerPlayer(identity, expireTimestamp)
+    if current_app.gameControl.isPlayerRegistered(identity) == False:
+        current_app.gameControl.registerPlayer(identity, expireTimestamp)
 
     jsonData = request.get_json()
 
     nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 35 else jsonData['nickname'][0:35]
-    GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
+    current_app.gameControl.setPlayerNickname(get_jwt_identity(), nickname)
 
-    GAME_CONTROL.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
+    current_app.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
 
     res = jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary())
 
     return res, 200
 
+@blueprint.route('/unregister', methods=['GET'])
 @jwt_required()
 def unregisterPlayer():
-    GAME_CONTROL.unregisterPlayer(get_jwt_identity())
+    current_app.gameControl.unregisterPlayer(get_jwt_identity())
     return jsonify(refresh=functions.refreshNecessary()), 200
 
+@blueprint.route('/updateExpireTimestamp')
 @jwt_required()
 def updatePlayerExpireTimestamp():
-    GAME_CONTROL.updatePlayerExpireTimestamp(get_jwt_identity(), get_jwt()['exp'])
+    current_app.gameControl.updatePlayerExpireTimestamp(get_jwt_identity(), get_jwt()['exp'])
     return jsonify(refresh=functions.refreshNecessary()), 200
 
+@blueprint.route('/setNickname', methods=['GET', 'POST'])
 @jwt_required()
 def setNickname():
     jsonData = request.get_json()
@@ -75,10 +81,11 @@ def setNickname():
         functions.returnAbortMissingParameter('nickname')
 
     nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 35 else jsonData['nickname'][0:35]
-    GAME_CONTROL.setPlayerNickname(get_jwt_identity(), nickname)
+    current_app.gameControl.setPlayerNickname(get_jwt_identity(), nickname)
 
     return jsonify(refresh=functions.refreshNecessary()), 200
 
+@blueprint.route('/setVolume', methods=['GET', 'POST'])
 @jwt_required()
 def setVolumeSetting():
     jsonData = request.get_json()
@@ -88,31 +95,6 @@ def setVolumeSetting():
     if not functions.jsonHasField(jsonData, 'volume'):
         return functions.returnAbortMissingParameter('volume')
 
-    GAME_CONTROL.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
+    current_app.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
 
     return jsonify(refresh=functions.refreshNecessary()), 200
-
-def configureRoutes(app):
-    global GAME_CONTROL
-    GAME_CONTROL = app.gameControl
-
-    global isPlayerRegistered
-    isPlayerRegistered = app.route('/api/player/isRegistered', methods=['GET'])(isPlayerRegistered)
-
-    global registerPlayer
-    registerPlayer = app.route('/api/player/register', methods=['GET','POST'])(registerPlayer)
-
-    global fullRegisterPlayer
-    fullRegisterPlayer = app.route('/api/player/fullRegister', methods=['GET', 'POST'])(fullRegisterPlayer)
-
-    global unregisterPlayer
-    unregisterPlayer = app.route('/api/player/unregister', methods=['GET'])(unregisterPlayer)
-
-    global updatePlayerExpireTimestamp
-    updatePlayerExpireTimestamp = app.route('/api/player/updateExpireTimestamp', methods=['GET'])(updatePlayerExpireTimestamp)
-
-    global setNickname
-    setNickname = app.route('/api/player/setNickname', methods=['GET', 'POST'])(setNickname)
-
-    global setVolumeSetting
-    setVolumeSetting = app.route('/api/player/setVolume', methods=['GET', 'POST'])(setVolumeSetting)
