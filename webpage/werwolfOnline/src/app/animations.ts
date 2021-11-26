@@ -1,6 +1,6 @@
 import { trigger, transition, style, query, animateChild, group, stagger, animate } from '@angular/animations';
 
-export const slideRight = [
+const slideRight = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -25,7 +25,7 @@ export const slideRight = [
   query(':enter', animateChild())
 ]
 
-export const slideLeft = [
+const slideLeft = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -50,7 +50,7 @@ export const slideLeft = [
   query(':enter', animateChild())
 ]
 
-export const overlay = [
+const overlay = [
   style({position: 'relative'}),
   query(':enter, :leave', [
     style({position: 'absolute', top: 0, left: 0, width: '100%'})
@@ -72,7 +72,27 @@ export const overlay = [
   ])
 ]
 
-export const overlayLeftIn = [
+const overlayLeftIn = [
+  style({ position: 'relative' }),
+  query(':enter, :leave', [
+    style({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%'
+    })
+  ]),
+  query(':enter', [
+    style({ left: '100%' , 'z-index': 10000})
+  ]),
+  query(':leave', animateChild()),
+  query(':enter', [
+    animate('1500ms ease-in-out', style({ left: '0%' }))
+  ]),
+  query(':enter', animateChild())
+]
+
+const overlayLeftInWithOpacity = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -97,7 +117,33 @@ export const overlayLeftIn = [
   query(':enter', animateChild())
 ]
 
-export const overlayLeftOut = [
+const overlayLeftOut = [
+  style({ position: 'relative' }),
+  query(':enter, :leave', [
+    style({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%'
+    })
+  ]),
+  query(':enter', [
+    style({ left: '0%' , 'z-index': 9000})
+  ]),
+  query(':leave', [
+    style({ 'z-index': 10000 }),
+    query('.back', [
+      style({ position: 'absolute' })
+    ])
+  ]),
+  query(':leave', animateChild()),
+  query(':leave', [
+    animate('1500ms ease-in-out', style({ left: '-100%' }))
+  ]),
+  query(':enter', animateChild())
+]
+
+const overlayLeftOutWithOpacity = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -128,7 +174,27 @@ export const overlayLeftOut = [
   query(':enter', animateChild())
 ]
 
-export const overlayRightIn = [
+const overlayRightIn = [
+  style({ position: 'relative' }),
+  query(':enter, :leave', [
+    style({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%'
+    })
+  ]),
+  query(':enter', [
+    style({ left: '-100%', 'z-index': 10000 })
+  ]),
+  query(':leave', animateChild()),
+  query(':enter', [
+    animate('1500ms ease-in-out', style({ left: '0%' }))
+  ]),
+  query(':enter', animateChild())
+]
+
+const overlayRightInWithOpacity = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -154,7 +220,30 @@ export const overlayRightIn = [
   query(':enter', animateChild())
 ]
 
-export const overlayRightOut = [
+const overlayRightOut = [
+  style({ position: 'relative' }),
+  query(':enter, :leave', [
+    style({
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%'
+    })
+  ]),
+  query(':enter', [
+    style({ 'z-index': 9000 })
+  ]),
+  query(':leave', [
+    style({ 'z-index': 10000})
+  ]),
+  query(':leave', animateChild()),
+  query(':leave', [
+    animate('1500ms ease-in-out', style({ left: '100%' }))
+  ]),
+  query(':enter', animateChild())
+]
+
+const overlayRightOutWihtOpacity = [
   style({ position: 'relative' }),
   query(':enter, :leave', [
     style({
@@ -181,3 +270,19 @@ export const overlayRightOut = [
   ]),
   query(':enter', animateChild())
 ]
+
+class Animations {
+  slideRight = slideRight;
+  slideLeft = slideLeft;
+  overlay = overlay;
+  overlayLeftIn = overlayLeftIn;
+  overlayLeftInWithOpacity = overlayLeftInWithOpacity;
+  overlayLeftOut = overlayLeftOut;
+  overlayLeftOutWithOpacity = overlayLeftOutWithOpacity;
+  overlayRightIn = overlayRightIn;
+  overlayRightInWithOpacity = overlayRightInWithOpacity;
+  overlayRightOut = overlayRightOut;
+  overlayRightOutWihtOpacity = overlayRightOutWihtOpacity;
+}
+
+export const animations = new Animations();

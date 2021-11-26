@@ -3,17 +3,17 @@ import { RouterOutlet } from '@angular/router';
 
 import { trigger, transition } from '@angular/animations';
 
-import { slideRight, slideLeft, overlay, overlayLeftIn, overlayRightIn, overlayRightOut, overlayLeftOut } from './animations';
+import { animations } from './animations';
 
 const routeTransAnim = trigger('routeAnimation', [
-  transition('MainPage <=> Play', overlay),
-  transition('MainPage => HowToPlay', overlayRightIn),
-  transition('HowToPlay => MainPage', overlayLeftOut),
-  transition('MainPage => About', overlayLeftIn),
-  transition('About => MainPage', overlayRightOut),
-  transition('* <=> NotFound', overlay),
-  transition('Play <=> Game', overlay),
-  transition('Play => HowToPlay', overlay)
+  transition('MainPage <=> Play', animations.overlay),
+  transition('MainPage => HowToPlay', animations.overlayRightInWithOpacity),
+  transition('HowToPlay => MainPage', animations.overlayLeftOutWithOpacity),
+  transition('MainPage => About', animations.overlayLeftInWithOpacity),
+  transition('About => MainPage', animations.overlayRightOutWihtOpacity),
+  transition('* <=> NotFound', animations.overlay),
+  transition('Play <=> Game', animations.overlay),
+  transition('Play => HowToPlay', animations.overlay)
 ])
 
 @Component({

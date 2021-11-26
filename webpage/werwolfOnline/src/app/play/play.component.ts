@@ -7,7 +7,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { trigger, transition } from '@angular/animations';
 
-import { slideRight, slideLeft, overlay, overlayLeftIn, overlayRightIn, overlayRightOut, overlayLeftOut } from '../animations';
+import { animations } from '../animations';
 
 @Component({
   selector: 'app-play',
@@ -15,11 +15,11 @@ import { slideRight, slideLeft, overlay, overlayLeftIn, overlayRightIn, overlayR
   styleUrls: ['./play.component.scss'],
   animations: [
     trigger('test', [
-      transition("PlayMain => PlayJoin", overlayLeftIn),
-      transition("PlayMain => PlayCreate", overlayLeftIn),
-      transition("PlayJoin => PlayMain", overlayRightOut),
-      transition("PlayCreate => PlayMain", overlayRightOut),
-      transition("PlaySettings => PlayMain", overlay),
+      transition("PlayMain => PlayJoin", animations.overlayLeftIn),
+      transition("PlayMain => PlayCreate", animations.overlayLeftIn),
+      transition("PlayJoin => PlayMain", animations.overlayRightOut),
+      transition("PlayCreate => PlayMain", animations.overlayRightOut),
+      transition("PlaySettings => PlayMain", animations.overlay),
     ])
   ]
 })
