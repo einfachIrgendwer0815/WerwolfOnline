@@ -1,9 +1,6 @@
 from modules import db
-from modules import customDecorators
-
 from modules import functions
 
-@customDecorators.Singleton
 class GameControl():
     def __init__(self):
         self.__dbSystem = db.create_mysql_db_system()

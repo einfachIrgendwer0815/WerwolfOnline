@@ -11,9 +11,6 @@ from modules import routes
 
 app = Flask(__name__)
 CORS(app)
-app.gameControl = gameControl.GameControl()
-app.gameControl.start()
-app.gameControl.prepareTables()
 
 app.config['JWT_TOKEN_LOCATION'] = ['query_string']
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=12)
@@ -32,6 +29,8 @@ else:
         app.config['JWT_SECRET_KEY'] = json.load(jsonFile)['key']
 
 jwt = JWTManager(app)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

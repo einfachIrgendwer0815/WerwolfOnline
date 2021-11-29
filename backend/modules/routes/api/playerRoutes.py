@@ -1,4 +1,4 @@
-from flask import request, jsonify, abort, Blueprint, current_app
+from flask import request, jsonify, abort, Blueprint, g
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
 from modules import functions
@@ -9,10 +9,10 @@ blueprint = Blueprint('player', __name__, url_prefix='/player')
 @jwt_required()
 def isPlayerRegistered():
     return jsonify(
-        isRegistered=current_app.gameControl.isPlayerRegistered(get_jwt_identity()),
-        nicknameSet=current_app.gameControl.getPlayerNickname(get_jwt_identity()),
-        volumeSet=current_app.gameControl.getVolumeSetting(get_jwt_identity()),
-        inRoom=current_app.gameControl.isPlayerInRoom(get_jwt_identity()),
+        isRegistered=g.gameControl.isPlayerRegistered(get_jwt_identity()),
+        nicknameSet=g.gameControl.getPlayerNickname(get_jwt_identity()),
+        volumeSet=g.gameControl.getVolumeSetting(get_jwt_identity()),
+        inRoom=g.gameControl.isPlayerInRoom(get_jwt_identity()),
         refresh=functions.refreshNecessary()
     ), 200
 
@@ -23,8 +23,8 @@ def registerPlayer():
     identity = get_jwt_identity()
     expireTimestamp = get_jwt()['exp']
 
-    if current_app.gameControl.isPlayerRegistered(identity) == False:
-        current_app.gameControl.registerPlayer(identity, expireTimestamp)
+    if g.gameControl.isPlayerRegistered(identity) == False:
+        g.gameControl.registerPlayer(identity, expireTimestamp)
 
     return jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary()), 200
 
@@ -43,15 +43,15 @@ def fullRegisterPlayer():
     if not functions.jsonHasField(jsonData, 'volume'):
         functions.returnAbortMissingParameter('volume')
 
-    if current_app.gameControl.isPlayerRegistered(identity) == False:
-        current_app.gameControl.registerPlayer(identity, expireTimestamp)
+    if g.gameControl.isPlayerRegistered(identity) == False:
+        g.gameControl.registerPlayer(identity, expireTimestamp)
 
     jsonData = request.get_json()
 
     nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 35 else jsonData['nickname'][0:35]
-    current_app.gameControl.setPlayerNickname(get_jwt_identity(), nickname)
+    g.gameControl.setPlayerNickname(get_jwt_identity(), nickname)
 
-    current_app.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
+    g.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
 
     res = jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary())
 
@@ -60,13 +60,13 @@ def fullRegisterPlayer():
 @blueprint.route('/unregister', methods=['GET'])
 @jwt_required()
 def unregisterPlayer():
-    current_app.gameControl.unregisterPlayer(get_jwt_identity())
+    g.gameControl.unregisterPlayer(get_jwt_identity())
     return jsonify(refresh=functions.refreshNecessary()), 200
 
 @blueprint.route('/updateExpireTimestamp')
 @jwt_required()
 def updatePlayerExpireTimestamp():
-    current_app.gameControl.updatePlayerExpireTimestamp(get_jwt_identity(), get_jwt()['exp'])
+    g.gameControl.updatePlayerExpireTimestamp(get_jwt_identity(), get_jwt()['exp'])
     return jsonify(refresh=functions.refreshNecessary()), 200
 
 @blueprint.route('/setNickname', methods=['GET', 'POST'])
@@ -81,7 +81,7 @@ def setNickname():
         functions.returnAbortMissingParameter('nickname')
 
     nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 35 else jsonData['nickname'][0:35]
-    current_app.gameControl.setPlayerNickname(get_jwt_identity(), nickname)
+    g.gameControl.setPlayerNickname(get_jwt_identity(), nickname)
 
     return jsonify(refresh=functions.refreshNecessary()), 200
 
@@ -95,6 +95,6 @@ def setVolumeSetting():
     if not functions.jsonHasField(jsonData, 'volume'):
         return functions.returnAbortMissingParameter('volume')
 
-    current_app.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
+    g.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
 
     return jsonify(refresh=functions.refreshNecessary()), 200
