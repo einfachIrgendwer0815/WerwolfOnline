@@ -2,8 +2,6 @@ from flask import Blueprint, g
 from modules.gameControl import GameControl
 from modules.routes.api import playerRoutes, tokenRoutes, roomRoutes, gameRoutes
 
-import json
-
 blueprint = Blueprint('api', __name__, url_prefix='/api')
 
 blueprint.register_blueprint(playerRoutes.blueprint)
