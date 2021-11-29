@@ -5,8 +5,6 @@ from flask_cors import CORS
 import json, os
 from datetime import timedelta
 
-from modules import gameControl
-from modules import functions
 from modules import routes
 
 app = Flask(__name__)
@@ -29,8 +27,6 @@ else:
         app.config['JWT_SECRET_KEY'] = json.load(jsonFile)['key']
 
 jwt = JWTManager(app)
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
