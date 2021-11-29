@@ -5,11 +5,13 @@ from modules import functions
 
 blueprint = Blueprint('room', __name__, url_prefix='/room')
 
+blueprint.after_request(functions.add_refresh_header)
+
 @blueprint.route('/join', methods=['GET', 'POST'])
 @jwt_required()
 def joinRoom():
     if g.gameControl.getPlayerNickname(get_jwt_identity()) == None:
-        return jsonify(refresh=functions.refreshNecessary(), succesfull=False)
+        return jsonify(succesfull=False)
 
     jsonData = request.get_json()
 
@@ -19,23 +21,22 @@ def joinRoom():
     roomName = (jsonData['roomName'] if functions.jsonHasField(jsonData, 'roomName') else None)
 
     if g.gameControl.joinRoom(get_jwt_identity(), roomName) == True:
-        return jsonify(refresh=functions.refreshNecessary(), succesfull=True)
+        return jsonify(succesfull=True)
     else:
-        return jsonify(refresh=functions.refreshNecessary(), succesfull=False)
+        return jsonify(succesfull=False)
 
 @blueprint.route('/leave', methods=['GET', 'POST'])
 @jwt_required()
 def leaveRoom():
     g.gameControl.leaveRoom(get_jwt_identity())
 
-    return jsonify(refresh=functions.refreshNecessary()), 200
+    return jsonify(), 200
 
 @blueprint.route('/code', methods=['GET'])
 @jwt_required()
 def getRoomCode():
     return jsonify(
-        roomCode=g.gameControl.getRoomCode(get_jwt_identity()),
-        refresh=functions.refreshNecessary()
+        roomCode=g.gameControl.getRoomCode(get_jwt_identity())
     ), 200
 
 @blueprint.route('/members', methods=['GET'])
@@ -43,4 +44,4 @@ def getRoomCode():
 def roomMembers():
     members = g.gameControl.getRoomMembers(get_jwt_identity())
 
-    return jsonify(members=members, refresh=functions.refreshNecessary()), 200
+    return jsonify(members=members), 200

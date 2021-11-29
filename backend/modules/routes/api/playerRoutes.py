@@ -5,6 +5,8 @@ from modules import functions
 
 blueprint = Blueprint('player', __name__, url_prefix='/player')
 
+blueprint.after_request(functions.add_refresh_header)
+
 @blueprint.route('/isRegistered', methods=['GET'])
 @jwt_required()
 def isPlayerRegistered():
@@ -12,8 +14,7 @@ def isPlayerRegistered():
         isRegistered=g.gameControl.isPlayerRegistered(get_jwt_identity()),
         nicknameSet=g.gameControl.getPlayerNickname(get_jwt_identity()),
         volumeSet=g.gameControl.getVolumeSetting(get_jwt_identity()),
-        inRoom=g.gameControl.isPlayerInRoom(get_jwt_identity()),
-        refresh=functions.refreshNecessary()
+        inRoom=g.gameControl.isPlayerInRoom(get_jwt_identity())
     ), 200
 
 @blueprint.route('/register', methods=['GET', 'POST'])
@@ -26,7 +27,7 @@ def registerPlayer():
     if g.gameControl.isPlayerRegistered(identity) == False:
         g.gameControl.registerPlayer(identity, expireTimestamp)
 
-    return jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary()), 200
+    return jsonify(identity=identity, expireTimestamp=expireTimestamp), 200
 
 @blueprint.route('/fullRegister', methods=['GET', 'POST'])
 @jwt_required()
@@ -53,7 +54,7 @@ def fullRegisterPlayer():
 
     g.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
 
-    res = jsonify(identity=identity, expireTimestamp=expireTimestamp, refresh=functions.refreshNecessary())
+    res = jsonify(identity=identity, expireTimestamp=expireTimestamp)
 
     return res, 200
 
@@ -61,13 +62,13 @@ def fullRegisterPlayer():
 @jwt_required()
 def unregisterPlayer():
     g.gameControl.unregisterPlayer(get_jwt_identity())
-    return jsonify(refresh=functions.refreshNecessary()), 200
+    return jsonify(), 200
 
 @blueprint.route('/updateExpireTimestamp')
 @jwt_required()
 def updatePlayerExpireTimestamp():
     g.gameControl.updatePlayerExpireTimestamp(get_jwt_identity(), get_jwt()['exp'])
-    return jsonify(refresh=functions.refreshNecessary()), 200
+    return jsonify(), 200
 
 @blueprint.route('/setNickname', methods=['GET', 'POST'])
 @jwt_required()
@@ -83,7 +84,7 @@ def setNickname():
     nickname = jsonData['nickname'] if len(jsonData['nickname']) <= 35 else jsonData['nickname'][0:35]
     g.gameControl.setPlayerNickname(get_jwt_identity(), nickname)
 
-    return jsonify(refresh=functions.refreshNecessary()), 200
+    return jsonify(), 200
 
 @blueprint.route('/setVolume', methods=['GET', 'POST'])
 @jwt_required()
@@ -97,4 +98,4 @@ def setVolumeSetting():
 
     g.gameControl.setVolumeSetting(get_jwt_identity(), functions.validateVolume(jsonData['volume']))
 
-    return jsonify(refresh=functions.refreshNecessary()), 200
+    return jsonify(), 200

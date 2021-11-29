@@ -1,9 +1,10 @@
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt
-from flask import request, abort
+from flask import request, abort, Response
 from datetime import datetime, timezone, timedelta
 
 import random
 import string
+import json
 
 def genToken(identity=None):
     if identity == None:
@@ -52,3 +53,12 @@ def generateName(length=10):
     chars = string.ascii_letters + string.digits
 
     return ''.join([random.choice(chars) for _ in range(length)])
+
+def add_refresh_header(resp: Response):
+    data = resp.get_json()
+
+    data['refresh'] = refreshNecessary()
+
+    resp.set_data(json.dumps(data, indent=4) + "\n")
+
+    return resp
