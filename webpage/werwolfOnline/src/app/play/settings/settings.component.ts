@@ -45,10 +45,18 @@ export class SettingsComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    await this.tokenStorage.validateTokenFromCookie();
+    if (environment.production == false) {
+      console.log( await this.player.getRedirectPath());
+    }
 
-    if (this.tokenStorage.token_valid == true) {
-      this.router.navigate(['/play']);
+    var redirPath: string = await this.player.getRedirectPath();
+
+    if (redirPath != environment.playerSettingsRoute) {
+      this.router.navigate([redirPath]);
+
+      if (environment.production == false) {
+        console.log("Redirecting");
+      }
     }
   }
 
@@ -76,7 +84,7 @@ export class SettingsComponent implements OnInit {
 
     this.tokenStorage.setToken(this.access_token as string, this.refresh_token as string);
 
-    this.router.navigate(['/play']);
+    this.router.navigate([environment.playRoute]);
   }
 
   errorHandler(err: any): void {

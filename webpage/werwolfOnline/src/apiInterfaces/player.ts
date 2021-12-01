@@ -3,6 +3,7 @@ export interface registrationInformation {
   refresh: boolean;
   nicknameSet: string | null;
   volumeSet: number | null;
+  inRoom: boolean;
 }
 
 export interface fullRegister {

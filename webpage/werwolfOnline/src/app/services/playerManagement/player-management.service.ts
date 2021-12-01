@@ -5,15 +5,17 @@ import { environment } from '../../../environments/environment';
 
 import { HttpClient } from '@angular/common/http';
 
+import { TokenStorageService } from '../tokenStorage/token-storage.service';
+
 import { generateToken } from '../../../apiInterfaces/token';
-import { fullRegister } from '../../../apiInterfaces/player';
+import { fullRegister, registrationInformation } from '../../../apiInterfaces/player';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerManagementService {
 
-  constructor(private client: HttpClient) { }
+  constructor(private client: HttpClient, private tokenStorage: TokenStorageService) { }
 
   generateTokens(): Promise<generateToken> {
     return this.generateTokensObservable().toPromise();
@@ -36,5 +38,40 @@ export class PlayerManagementService {
     }
     var req = this.client.post<fullRegister>(url, {nickname: nickname, volume: volume}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
     return req;
+  }
+
+  getRegistrationInformation(access_token: string): Promise<registrationInformation> {
+    return this.getRegistrationInformationObservable(access_token).toPromise();
+  }
+
+  getRegistrationInformationObservable(access_token: string): Observable<registrationInformation> {
+    var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.registrationInformation.route;
+    if (environment.api.player.registrationInformation.requiresJWT == true) {
+      url = url + "?jwt=" + access_token;
+    }
+    var req = this.client.get<registrationInformation>(url, {observe: 'body', responseType: 'json'});
+    return req;
+  }
+
+  async getRedirectPath(): Promise<string> {
+    await this.tokenStorage.validateTokenFromCookie();
+
+    if (this.tokenStorage.token_valid != true) {
+      return environment.playerSettingsRoute;
+    } else {
+      var info: void | registrationInformation = await this.getRegistrationInformation(this.tokenStorage.token as string)
+        .catch(err => { });
+
+      if (info == null) {
+        return environment.homePage;
+      }
+      if (info.inRoom == true) {
+        return environment.gameRoute;
+      } else {
+        return environment.playRoute;
+      }
+    }
+
+
   }
 }

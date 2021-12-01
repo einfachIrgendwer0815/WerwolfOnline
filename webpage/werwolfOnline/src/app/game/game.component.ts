@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TokenStorageService } from '../services/tokenStorage/token-storage.service';
+import { PlayerManagementService } from '../services/playerManagement/player-management.service';
 
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-game',
@@ -12,13 +14,21 @@ import { Router } from '@angular/router';
 })
 export class GameComponent implements OnInit {
 
-  constructor(private tokenStorage: TokenStorageService, private cookieService: CookieService, private router: Router) { }
+  constructor(private player: PlayerManagementService, private cookieService: CookieService, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
-    await this.tokenStorage.validateTokenFromCookie();
+    if (environment.production == false) {
+      console.log( await this.player.getRedirectPath());
+    }
 
-    if (this.tokenStorage.token_valid != true) {
-      this.router.navigate(['/play/settings']);
+    var redirPath: string = await this.player.getRedirectPath();
+
+    if (redirPath != environment.gameRoute) {
+      this.router.navigate([redirPath]);
+
+      if (environment.production == false) {
+        console.log("Redirecting");
+      }
     }
   }
 }

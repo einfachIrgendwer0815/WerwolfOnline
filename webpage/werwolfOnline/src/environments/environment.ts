@@ -8,6 +8,11 @@ export const environment = {
   useHashLocation: false,
   serverName: 'http://localhost:5000',
 
+  homePage: '/',
+  playerSettingsRoute: '/play/settings',
+  gameRoute: '/game',
+  playRoute: '/play',
+
   api: {
     route: '/api',
     directAccess: false,
