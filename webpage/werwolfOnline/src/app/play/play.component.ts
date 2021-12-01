@@ -20,6 +20,7 @@ import { animations } from '../animations';
       transition("PlayJoin => PlayMain", animations.overlayRightOut),
       transition("PlayCreate => PlayMain", animations.overlayRightOut),
       transition("PlaySettings => PlayMain", animations.overlay),
+      transition("PlayMain => PlaySettings", animations.overlay)
     ])
   ]
 })
