@@ -1,5 +1,5 @@
 <div id="playSettings">
-  <div class="centered">
+  <div class="centered" [class]="popupOpen ? 'blurred' : ''">
     <div id="unauthenticatedBlock" *ngIf="!authenticated; else authenticatedContent">
       <span class="headline" i18n>Bevor es los geht...</span>
       <span class="description" i18n>...ein paar Einstellungen...</span>
@@ -18,5 +18,16 @@
         <span i18n>Warten auf Server...</span>
       </div>
     </ng-template>
+  </div>
+  <div class="errorPopup" [class]="this.popupOpen ? 'open' : 'closed'">
+    <div class="inner">
+      <span class="close_button" (click)="this.closePopup()">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+      </span>
+      <span class="title" i18n>Es ist ein Fehler aufgetreten</span>
+      <span *ngIf="nickname.valid; else nicknameInvalid" class="text" i18n>Bitte versuche es erneut.</span>
+      <ng-template #nicknameInvalid><span class="text" i18n>Bitte verwende einen gültigen Nickname.</span></ng-template>
+    </div>
   </div>
 </div>

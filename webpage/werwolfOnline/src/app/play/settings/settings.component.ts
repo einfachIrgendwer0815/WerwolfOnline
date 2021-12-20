@@ -18,7 +18,7 @@ import { fullRegister } from '../../../apiInterfaces/player';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss', './scss/unauthenticatedBlock.scss', './scss/unauthenticatedBlock/namefield.scss']
+  styleUrls: ['./settings.component.scss', './scss/unauthenticatedBlock.scss', './scss/unauthenticatedBlock/namefield.scss', './scss/errorPopup.scss']
 })
 export class SettingsComponent implements OnInit {
   access_token: string | undefined;
@@ -33,6 +33,8 @@ export class SettingsComponent implements OnInit {
     Validators.maxLength(this.maxNameLength)
   ]);
   volume = new FormControl(0);
+
+  popupOpen = false;
 
   constructor(
     private player: PlayerManagementService,
@@ -62,6 +64,7 @@ export class SettingsComponent implements OnInit {
 
   async save(): Promise<void> {
     if (!this.nickname.valid) {
+      this.openPopup();
       return;
     }
     this.authenticated = true;
@@ -92,6 +95,8 @@ export class SettingsComponent implements OnInit {
       console.log(err);
       this.authenticated = false;
     }
+
+    this.openPopup();
   }
 
   loadTokens() {
@@ -99,4 +104,11 @@ export class SettingsComponent implements OnInit {
     this.refresh_token = this.cookieService.get('token_refresh');
   }
 
+  openPopup() {
+    this.popupOpen = true;
+  }
+
+  closePopup() {
+    this.popupOpen = false;
+  }
 }

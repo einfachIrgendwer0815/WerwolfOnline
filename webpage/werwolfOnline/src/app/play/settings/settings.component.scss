@@ -32,6 +32,11 @@
     text-align: center;
 
     @include vendorPrefix(transform, translate(-50%, -50%));
+
+    @include vendorPrefix(transition, #{filter 1s});
+    &.blurred {
+      filter: blur(5px);
+    }
   }
 }
 
