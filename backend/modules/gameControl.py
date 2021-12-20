@@ -21,7 +21,7 @@ class GameControl():
             return
 
         self.__dbSystem.create_table('Games', {'name': 'varchar(10)', 'activeRoles': 'int', 'actionType': 'int'}, primaryKeys=['name'])
-        self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
+        self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)', 'public': 'boolean'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
         self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'roomAdmin': 'boolean', 'nickname': 'varchar(35)', 'volumeSetting': 'int'}, uniqueColumns=['identity'], foreignKeys={'room': 'Rooms(name)'})
         self.__dbSystem.create_table('PlayerData', {'identity': 'varchar(40)', 'role': 'int', 'votedFor': 'varchar(40)', 'skipsVoting': 'int'}, uniqueColumns=['identity'], foreignKeys={'identity': 'Player(identity)', 'votedFor': 'Player(identity)'})
 
@@ -80,12 +80,12 @@ class GameControl():
         else:
             return False
 
-    def createRoom(self, name=None, maxRetries=5, retryNo=0):
+    def createRoom(self, name=None, public=False, maxRetries=5, retryNo=0):
         name = (name if name != None else functions.generateName())
         res = self.__dbSystem.select_from('Rooms', ['name'], {'name': name})
 
         if len(res) == 0:
-            self.__dbSystem.insert_into('Rooms', {'name': name})
+            self.__dbSystem.insert_into('Rooms', {'name': name, 'public': public})
             return True, name
 
         if retryNo >= maxRetries:
@@ -93,10 +93,10 @@ class GameControl():
         else:
             return self.createRoom(retryNo=retryNo+1)
 
-    def joinRoom(self, identity, roomName=None):
+    def joinRoom(self, identity, roomName=None, roomIsPublic=None):
         asAdmin = False
         if roomName == None:
-            success, roomName = self.createRoom()
+            success, roomName = self.createRoom(public=(False if roomIsPublic == None else roomIsPublic))
             if success == False:
                 return False
 
@@ -106,7 +106,7 @@ class GameControl():
             res = self.__dbSystem.select_from('Rooms', ['name'], {'name': roomName})
 
             if len(res) == 0:
-                success, roomName = self.createRoom(name=roomName)
+                success, roomName = self.createRoom(name=roomName, public=roomIsPublic)
                 if success == False:
                     return False
 
@@ -166,3 +166,15 @@ class GameControl():
             return []
 
         return [i[0] for i in res]
+
+    def isRoomPublic(self, identity):
+        room = self.getRoomCode(identity)
+        if room == None:
+            return None
+
+        res = self.__dbSystem.select_from('Rooms', ['public'], conditions={'name': room})
+
+        if len(res) == 0:
+            return None
+
+        return bool(res[0][0])

@@ -57,7 +57,8 @@ def generateName(length=10):
 def add_refresh_header(resp: Response):
     data = resp.get_json()
 
-    data['refresh'] = refreshNecessary()
+    if data != None:
+        data['refresh'] = refreshNecessary()
 
     resp.set_data(json.dumps(data, indent=4) + "\n")
 

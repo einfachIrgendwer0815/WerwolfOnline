@@ -19,8 +19,9 @@ def joinRoom():
         jsonData = {}
 
     roomName = (jsonData['roomName'] if functions.jsonHasField(jsonData, 'roomName') else None)
+    roomIsPublic = (jsonData['roomIsPublic'] if functions.jsonHasField(jsonData, 'roomIsPublic') else None)
 
-    if g.gameControl.joinRoom(get_jwt_identity(), roomName) == True:
+    if g.gameControl.joinRoom(get_jwt_identity(), roomName, roomIsPublic) == True:
         return jsonify(succesfull=True)
     else:
         return jsonify(succesfull=False)
@@ -37,6 +38,13 @@ def leaveRoom():
 def getRoomCode():
     return jsonify(
         roomCode=g.gameControl.getRoomCode(get_jwt_identity())
+    ), 200
+
+@blueprint.route('/isPublic', methods=['GET'])
+@jwt_required()
+def isPublic():
+    return jsonify(
+        public=g.gameControl.isRoomPublic(get_jwt_identity())
     ), 200
 
 @blueprint.route('/members', methods=['GET'])
