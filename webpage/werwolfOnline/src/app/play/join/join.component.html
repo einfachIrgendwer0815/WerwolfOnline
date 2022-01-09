@@ -1,3 +1,23 @@
 <div id="playJoin">
-  <p>join works!</p>
+  <div class="roomTable">
+    <div class="center">
+      <span i18n class="reloadButton" (click)="loadPublicList()">Liste aktualisieren</span>
+    </div>
+    <table *ngIf="tableData.length > 0 else alternate">
+      <tr>
+        <th>Room code</th>
+        <th>Players</th>
+        <th>Limit</th>
+      </tr>
+      <tr *ngFor="let row of tableData">
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+      </tr>
+    </table>
+    <ng-template #alternate>
+      <span i18n class="alttext">Derzeit ist kein öffentlicher Raum verfügbar.</span>
+      <span i18n class="alttext link" routerLink="/play/create">Raum erstellen</span>
+    </ng-template>
+  </div>
 </div>

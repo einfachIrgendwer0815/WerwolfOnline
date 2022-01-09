@@ -41,6 +41,16 @@ export const environment = {
         directAccess: true,
         requiresJWT: false
       }
+    },
+    room: {
+      route: '/room',
+      directAccess: false,
+
+      publics: {
+        route: '/publics',
+        directAccess: true,
+        requiresJWT: false
+      }
     }
   }
 };

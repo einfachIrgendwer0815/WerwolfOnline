@@ -14,4 +14,111 @@
   background-color: $background-color;
 
   color: $font-color;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .roomTable {
+    table {
+      width: 30vw;
+
+      text-align: center;
+
+      border-collapse: collapse;
+    }
+
+    th {
+      padding-bottom: 0.3em;
+
+      border-bottom: 2px solid white;
+      border-right: 1px solid white;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    td {
+      padding: {
+        top: 0.1em;
+        bottom: 0.1em;
+      }
+
+      //border-bottom: 1px solid white;
+      border-right: 1px solid white;
+
+      @include vendorPrefix(transition, #{background 200ms});
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    tr:hover td {
+      background-color: #222;
+
+      &:hover {
+        background-color: #555;
+      }
+    }
+
+    tr:last-child {
+      td {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .alttext {
+    display: block;
+    margin-bottom: 0.5em;
+
+    font: {
+      family: 'Roboto';
+      size: 1.1em;
+    }
+  }
+
+  .link {
+    text-align: center;
+
+    font: {
+      size: 1em;
+    }
+
+    text-decoration: underline;
+  }
+
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .reloadButton {
+    text-align: center;
+
+    margin-bottom: 2em;
+
+    border: 2px solid black;
+    border-radius: 5px;
+
+    padding: 0.3em;
+
+    background-color: black;
+
+    font: {
+      family: 'Roboto';
+    }
+
+    @include vendorPrefix(transition, #{color 300ms, border-color 300ms, background-color 300ms});
+
+    &:hover {
+      border-color: #666;
+      background-color: #666;
+
+      color: black;
+    }
+  }
 }
