@@ -21,7 +21,7 @@ class GameControl():
             return
 
         self.__dbSystem.create_table('Games', {'name': 'varchar(10)', 'activeRoles': 'int', 'actionType': 'int'}, primaryKeys=['name'])
-        self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)', 'public': 'boolean'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
+        self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)', 'public': 'boolean', 'playerLimit': 'int'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
         self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'roomAdmin': 'boolean', 'nickname': 'varchar(35)', 'volumeSetting': 'int'}, uniqueColumns=['identity'], foreignKeys={'room': 'Rooms(name)'})
         self.__dbSystem.create_table('PlayerData', {'identity': 'varchar(40)', 'role': 'int', 'votedFor': 'varchar(40)', 'skipsVoting': 'int'}, uniqueColumns=['identity'], foreignKeys={'identity': 'Player(identity)', 'votedFor': 'Player(identity)'})
 
@@ -80,12 +80,12 @@ class GameControl():
         else:
             return False
 
-    def createRoom(self, name=None, public=False, maxRetries=5, retryNo=0):
+    def createRoom(self, name=None, public=False, playerLimit=10, maxRetries=5, retryNo=0):
         name = (name if name != None else functions.generateName())
         res = self.__dbSystem.select_from('Rooms', ['name'], {'name': name})
 
         if len(res) == 0:
-            self.__dbSystem.insert_into('Rooms', {'name': name, 'public': public})
+            self.__dbSystem.insert_into('Rooms', {'name': name, 'public': public, 'playerLimit': playerLimit})
             return True, name
 
         if retryNo >= maxRetries:
@@ -93,20 +93,20 @@ class GameControl():
         else:
             return self.createRoom(retryNo=retryNo+1)
 
-    def joinRoom(self, identity, roomName=None, roomIsPublic=None):
+    def joinRoom(self, identity, roomName=None, roomIsPublic=None, roomPlayerLimit=10):
         asAdmin = False
         if roomName == None:
-            success, roomName = self.createRoom(public=(False if roomIsPublic == None else roomIsPublic))
+            success, roomName = self.createRoom(public=(False if roomIsPublic == None else roomIsPublic), playerLimit=(10 if roomPlayerLimit == None else roomPlayerLimit))
             if success == False:
                 return False
 
             asAdmin = True
 
         else:
-            res = self.__dbSystem.select_from('Rooms', ['name'], {'name': roomName})
+            res = self.__dbSystem.select_from('Rooms', ['name', 'playerLimit'], {'name': roomName})
 
             if len(res) == 0:
-                success, roomName = self.createRoom(name=roomName, public=roomIsPublic)
+                success, roomName = self.createRoom(name=roomName, public=(False if roomIsPublic == None else roomIsPublic), playerLimit=(10 if roomPlayerLimit == None else roomPlayerLimit))
                 if success == False:
                     return False
 
@@ -120,9 +120,16 @@ class GameControl():
         elif len(res) == 0:
             return False
 
-        self.__dbSystem.update('Player', {'room': roomName, 'roomAdmin': asAdmin}, {'identity': identity})
+        res = self.__dbSystem.select_count('Player', 'room', {'room': roomName})
+        res2 = self.__dbSystem.select_from('Rooms', ['playerLimit'], {'name': roomName})
 
-        return True
+        print(res, res2)
+        if res == None or len(res2) == 0 or res < res2[0][0]:
+            self.__dbSystem.update('Player', {'room': roomName, 'roomAdmin': asAdmin}, {'identity': identity})
+
+            return True
+
+        return False
 
     def leaveRoom(self, identity):
         res = self.__dbSystem.select_from('Player', ['room', 'roomAdmin'], conditions={'identity': identity})
@@ -178,3 +185,15 @@ class GameControl():
             return None
 
         return bool(res[0][0])
+
+    def getRoomPlayerLimit(self, identity):
+        room = self.getRoomCode(identity)
+        if room == None:
+            return None
+
+        res = self.__dbSystem.select_from('Rooms', ['playerLimit'], conditions={'name': room})
+
+        if len(res) == 0:
+            return None
+
+        return res[0][0]
