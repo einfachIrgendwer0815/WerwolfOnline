@@ -123,7 +123,6 @@ class GameControl():
         res = self.__dbSystem.select_count('Player', 'room', {'room': roomName})
         res2 = self.__dbSystem.select_from('Rooms', ['playerLimit'], {'name': roomName})
 
-        print(res, res2)
         if res == None or len(res2) == 0 or res < res2[0][0]:
             self.__dbSystem.update('Player', {'room': roomName, 'roomAdmin': asAdmin}, {'identity': identity})
 
@@ -197,3 +196,16 @@ class GameControl():
             return None
 
         return res[0][0]
+
+    def getPublicRooms(self):
+        res = self.__dbSystem.select_from('Rooms', ['name', 'playerLimit'])
+
+        rooms = []
+
+        for room in res:
+            res2 = self.__dbSystem.select_count('Player', 'room', {'room': room[0]})
+
+            if res2 < room[1]:
+                rooms.append((room[0], res2, room[1]))
+
+        return rooms

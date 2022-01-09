@@ -61,3 +61,9 @@ def roomMembers():
     members = g.gameControl.getRoomMembers(get_jwt_identity())
 
     return jsonify(members=members), 200
+
+@blueprint.route('/publics', methods=['GET'])
+def getPublicRooms():
+    return jsonify(
+        rooms=g.gameControl.getPublicRooms()
+    ), 200
