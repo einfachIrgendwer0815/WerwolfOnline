@@ -11,7 +11,7 @@ blueprint.after_request(functions.add_refresh_header)
 @jwt_required()
 def joinRoom():
     if g.gameControl.getPlayerNickname(get_jwt_identity()) == None:
-        return jsonify(succesfull=False)
+        return jsonify(successful=False)
 
     jsonData = request.get_json()
 
@@ -23,9 +23,9 @@ def joinRoom():
     roomPlayerLimit = (jsonData['roomPlayerLimit'] if functions.jsonHasField(jsonData, 'roomPlayerLimit') else None)
 
     if g.gameControl.joinRoom(get_jwt_identity(), roomName=roomName, roomIsPublic=roomIsPublic, roomPlayerLimit=roomPlayerLimit) == True:
-        return jsonify(succesfull=True)
+        return jsonify(successful=True)
     else:
-        return jsonify(succesfull=False)
+        return jsonify(successful=False)
 
 @blueprint.route('/leave', methods=['GET', 'POST'])
 @jwt_required()
