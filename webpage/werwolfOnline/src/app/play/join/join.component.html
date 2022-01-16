@@ -9,7 +9,7 @@
         <th>Players</th>
         <th>Limit</th>
       </tr>
-      <tr *ngFor="let row of tableData">
+      <tr *ngFor="let row of tableData" (click)="join(row[0].toString())">
         <td>{{ row[0] }}</td>
         <td>{{ row[1] }}</td>
         <td>{{ row[2] }}</td>

@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 import { PlayerManagementService } from '../../services/playerManagement/player-management.service';
+import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 import { environment } from '../../../environments/environment';
 
 import { HttpClient } from '@angular/common/http';
@@ -17,8 +18,9 @@ import { publics } from '../../../apiInterfaces/room';
 })
 export class JoinComponent implements OnInit {
   tableData: Array<Array<string|number>> = [];
+  blockInput: boolean = false;
 
-  constructor(private player: PlayerManagementService, private linkService: LinkService, private cookieService: CookieService, private router: Router, private client: HttpClient) {
+  constructor(private player: PlayerManagementService, private linkService: LinkService, private router: Router, private client: HttpClient, private token: TokenStorageService) {
     this.linkService.setLink("/play");
   }
 
@@ -49,6 +51,28 @@ export class JoinComponent implements OnInit {
         this.tableData = data.rooms;
       }, err => {
 
+      });
+  }
+
+  async join(code: string) {
+    if (!this.blockInput) {
+      this.blockInput = true;
+    } else {
+      return;
+    }
+
+    this.player.joinRoomObservable(this.token.token as string, code)
+      .subscribe(async data => {
+        console.log(data);
+        if (data.successful == true) {
+          var path = await this.player.getRedirectPath();
+          this.router.navigate([path]);
+        } else {
+          this.blockInput = false;
+        }
+      }, err => {
+        console.log(err);
+        this.blockInput = false;
       });
   }
 

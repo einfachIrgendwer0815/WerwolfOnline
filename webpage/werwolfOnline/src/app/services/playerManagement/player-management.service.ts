@@ -9,6 +9,7 @@ import { TokenStorageService } from '../tokenStorage/token-storage.service';
 
 import { generateToken } from '../../../apiInterfaces/token';
 import { fullRegister, registrationInformation } from '../../../apiInterfaces/player';
+import { joinRoom } from '../../../apiInterfaces/room';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,19 @@ export class PlayerManagementService {
       url = url + "?jwt=" + access_token;
     }
     var req = this.client.get<registrationInformation>(url, {observe: 'body', responseType: 'json'});
+    return req;
+  }
+
+  joinRoom(access_token: string, roomCode: string = '', isPublic: boolean = false, playerLimit: number = 10): Promise<joinRoom> {
+    return this.joinRoomObservable(access_token, roomCode, isPublic, playerLimit).toPromise();
+  }
+
+  joinRoomObservable(access_token: string, roomCode: string = '', isPublic: boolean = false, playerLimit: number = 10): Observable<joinRoom> {
+    var url: string = environment.serverName + environment.api.route + environment.api.room.route + environment.api.room.join.route;
+    if (environment.api.player.fullRegistration.requiresJWT == true) {
+      url = url + "?jwt=" + access_token;
+    }
+    var req = this.client.post<joinRoom>(url, {roomName: roomCode, roomIsPublic: isPublic, roomPlayerLimit: playerLimit}, {observe: 'body', responseType: 'json'});
     return req;
   }
 

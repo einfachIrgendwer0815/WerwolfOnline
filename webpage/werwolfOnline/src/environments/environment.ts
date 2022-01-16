@@ -50,6 +50,12 @@ export const environment = {
         route: '/publics',
         directAccess: true,
         requiresJWT: false
+      },
+
+      join: {
+        route: '/join',
+        directAccess: true,
+        requiresJWT: true
       }
     }
   }
