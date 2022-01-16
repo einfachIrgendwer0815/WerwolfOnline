@@ -77,6 +77,26 @@
           $transform: scale(1.05);
           @include vendorPrefix(transform, $transform);
         }
+
+        @keyframes flyInDelayed {
+          from {
+            @include vendorPrefix(transform, #{translateY(50%)});
+          }
+          to {
+            transform: none;
+          }
+        }
+
+        &:first-child, &:last-child {
+          //@include vendorPrefix(transform, #{translateY(50%)})
+          animation: {
+            name: flyInDelayed;
+            duration: 1s;
+            delay: 2s;
+            timing-function: ease-out;
+            fill-mode: both;
+          }
+        }
       }
     }
 

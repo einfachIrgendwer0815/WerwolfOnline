@@ -21,8 +21,9 @@
           $transition: opacity 100ms;
           @include vendorPrefix (transition, $transition);
 
-          &:not(.animate):hover {
-            opacity: 0.6;
+          &:hover {
+            animation-play-state: paused;
+            opacity: 0.6 !important;
           }
 
           &.animate {
