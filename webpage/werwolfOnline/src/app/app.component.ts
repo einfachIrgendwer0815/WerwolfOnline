@@ -13,7 +13,8 @@ const routeTransAnim = trigger('routeAnimation', [
   transition('About => MainPage', animations.overlayRightOutWihtOpacity),
   transition('* <=> NotFound', animations.overlay),
   transition('Play <=> Game', animations.overlay),
-  transition('Play => HowToPlay', animations.overlay)
+  transition('Play => HowToPlay', animations.overlay),
+  transition('* <=> Imprint', animations.overlay)
 ])
 
 @Component({

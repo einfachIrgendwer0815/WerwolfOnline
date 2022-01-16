@@ -14,4 +14,31 @@
   }
 
   position: relative;
+
+  .imprintButton {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+
+    @include vendorPrefix(transform, #{translate(-50%, -150%)});
+
+    font: {
+      family: 'Roboto';
+    }
+
+    color: white;
+
+    @keyframes imprintButtonDelayedIn {
+      from {
+        opacity: 0%;
+      }
+    }
+
+    animation: {
+      name: imprintButtonDelayedIn;
+      duration: 2s;
+      delay: 3s;
+      fill-mode: backwards;
+    }
+  }
 }

@@ -11,6 +11,7 @@ import { HowToPlayComponent } from './how-to-play/how-to-play.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AboutComponent } from './about/about.component';
 import { SettingsComponent } from './play/settings/settings.component';
+import { ImprintComponent } from './imprint/imprint.component';
 
 import { environment } from '../environments/environment';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   ]},
   {path: 'about', component: AboutComponent, data: {animation: 'About'}},
   {path: 'howToPlay', component: HowToPlayComponent, data: {animation: 'HowToPlay'}},
+  {path: 'imprint', component: ImprintComponent, data: {animation: 'Imprint'}},
   {path: '**', component: NotFoundComponent, data: {animation: 'NotFound'}}
 ];
 

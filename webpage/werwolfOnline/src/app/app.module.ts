@@ -24,6 +24,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LinkService } from './services/linkService/link.service';
 import { TokenStorageService } from './services/tokenStorage/token-storage.service';
 import { PlayerManagementService } from './services/playerManagement/player-management.service';
+import { ImprintComponent } from './imprint/imprint.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { PlayerManagementService } from './services/playerManagement/player-mana
     HowToPlayComponent,
     AboutComponent,
     SettingsComponent,
+    ImprintComponent,
   ],
   imports: [
     BrowserModule,
