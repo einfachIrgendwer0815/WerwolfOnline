@@ -83,7 +83,7 @@
             @include vendorPrefix(transform, #{translateY(50%)});
           }
           to {
-            transform: none;
+            transform: translateY(0);
           }
         }
 
@@ -94,7 +94,7 @@
             duration: 1s;
             delay: 2s;
             timing-function: ease-out;
-            fill-mode: both;
+            fill-mode: backwards;
           }
         }
       }
