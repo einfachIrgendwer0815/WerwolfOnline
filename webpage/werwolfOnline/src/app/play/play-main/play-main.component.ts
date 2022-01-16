@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./play-main.component.scss']
 })
 export class PlayMainComponent implements OnInit {
+  ready: boolean = false;
 
   constructor(private player: PlayerManagementService, private linkService: LinkService, private cookieService: CookieService, private router: Router) {
     this.linkService.setLink("/");
@@ -33,6 +34,8 @@ export class PlayMainComponent implements OnInit {
       if (environment.production == false) {
         console.log("Redirecting");
       }
+    } else {
+      this.ready = true;
     }
   }
 

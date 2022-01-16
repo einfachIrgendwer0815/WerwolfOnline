@@ -1,4 +1,4 @@
-<div id="playMain">
+<div id="playMain" [class]="ready ? '': 'alt'">
   <div class="choose">
     <span class="headline" i18n>Los geht`s!</span>
     <span class="description" i18n>bitte wähle eine Option aus</span>
@@ -12,5 +12,9 @@
     <hr class="line">
     <span class="rules" i18n>Schon die Regeln gelesen?</span>
     <span routerLink="/howToPlay" class="rules description" i18n>zu den Regeln</span>
+  </div>
+
+  <div class="alt">
+    <span>Einen Moment bitte...</span>
   </div>
 </div>

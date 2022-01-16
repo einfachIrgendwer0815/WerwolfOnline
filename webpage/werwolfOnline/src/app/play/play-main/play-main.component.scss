@@ -4,8 +4,6 @@
 @import '../variables';
 
 #playMain {
-  position: relative;
-
   width: 100%;
   min-height: calc(100vh - #{$header-height});
 
@@ -22,14 +20,39 @@
 
   color: $font-color;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.alt {
+    .choose {
+      display: none;
+    }
+
+    .alt {
+      display: block;
+    }
+  }
+
+  &:not(.alt) {
+    .choose {
+      display: block;
+    }
+
+    .alt {
+      display: none;
+    }
+  }
+
+  .alt {
+    font: {
+      family: 'Roboto';
+      size: 1.5em;
+    }
+  }
+
   .choose {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    @include vendorPrefix(transform, translate(-50%,-50%));
-
-    border: {
+      border: {
       width: 1px;
       style: solid;
       color: $border-color;
