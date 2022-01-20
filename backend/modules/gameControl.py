@@ -21,7 +21,7 @@ class GameControl():
             return
 
         self.__dbSystem.create_table('Games', {'name': 'varchar(10)', 'activeRoles': 'int', 'actionType': 'int'}, primaryKeys=['name'])
-        self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)', 'public': 'boolean', 'playerLimit': 'int'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
+        self.__dbSystem.create_table('Rooms', {'name': 'varchar(10)', 'game': 'varchar(10)', 'public': 'boolean', 'playerLimit': 'int', 'persistant': 'boolean'}, primaryKeys=['name'], foreignKeys={'game': 'Games(name)'})
         self.__dbSystem.create_table('Player', {'identity': 'varchar(40)', 'expireTimestamp': 'int', 'room': 'varchar(10)', 'roomAdmin': 'boolean', 'nickname': 'varchar(35)', 'volumeSetting': 'int'}, uniqueColumns=['identity'], foreignKeys={'room': 'Rooms(name)'})
         self.__dbSystem.create_table('PlayerData', {'identity': 'varchar(40)', 'role': 'int', 'votedFor': 'varchar(40)', 'skipsVoting': 'int'}, uniqueColumns=['identity'], foreignKeys={'identity': 'Player(identity)', 'votedFor': 'Player(identity)'})
 
@@ -144,7 +144,10 @@ class GameControl():
 
             res = self.__dbSystem.select_from('Player', ['room'], conditions={'room': room})
             if len(res) == 0:
-                self.__dbSystem.delete_from('Rooms', conditions={'name': room})
+                res = self.__dbSystem.select_from('Rooms', ['persistant'], conditions={'name': room})
+
+                if len(res) == 0 or res[0][0] != True:
+                    self.__dbSystem.delete_from('Rooms', conditions={'name': room})
 
             else:
                 if asAdmin == True:
