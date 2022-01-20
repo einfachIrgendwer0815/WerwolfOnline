@@ -95,7 +95,7 @@ class GameControl():
 
     def joinRoom(self, identity, roomName=None, roomIsPublic=None, roomPlayerLimit=10):
         asAdmin = False
-        if roomName == None:
+        if roomName == None or roomName == '':
             success, roomName = self.createRoom(public=(False if roomIsPublic == None else roomIsPublic), playerLimit=(10 if roomPlayerLimit == None else roomPlayerLimit))
             if success == False:
                 return False

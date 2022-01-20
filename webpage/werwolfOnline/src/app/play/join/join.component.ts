@@ -63,7 +63,9 @@ export class JoinComponent implements OnInit {
 
     this.player.joinRoomObservable(this.token.token as string, code)
       .subscribe(async data => {
-        console.log(data);
+        if (environment.production == false) {
+          console.log(data);
+        }
         if (data.successful == true) {
           var path = await this.player.getRedirectPath();
           this.router.navigate([path]);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LinkService } from '../../services/linkService/link.service';
 
 import { PlayerManagementService } from '../../services/playerManagement/player-management.service';
+import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -16,13 +17,14 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
+  blockInput: boolean = false;
   isPublic: boolean = false;
   playerLimit = new FormControl(10, [
     Validators.required,
     Validators.min(4)
   ]);
 
-  constructor(private player: PlayerManagementService, private linkService: LinkService, private cookieService: CookieService, private router: Router) {
+  constructor(private player: PlayerManagementService, private token: TokenStorageService, private linkService: LinkService, private cookieService: CookieService, private router: Router) {
     this.linkService.setLink("/play");
   }
 
@@ -53,5 +55,29 @@ export class CreateComponent implements OnInit {
     if (!this.playerLimit.valid) {
       this.playerLimit.setValue(old);
     }
+  }
+
+  async create() {
+    if (!this.blockInput) {
+      this.blockInput = true;
+    } else {
+      return;
+    }
+
+    this.player.joinRoomObservable(this.token.token as string, '', this.isPublic, this.playerLimit.value)
+      .subscribe(async data => {
+        if (environment.production == false) {
+          console.log(data);
+        }
+        if (data.successful == true) {
+          var path = await this.player.getRedirectPath();
+          this.router.navigate([path]);
+        } else {
+          this.blockInput = false;
+        }
+      }, err => {
+        console.log(err);
+        this.blockInput = false;
+      });
   }
 }
