@@ -134,10 +134,13 @@
 
     width: 100%;
 
-    @include vendorPrefix(transition, #{opacity 200ms});
+    @include vendorPrefix(transition, #{color 200ms, background-color 200ms});
 
     &:hover {
-      opacity: 0.7;
+      color: #007fff;
+      background: {
+        color: white;
+      }
     }
   }
 }
