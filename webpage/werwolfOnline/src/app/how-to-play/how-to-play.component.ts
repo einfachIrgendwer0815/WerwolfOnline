@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -12,7 +13,7 @@ export class HowToPlayComponent implements OnInit {
   arrowBack = faChevronRight;
   backCounter = 0;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
@@ -26,7 +27,7 @@ export class HowToPlayComponent implements OnInit {
           window.scrollTo({ top: 0 });
         }
         this.backCounter = 0;
-        this.router.navigate(['/']);
+        this.router.navigate(['../'], {relativeTo: this.route});
         clearInterval(interval);
       }
     }, 10);

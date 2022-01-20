@@ -22,7 +22,8 @@ const routes: Routes = [
     {path: '', component: PlayMainComponent, data: {animation: 'PlayMain'}},
     {path: 'join', component: JoinComponent, data: {animation: 'PlayJoin'}},
     {path: 'create', component: CreateComponent, data: {animation: 'PlayCreate'}},
-    {path: 'settings', component: SettingsComponent, data: {animation: 'PlaySettings'}}
+    {path: 'settings', component: SettingsComponent, data: {animation: 'PlaySettings'}},
+    {path: 'howTo', component: HowToPlayComponent, data: {animation: 'PlayHowTo'}}
   ]},
   {path: 'about', component: AboutComponent, data: {animation: 'About'}},
   {path: 'howToPlay', component: HowToPlayComponent, data: {animation: 'HowToPlay'}},
