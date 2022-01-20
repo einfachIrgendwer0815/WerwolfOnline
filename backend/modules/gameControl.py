@@ -201,7 +201,7 @@ class GameControl():
         return res[0][0]
 
     def getPublicRooms(self):
-        res = self.__dbSystem.select_from('Rooms', ['name', 'playerLimit'])
+        res = self.__dbSystem.select_from('Rooms', ['name', 'playerLimit'], conditions={'public': True})
 
         rooms = []
 
