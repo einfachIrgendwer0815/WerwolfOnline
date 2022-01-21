@@ -41,6 +41,22 @@ def getRoomCode():
         roomCode=g.gameControl.getRoomCode(get_jwt_identity())
     ), 200
 
+@blueprint.route('/doesRoomExist', methods=['GET', 'POST'])
+def doesRoomExist():
+    jsonData = request.get_json()
+
+    if jsonData == None:
+        jsonData = {}
+
+    roomName = (jsonData['roomName'] if functions.jsonHasField(jsonData, 'roomName') else None)
+
+    if roomName == None:
+        functions.returnAbortMissingParameter('roomName')
+    else:
+        return jsonify(
+            exists=g.gameControl.doesRoomExist(roomName)
+        ), 200
+
 @blueprint.route('/isPublic', methods=['GET'])
 @jwt_required()
 def isPublic():

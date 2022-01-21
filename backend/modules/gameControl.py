@@ -176,6 +176,14 @@ class GameControl():
 
         return [i[0] for i in res]
 
+    def doesRoomExist(self, roomName):
+        res = self.__dbSystem.select_count('Rooms', conditions={'name': roomName})
+
+        if res > 0:
+            return True
+
+        return False
+
     def isRoomPublic(self, identity):
         room = self.getRoomCode(identity)
         if room == None:
