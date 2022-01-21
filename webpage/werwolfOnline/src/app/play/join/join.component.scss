@@ -16,6 +16,7 @@
   color: $font-color;
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -120,6 +121,32 @@
       background-color: #666;
 
       color: black;
+    }
+  }
+
+  .privateJoin {
+    margin-top: 4em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .headline {
+      font: {
+        family: 'Roboto';
+        size: 1.2em;
+      }
+
+      margin-bottom: 0.4em;
+    }
+
+    .globalTextInputLine {
+      margin-bottom: 1em;
+    }
+
+    .globalSubmitButton {
+      width: 70%;
     }
   }
 }

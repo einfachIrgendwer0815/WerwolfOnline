@@ -11,6 +11,8 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { publics } from '../../../apiInterfaces/room';
 
+import { FormControl, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-join',
   templateUrl: './join.component.html',
@@ -19,6 +21,15 @@ import { publics } from '../../../apiInterfaces/room';
 export class JoinComponent implements OnInit {
   tableData: Array<Array<string|number>> = [];
   blockInput: boolean = false;
+
+  maxCodeLength: number = 10;
+  minCodeLength: number = 10;
+
+  code: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(this.minCodeLength),
+    Validators.maxLength(this.maxCodeLength)
+  ]);
 
   constructor(private player: PlayerManagementService, private linkService: LinkService, private router: Router, private client: HttpClient, private token: TokenStorageService) {
     this.linkService.setLink("/play");
@@ -78,4 +89,32 @@ export class JoinComponent implements OnInit {
       });
   }
 
+  async joinPrivate() {
+    if (!this.blockInput) {
+      this.blockInput = true;
+    } else {
+      return;
+    }
+
+    if (!this.code.valid) {
+      this.blockInput = false;
+      return;
+    }
+
+    this.player.joinRoomObservable(this.token.token as string, this.code.value)
+      .subscribe(async data => {
+        if (environment.production == false) {
+          console.log(data);
+        }
+        if (data.successful == true) {
+          var path = await this.player.getRedirectPath();
+          this.router.navigate([path]);
+        } else {
+          this.blockInput = false;
+        }
+      }, err => {
+        console.log(err);
+        this.blockInput = false;
+      });
+  }
 }
