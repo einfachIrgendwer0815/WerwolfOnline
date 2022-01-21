@@ -18,3 +18,7 @@ body {
 *::-webkit-scrollbar {
   display: none;
 }
+
+@import './styles/submitButton';
+@import './styles/textInputLine';
+@import './styles/sliderInput';

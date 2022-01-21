@@ -1,0 +1,107 @@
+.globalTextInputLineContainer {
+  display: flex;
+  width: 100%;
+}
+
+.globalTextInputLine {
+  @include vendorPrefix(appearance, none);
+
+  $padding-left: 0.5em;
+  $padding-right: 3.5em;
+
+  --total-width: 100%;
+
+  width: calc(var(--total-width) - #{$padding-left} - #{$padding-right});
+
+  position: relative;
+  top: 0;
+  left: 0;
+
+  border: {
+    top: none;
+    bottom: 2px solid grey;
+    left: none;
+    right: none;
+  }
+
+  padding: {
+    left: $padding-left;
+    right: $padding-right;
+    bottom: 0.4em;
+  }
+
+  margin: {
+    top: 0.5em;
+    bottom: 2.5em;
+  }
+
+  background-color: $background-color;
+
+  user-select: text;
+
+  color: $font-color;
+
+  @include vendorPrefix(transition, #{border 500ms});
+
+  &::placeholder {
+    color: $placeholder-color;
+    font: {
+      family: 'Roboto';
+      size: 1.1em;
+    }
+  }
+
+  &:not(:placeholder-shown) {
+    &.valid {
+      border: {
+        bottom: 2px solid #0A0;
+      }
+
+      &:hover,
+      &:focus {
+        border: {
+          bottom: 2px solid #7D7;
+        }
+      }
+    }
+
+    &.invalid {
+      border: {
+        bottom: 2px solid #A00;
+      }
+
+      &:hover,
+      &:focus {
+        border: {
+          bottom: 2px solid #D77;
+        }
+      }
+    }
+  }
+
+  &:hover,
+  &:focus {
+    border: {
+      bottom: 2px solid white;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.globalTextInputLineLengthNote {
+  position: relative;
+
+  transform: translateX(-3em) translateY(0.7em);
+
+  width: 0;
+  height: 0;
+
+  color: $placeholder-color-2;
+  font: {
+    size: 0.8em;
+    family: 'Roboto';
+  }
+}

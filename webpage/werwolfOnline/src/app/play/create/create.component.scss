@@ -177,41 +177,10 @@
     }
   }
 
-  .button {
-    user-select: none;
-    font: {
-      family: 'Roboto';
-      size: 1.2em;
-    }
-
+  .globalSubmitButton {
     width: 80%;
-    text-align: center;
 
     margin-top: 3em;
     margin-left: 10%;
-
-    border: {
-      radius: 7px;
-    }
-
-    background: {
-      color: #007fff;
-    }
-
-    letter-spacing: 0.05em;
-
-    padding: {
-      top: 0.5em;
-      bottom: 0.5em;
-    }
-
-    @include vendorPrefix(transition, #{color 200ms, background-color 200ms});
-
-    &:hover {
-      color: #007fff;
-      background: {
-        color: white;
-      }
-    }
   }
 }
