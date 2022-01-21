@@ -56,6 +56,12 @@ export const environment = {
         route: '/join',
         directAccess: true,
         requiresJWT: true
+      },
+
+      doesRoomExist: {
+        route: '/doesRoomExist',
+        directAccess: true,
+        requiresJWT: false
       }
     }
   }

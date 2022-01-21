@@ -27,6 +27,6 @@
       <input type="text" class="globalTextInputLine" i18n-placeholer placeholder="Raum Code" [maxLength]="maxCodeLength" [class]="code.valid ? 'valid' : 'invalid'" [formControl]="code" />
       <span class="globalTextInputLineLengthNote">{{ code.value.length }}/{{ maxCodeLength }}</span>
     </div>
-    <div i18n class="globalSubmitButton" (click)="false && joinPrivate()">Beitreten</div>
+    <div i18n class="globalSubmitButton" (click)="joinPrivate()">Beitreten</div>
   </div>
 </div>

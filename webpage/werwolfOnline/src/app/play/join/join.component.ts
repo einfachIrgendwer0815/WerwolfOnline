@@ -9,7 +9,7 @@ import { TokenStorageService } from '../../services/tokenStorage/token-storage.s
 import { environment } from '../../../environments/environment';
 
 import { HttpClient } from '@angular/common/http';
-import { publics } from '../../../apiInterfaces/room';
+import { publics, doesRoomExist } from '../../../apiInterfaces/room';
 
 import { FormControl, Validators } from '@angular/forms';
 
@@ -101,6 +101,24 @@ export class JoinComponent implements OnInit {
       return;
     }
 
+    var url: string = environment.serverName + environment.api.route + environment.api.room.route + environment.api.room.doesRoomExist.route;
+    var req = this.client.post<doesRoomExist>(url, {roomName: this.code.value} ,{observe: 'body', responseType: 'json'})
+      .subscribe(async data => {
+        if (environment.production == false) {
+          console.log(data);
+        }
+
+        if (data.exists == true) {
+          await this.doPrivateJoin();
+        } else {
+          this.blockInput = false;
+        }
+      }, err => {
+        this.blockInput = false;
+      });
+  }
+
+  async doPrivateJoin() {
     this.player.joinRoomObservable(this.token.token as string, this.code.value)
       .subscribe(async data => {
         if (environment.production == false) {
