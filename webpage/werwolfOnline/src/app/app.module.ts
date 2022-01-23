@@ -25,6 +25,7 @@ import { LinkService } from './services/linkService/link.service';
 import { TokenStorageService } from './services/tokenStorage/token-storage.service';
 import { PlayerManagementService } from './services/playerManagement/player-management.service';
 import { ImprintComponent } from './imprint/imprint.component';
+import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ImprintComponent } from './imprint/imprint.component';
     AboutComponent,
     SettingsComponent,
     ImprintComponent,
+    ProfileSettingsComponent,
   ],
   imports: [
     BrowserModule,
