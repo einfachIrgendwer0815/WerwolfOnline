@@ -1,1 +1,6 @@
-<p>profile-settings works!</p>
+<div class="profileSettings">
+  <div [class]="name ? 'available' : ''" class="inner">
+    <span>{{ name }}</span>
+    <fa-icon [icon]="downArrow" class="arrow"></fa-icon>
+  </div>
+</div>

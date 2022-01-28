@@ -1,0 +1,57 @@
+@import '../../globalScss';
+
+.profileSettings {
+  width: 8em;
+  height: 3em;
+
+  color: white;
+
+  display: flex;
+  justify-content: flex-end;
+
+  .inner {
+    width: 0%;
+    height: 100%;
+
+    border-left-style: solid;
+    border-left-color: #333;
+    border-left-width: 0px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include vendorPrefix(transition, #{background-color 200ms, border 400ms, width 400ms});
+
+    span {
+      opacity: 0;
+    }
+
+    .arrow {
+      color: #777;
+
+      @include vendorPrefix(transform, #{translateY(-20%)});
+
+      margin-left: 0.3em;
+
+      opacity: 0;
+    }
+
+    span, .arrow {
+      @include vendorPrefix(transition, #{opacity 200ms});
+    }
+
+    &.available {
+      width: 100%;
+      border-left-width: 1px;
+
+      &:hover {
+        background-color: #222;
+      }
+
+      span, .arrow {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 <div id="play">
   <header *ngIf="prepareRoute(outlet) != 'PlayHowTo'">
     <fa-icon class="back" [routerLink]="linkService.link" [icon]="arrowBack"></fa-icon>
+    <app-profile-settings></app-profile-settings>
   </header>
   <div [@test]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>
