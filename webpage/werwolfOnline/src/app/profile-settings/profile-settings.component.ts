@@ -10,6 +10,7 @@ import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 export class ProfileSettingsComponent implements OnInit {
   downArrow = faSortDown;
   name?: string;
+  popupOpen: boolean = false;
 
   constructor() { }
 
@@ -19,4 +20,11 @@ export class ProfileSettingsComponent implements OnInit {
     }, 50);
   }
 
+  isPopupOpen(): string {
+    if (this.popupOpen) {
+      return 'open';
+    }
+
+    return '';
+  }
 }
