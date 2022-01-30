@@ -1,22 +1,109 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { retryWhen, flatMap, delay } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
 import { HttpClient } from '@angular/common/http';
 
 import { TokenStorageService } from '../tokenStorage/token-storage.service';
+import { CookieService } from 'ngx-cookie-service';
 
-import { generateToken } from '../../../apiInterfaces/token';
+import { generateToken, identityInformation } from '../../../apiInterfaces/token';
 import { fullRegister, registrationInformation } from '../../../apiInterfaces/player';
 import { joinRoom } from '../../../apiInterfaces/room';
+
+const TOKEN_ACCESS_COOKIE_NAME: string = "token_access_new";
+const TOKEN_REFRESH_COOKIE_NAME: string = "token_refresh_new";
+const TOKEN_PATH: string = "/";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerManagementService {
+  private token_access?: string;
+  private token_refresh?: string;
+  private tokenInCookie: boolean = false;
+  private playerInformation?: { [id: string]: string|number|boolean };
+  private roomInformation?: { [id: string]: string|number|boolean };
 
-  constructor(private client: HttpClient, private tokenStorage: TokenStorageService) { }
+  constructor(private client: HttpClient, private cookieService: CookieService, private tokenStorage: TokenStorageService) {
+    this.readTokensFromCookie();
+
+    if(this.tokensAvailable()) {
+      this.validateToken(
+        (data: identityInformation) => {
+
+        },
+        (err: any) => {
+          this.token_access = undefined;
+          this.token_refresh = undefined;
+          this.tokenInCookie = false;
+          this.playerInformation = undefined;
+          this.roomInformation = undefined;
+          this.clearCookies();
+        }
+      );
+    }
+  }
+
+  private validateToken(onValid: any, onInvalid: any): void {
+    if (!this.tokensAvailable()) {
+      onInvalid();
+    }
+
+    var url: string = environment.serverName + environment.api.route + environment.api.token.route + environment.api.token.identityInformation.route;
+    url += '?jwt=' + this.token_access;
+    var resp: Observable<identityInformation> = this.client.get<identityInformation>(url, {observe: 'body', responseType: 'json'});
+
+    resp.subscribe(data => {
+      onValid(data);
+    }, err => {
+      onInvalid(err);
+    })
+  }
+
+  private readTokensFromCookie(): void {
+    if(this.cookiesAvailable()) {
+      this.token_access = this.cookieService.get(TOKEN_ACCESS_COOKIE_NAME);
+      this.token_refresh = this.cookieService.get(TOKEN_REFRESH_COOKIE_NAME);
+      this.tokenInCookie = true;
+    }
+  }
+
+  private clearCookies() {
+    this.cookieService.delete(TOKEN_ACCESS_COOKIE_NAME, TOKEN_PATH);
+    this.cookieService.delete(TOKEN_REFRESH_COOKIE_NAME, TOKEN_PATH);
+  }
+
+  private cookiesAvailable(): boolean {
+    return this.cookieService.check(TOKEN_ACCESS_COOKIE_NAME) && this.cookieService.check(TOKEN_REFRESH_COOKIE_NAME);
+  }
+
+  private tokensAvailable(): boolean {
+    return this.token_access != undefined && this.token_refresh != undefined;
+  }
+
+  private applyRetry(observable: Observable<any>): Observable<any> {
+    return observable.pipe(
+      retryWhen((err: any) => {
+        let retries = 3;
+
+        return err.pipe(
+          delay(1000),
+          flatMap(err => {
+            if (retries-- > 0) {
+              return of(err);
+            } else {
+              throw err;
+            }
+          })
+        );
+      })
+    );
+  }
+
+// old
 
   generateTokens(): Promise<generateToken> {
     return this.generateTokensObservable().toPromise();
