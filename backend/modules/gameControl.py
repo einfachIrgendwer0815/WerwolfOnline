@@ -169,12 +169,12 @@ class GameControl():
         if room == None:
             return []
 
-        res = self.__dbSystem.select_from('Player', ['nickname'], conditions={'room': room})
+        res = self.__dbSystem.select_from('Player', ['identity','nickname'], conditions={'room': room})
 
         if len(res) == 0:
             return []
 
-        return [i[0] for i in res]
+        return [{'identity': i[0], 'nickname': i[1]} for i in res]
 
     def doesRoomExist(self, roomName):
         res = self.__dbSystem.select_count('Rooms', conditions={'name': roomName})
