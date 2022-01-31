@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, Observer, of } from 'rxjs';
 import { retryWhen, flatMap, delay } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -13,9 +13,10 @@ import { generateToken, identityInformation } from '../../../apiInterfaces/token
 import { fullRegister, registrationInformation } from '../../../apiInterfaces/player';
 import { joinRoom } from '../../../apiInterfaces/room';
 
-const TOKEN_ACCESS_COOKIE_NAME: string = "token_access_new";
-const TOKEN_REFRESH_COOKIE_NAME: string = "token_refresh_new";
+const TOKEN_ACCESS_COOKIE_NAME: string = "token";
+const TOKEN_REFRESH_COOKIE_NAME: string = "token_refresh";
 const TOKEN_PATH: string = "/";
+const DELETE_COOKIE_ON_ERROR: boolean = false;
 
 @Injectable({
   providedIn: 'root'
@@ -24,24 +25,58 @@ export class PlayerManagementService {
   private token_access?: string;
   private token_refresh?: string;
   private tokenInCookie: boolean = false;
-  private playerInformation?: { [id: string]: string|number|boolean };
+  private playerInformation: { [id: string]: string|number|boolean } = {};
+  private playerInformationAvailable: boolean = false;
   private roomInformation?: { [id: string]: string|number|boolean };
 
   constructor(private client: HttpClient, private cookieService: CookieService, private tokenStorage: TokenStorageService) {
+    this.initialize();
+    if(environment.production == false) {
+      console.log(this);
+
+      setInterval(() => {
+        console.log(this);
+      }, 5000);
+
+    }
+
+    setInterval(() => {
+      this.initialize();
+    }, 10000)
+  }
+
+  public getNickname(): Observable<string> {
+    return new Observable<string>((observer: Observer<string>) => {
+      var returnIfAvailable = (interval?: number) => {
+        console.log("abc");
+        if(this.playerInformation.nickname != undefined) {
+          observer.next(this.playerInformation.nickname as string);
+
+          if(interval != undefined) {
+            clearInterval(interval);
+          }
+        }
+      };
+
+      var interval = setInterval(() => { returnIfAvailable(interval); }, 50);
+    });
+  }
+
+  private initialize() {
     this.readTokensFromCookie();
 
     if(this.tokensAvailable()) {
       this.validateToken(
         (data: identityInformation) => {
-
+          this.loadPlayerInformation();
         },
         (err: any) => {
           this.token_access = undefined;
           this.token_refresh = undefined;
           this.tokenInCookie = false;
-          this.playerInformation = undefined;
+          this.playerInformation['registered'] = false;
           this.roomInformation = undefined;
-          this.clearCookies();
+          if(DELETE_COOKIE_ON_ERROR) this.clearCookies();
         }
       );
     }
@@ -55,12 +90,50 @@ export class PlayerManagementService {
     var url: string = environment.serverName + environment.api.route + environment.api.token.route + environment.api.token.identityInformation.route;
     url += '?jwt=' + this.token_access;
     var resp: Observable<identityInformation> = this.client.get<identityInformation>(url, {observe: 'body', responseType: 'json'});
+    resp = this.applyRetry(resp, 2, 5000);
 
     resp.subscribe(data => {
       onValid(data);
     }, err => {
       onInvalid(err);
     })
+  }
+
+  private loadPlayerInformation(): void {
+    if (!this.tokensAvailable()) {
+      return;
+    }
+
+    var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.registrationInformation.route;
+    url += '?jwt=' + this.token_access;
+    var resp: Observable<registrationInformation> = this.client.get<registrationInformation>(url);
+    resp = this.applyRetry(resp, 5, 5000);
+
+    resp.subscribe(data => {
+      if(data.isRegistered == false) {
+        this.playerInformation['registered'] = false;
+      } else {
+        this.playerInformation['registered'] = true;
+        this.playerInformation['nickname'] = data.nicknameSet as string;
+        this.playerInformation['volume'] = data.volumeSet as number;
+        this.playerInformation['inRoom'] = data.inRoom as boolean;
+      }
+
+      this.playerInformationAvailable = true;
+    }, err => {
+      this.playerInformationAvailable = false;
+    });
+
+  }
+
+  public register(nickname: string, volume: number): void {
+    var obs = new Observable((observer: Observer<void>) => {
+      setTimeout(() => {
+        observer.complete();
+      }, 5000);
+    });
+
+    obs.subscribe({ complete:  () => { console.log('done') }} );
   }
 
   private readTokensFromCookie(): void {
@@ -84,13 +157,13 @@ export class PlayerManagementService {
     return this.token_access != undefined && this.token_refresh != undefined;
   }
 
-  private applyRetry(observable: Observable<any>): Observable<any> {
+  private applyRetry(observable: Observable<any>, numberOfRetries: number = 3, delayBetween: number = 1000): Observable<any> {
     return observable.pipe(
       retryWhen((err: any) => {
-        let retries = 3;
+        let retries = numberOfRetries;
 
         return err.pipe(
-          delay(1000),
+          delay(delayBetween),
           flatMap(err => {
             if (retries-- > 0) {
               return of(err);
