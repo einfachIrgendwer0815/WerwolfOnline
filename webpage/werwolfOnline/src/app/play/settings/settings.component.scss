@@ -48,3 +48,36 @@
     }
   }
 }
+
+@media screen and (max-width: 1500px) {
+  #playSettings {
+    .centered {
+      width: 27%;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #playSettings {
+    .centered {
+      width: 40%;
+      top: 40%;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #playSettings {
+    .centered {
+      width: 50%;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #playSettings {
+    .centered {
+      width: 90%;
+    }
+  }
+}
