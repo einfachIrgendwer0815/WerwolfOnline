@@ -115,3 +115,31 @@
     }
   }
 }
+
+@media screen and (max-width: 1000px) {
+  #mainPage {
+    .headlines {
+      .headline {
+        &.no1 {
+          font: {
+            size: 12vw;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #mainPage {
+    .headlines {
+      .headline {
+        &.no1 {
+          font: {
+            size: 19vw;
+          }
+        }
+      }
+    }
+  }
+}

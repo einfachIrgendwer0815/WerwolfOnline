@@ -87,3 +87,47 @@
     }
   }
 }
+
+@media screen and (max-height: 1000px) {
+  #mainPage {
+    .headlines {
+      $top: 20%;
+      top: $top;
+
+      @keyframes flyIn {
+        0% {
+          top: 10%;
+          opacity: 0;
+        }
+        90% {
+          top: $top;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .headline {
+        &.no2 {
+          font: {
+            size: 2.5vw;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #mainPage {
+    .headlines {
+      .headline {
+        &.no2 {
+          font: {
+            size: 6vw;
+          }
+        }
+      }
+    }
+  }
+}

@@ -120,3 +120,60 @@
     }
   }
 }
+
+@media screen and (max-width: 600px) {
+  #mainPage {
+    .buttonBox {
+      width: 40%;
+
+      $bottom: 20vh;
+      bottom: $bottom;
+
+      @keyframes flyInButtons {
+        0% {
+          bottom: 2%;
+          opacity: 0;
+        }
+        60% {
+          bottom: $bottom;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      ul {
+        width: 100%;
+
+        li {
+          box-sizing: border-box;
+          width: 100%;
+
+          $space: 1em;
+          margin: {
+            top: math.div($space, 2);
+            botton: math.div($space, 2);
+            left: 0;
+            right: 0;
+          }
+
+          font-size: 2.5vh;
+
+          text-align: center;
+
+          &:first-child {
+            margin-top: 0;
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          &:first-child, &:last-child {
+            animation: none;
+          }
+        }
+      }
+    }
+  }
+}
