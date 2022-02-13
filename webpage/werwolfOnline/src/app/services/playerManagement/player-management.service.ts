@@ -25,6 +25,7 @@ export class PlayerManagementService {
   private token_access?: string;
   private token_refresh?: string;
   private tokenInCookie: boolean = false;
+  private skipValidation: boolean = false;
   private playerInformation: { [id: string]: string|number|boolean } = {};
   private playerInformationAvailable: boolean = false;
   private roomInformation?: { [id: string]: string|number|boolean };
@@ -36,6 +37,7 @@ export class PlayerManagementService {
 
       setInterval(() => {
         console.log(this);
+        console.log(this.playerInformation);
       }, 5000);
 
     }
@@ -48,7 +50,6 @@ export class PlayerManagementService {
   public getNickname(): Observable<string> {
     return new Observable<string>((observer: Observer<string>) => {
       var returnIfAvailable = (interval?: number) => {
-        console.log("abc");
         if(this.playerInformation.nickname != undefined) {
           observer.next(this.playerInformation.nickname as string);
 
@@ -65,7 +66,7 @@ export class PlayerManagementService {
   private initialize() {
     this.readTokensFromCookie();
 
-    if(this.tokensAvailable()) {
+    if(this.tokensAvailable() && !this.skipValidation) {
       this.validateToken(
         (data: identityInformation) => {
           this.loadPlayerInformation();
@@ -106,7 +107,7 @@ export class PlayerManagementService {
 
     var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.registrationInformation.route;
     url += '?jwt=' + this.token_access;
-    var resp: Observable<registrationInformation> = this.client.get<registrationInformation>(url);
+    var resp: Observable<registrationInformation> = this.client.get<registrationInformation>(url, {observe: 'body', responseType: 'json'});
     resp = this.applyRetry(resp, 5, 5000);
 
     resp.subscribe(data => {
@@ -126,14 +127,52 @@ export class PlayerManagementService {
 
   }
 
-  public register(nickname: string, volume: number): void {
-    var obs = new Observable((observer: Observer<void>) => {
-      setTimeout(() => {
-        observer.complete();
-      }, 5000);
-    });
+  public register(nickname: string, volume: number): Observable<fullRegister> {
+    var execFullRegister = (observer: Observer<fullRegister>) => {
+      var req: Observable<fullRegister> = this.sendFullRegister(nickname, volume);
+      req = this.applyRetry(req, 5, 5000);
 
-    obs.subscribe({ complete:  () => { console.log('done') }} );
+      req.subscribe(data => {
+        this.saveTokensAsCookie();
+        this.skipValidation = false;
+
+        observer.next(data);
+        observer.complete();
+      }, err => {
+        observer.error(err);
+        this.skipValidation = false;
+      });
+    }
+
+    return new Observable<fullRegister>((observer: Observer<fullRegister>) => {
+      if(!this.tokensAvailable() && true) {
+        this.generateTokens_()
+          .subscribe(data => {
+            this.skipValidation = true;
+            this.setTokens(data.access_token, data.refresh_token);
+            execFullRegister(observer);
+          }, err => {
+            observer.error('Could not generate tokens.');
+          });
+      } else {
+        execFullRegister(observer);
+      }
+    });
+  }
+
+  private generateTokens_(): Observable<generateToken> {
+    var url: string = environment.serverName + environment.api.route + environment.api.token.route + environment.api.token.generate.route;
+    var req =  this.client.get<generateToken>(url, {observe: 'body', responseType: 'json'});
+    req = this.applyRetry(req, 3, 5000);
+
+    return req;
+  }
+
+  private sendFullRegister(nickname: string, volume: number): Observable<fullRegister> {
+    var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.fullRegistration.route;
+    url = url + "?jwt=" + this.token_access;
+    var req = this.client.post<fullRegister>(url, {nickname: nickname, volume: volume}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
+    return req;
   }
 
   private readTokensFromCookie(): void {
@@ -144,6 +183,24 @@ export class PlayerManagementService {
     }
   }
 
+  private setTokens(access: string, refresh: string, saveToCookie: boolean = false): void {
+    this.token_access = access;
+    this.token_refresh = refresh;
+
+    if(saveToCookie) {
+      this.saveTokensAsCookie();
+    } else {
+      this.tokenInCookie = false;
+    }
+  }
+
+  private saveTokensAsCookie(): void {
+    if(this.tokensAvailable()) {
+      this.cookieService.set(TOKEN_ACCESS_COOKIE_NAME, this.token_access as string, { path: TOKEN_PATH });
+      this.cookieService.set(TOKEN_REFRESH_COOKIE_NAME, this.token_refresh as string, { path: TOKEN_PATH });
+      this.tokenInCookie = true;
+    }
+  }
   private clearCookies() {
     this.cookieService.delete(TOKEN_ACCESS_COOKIE_NAME, TOKEN_PATH);
     this.cookieService.delete(TOKEN_REFRESH_COOKIE_NAME, TOKEN_PATH);
