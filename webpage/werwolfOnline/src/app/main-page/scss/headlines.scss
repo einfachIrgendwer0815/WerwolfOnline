@@ -88,7 +88,7 @@
   }
 }
 
-@media screen and (max-height: 1000px) {
+@media screen and (max-width: 1000px) {
   #mainPage {
     .headlines {
       $top: 20%;
