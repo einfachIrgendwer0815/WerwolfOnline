@@ -1,5 +1,6 @@
 tmp/
 static/
 templates/
+venv/
 
 jwt_secret_key.override.json
