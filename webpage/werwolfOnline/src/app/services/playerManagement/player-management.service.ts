@@ -63,23 +63,52 @@ export class PlayerManagementService {
     });
   }
 
+  public getRedirectPath_(): Observable<string> {
+    return new Observable<string>((observer: Observer<string>) => {
+      var oldPath: string = '';
+      var newPath: string = '';
+
+      var interval: number = setInterval(() => {
+        if(this.playerInformation.registered != undefined) {
+          if(!this.tokensAvailable() || this.playerInformation.registered == false) {
+            newPath = '/play/settings';
+          } else {
+            if(this.playerInformation.inRoom == undefined || this.playerInformation.inRoom == false){
+              newPath = '/play';
+            } else {
+              newPath = '/game';
+            }
+          }
+        }
+
+        if(newPath != oldPath) {
+          oldPath = newPath;
+          observer.next(newPath);
+        }
+      }, 50);
+    });
+  }
+
   private initialize() {
+    var onSucess = (data: identityInformation) => {
+      this.loadPlayerInformation();
+    };
+
+    var onErr = (err: any) => {
+      this.token_access = undefined;
+      this.token_refresh = undefined;
+      this.tokenInCookie = false;
+      this.playerInformation['registered'] = false;
+      this.roomInformation = undefined;
+      if(DELETE_COOKIE_ON_ERROR) this.clearCookies();
+    };
+
     this.readTokensFromCookie();
 
     if(this.tokensAvailable() && !this.skipValidation) {
-      this.validateToken(
-        (data: identityInformation) => {
-          this.loadPlayerInformation();
-        },
-        (err: any) => {
-          this.token_access = undefined;
-          this.token_refresh = undefined;
-          this.tokenInCookie = false;
-          this.playerInformation['registered'] = false;
-          this.roomInformation = undefined;
-          if(DELETE_COOKIE_ON_ERROR) this.clearCookies();
-        }
-      );
+      this.validateToken(onSucess, onErr);
+    } else {
+      onErr(null);
     }
   }
 
@@ -97,7 +126,7 @@ export class PlayerManagementService {
       onValid(data);
     }, err => {
       onInvalid(err);
-    })
+    });
   }
 
   private loadPlayerInformation(): void {
