@@ -263,43 +263,6 @@ export class PlayerManagementService {
   }
 
 // old
-
-  generateTokens(): Promise<generateToken> {
-    return this.generateTokensObservable().toPromise();
-  }
-
-  generateTokensObservable(): Observable<generateToken> {
-    var url: string = environment.serverName + environment.api.route + environment.api.token.route + environment.api.token.generate.route;
-    var req = this.client.get<generateToken>(url, {observe: 'body', responseType: 'json'});
-    return req;
-  }
-
-  fullRegister(access_token: string, nickname: string, volume: number): Promise<fullRegister> {
-    return this.fullRegisterObservable(access_token, nickname, volume).toPromise();
-  }
-
-  fullRegisterObservable(access_token: string, nickname: string, volume: number): Observable<fullRegister> {
-    var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.fullRegistration.route;
-    if (environment.api.player.fullRegistration.requiresJWT == true) {
-      url = url + "?jwt=" + access_token;
-    }
-    var req = this.client.post<fullRegister>(url, {nickname: nickname, volume: volume}, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'});
-    return req;
-  }
-
-  getRegistrationInformation(access_token: string): Promise<registrationInformation> {
-    return this.getRegistrationInformationObservable(access_token).toPromise();
-  }
-
-  getRegistrationInformationObservable(access_token: string): Observable<registrationInformation> {
-    var url: string = environment.serverName + environment.api.route + environment.api.player.route + environment.api.player.registrationInformation.route;
-    if (environment.api.player.registrationInformation.requiresJWT == true) {
-      url = url + "?jwt=" + access_token;
-    }
-    var req = this.client.get<registrationInformation>(url, {observe: 'body', responseType: 'json'});
-    return req;
-  }
-
   joinRoom(access_token: string, roomCode: string = '', isPublic: boolean = false, playerLimit: number = 10): Promise<joinRoom> {
     return this.joinRoomObservable(access_token, roomCode, isPublic, playerLimit).toPromise();
   }

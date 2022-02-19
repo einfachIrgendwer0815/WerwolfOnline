@@ -70,40 +70,9 @@ export class SettingsComponent implements OnInit {
       return;
     }
     this.authenticated = true;
-    var genTokens: generateToken | void = await this.player.generateTokens()
-      .catch(err => this.errorHandler(err));
 
-    if (typeof genTokens == "undefined") {
-      return;
-    }
-
-    this.access_token = genTokens.access_token;
-    this.refresh_token = genTokens.refresh_token;
-
-    var regPlayer: fullRegister | void = await this.player.fullRegister(this.access_token, this.nickname.value, this.volume.value)
-      .catch(err => this.errorHandler(err));
-
-    if (typeof regPlayer == "undefined") {
-      return;
-    }
-
-    this.tokenStorage.setToken(this.access_token as string, this.refresh_token as string);
-
-    this.router.navigate([environment.playRoute]);
-  }
-
-  errorHandler(err: any): void {
-    if (environment.production == false) {
-      console.log(err);
-      this.authenticated = false;
-    }
-
-    this.openPopup();
-  }
-
-  loadTokens() {
-    this.access_token = this.cookieService.get('token');
-    this.refresh_token = this.cookieService.get('token_refresh');
+    this.player.register(this.nickname.value, this.volume.value)
+      .subscribe();
   }
 
   openPopup() {
