@@ -263,14 +263,14 @@ export class PlayerManagementService {
   }
 
 // old
-  joinRoom(access_token: string, roomCode: string = '', isPublic: boolean = false, playerLimit: number = 10): Promise<joinRoom> {
-    return this.joinRoomObservable(access_token, roomCode, isPublic, playerLimit).toPromise();
+  joinRoom(roomCode: string = '', isPublic: boolean = false, playerLimit: number = 10): Promise<joinRoom> {
+    return this.joinRoomObservable(roomCode, isPublic, playerLimit).toPromise();
   }
 
-  joinRoomObservable(access_token: string, roomCode: string = '', isPublic: boolean = false, playerLimit: number = 10): Observable<joinRoom> {
+  joinRoomObservable(roomCode: string = '', isPublic: boolean = false, playerLimit: number = 10): Observable<joinRoom> {
     var url: string = environment.serverName + environment.api.route + environment.api.room.route + environment.api.room.join.route;
     if (environment.api.player.fullRegistration.requiresJWT == true) {
-      url = url + "?jwt=" + access_token;
+      url = url + "?jwt=" + this.token_access as string;
     }
     var req = this.client.post<joinRoom>(url, {roomName: roomCode, roomIsPublic: isPublic, roomPlayerLimit: playerLimit}, {observe: 'body', responseType: 'json'});
     return req;

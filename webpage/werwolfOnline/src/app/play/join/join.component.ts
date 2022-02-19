@@ -75,15 +75,12 @@ export class JoinComponent implements OnInit {
       return;
     }
 
-    this.player.joinRoomObservable(this.token.token as string, code)
+    this.player.joinRoomObservable(code)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);
         }
-        if (data.successful == true) {
-          var path = await this.player.getRedirectPath();
-          this.router.navigate([path]);
-        } else {
+        if (data.successful == false) {
           this.blockInput = false;
         }
       }, err => {
@@ -122,15 +119,12 @@ export class JoinComponent implements OnInit {
   }
 
   async doPrivateJoin() {
-    this.player.joinRoomObservable(this.token.token as string, this.code.value)
+    this.player.joinRoomObservable(this.code.value)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);
         }
-        if (data.successful == true) {
-          var path = await this.player.getRedirectPath();
-          this.router.navigate([path]);
-        } else {
+        if (data.successful == false) {
           this.blockInput = false;
         }
       }, err => {

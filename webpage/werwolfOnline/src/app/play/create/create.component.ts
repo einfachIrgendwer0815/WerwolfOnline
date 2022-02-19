@@ -68,15 +68,12 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    this.player.joinRoomObservable(this.token.token as string, '', this.isPublic, this.playerLimit.value)
+    this.player.joinRoomObservable('', this.isPublic, this.playerLimit.value)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);
         }
-        if (data.successful == true) {
-          var path = await this.player.getRedirectPath();
-          this.router.navigate([path]);
-        } else {
+        if (data.successful == false) {
           this.blockInput = false;
         }
       }, err => {
