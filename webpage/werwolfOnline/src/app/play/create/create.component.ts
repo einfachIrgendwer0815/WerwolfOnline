@@ -11,6 +11,8 @@ import { FormControl, Validators } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
 
+import { Observable, Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -23,25 +25,27 @@ export class CreateComponent implements OnInit {
     Validators.required,
     Validators.min(4)
   ]);
+  private pathSub?: Subscription;
 
   constructor(private player: PlayerManagementService, private token: TokenStorageService, private linkService: LinkService, private cookieService: CookieService, private router: Router) {
     this.linkService.setLink("/play");
   }
 
-  async ngOnInit(): Promise<void> {
-    if (environment.production == false) {
-      console.log( await this.player.getRedirectPath());
-    }
+  ngOnInit(): void {
+    this.pathSub = this.player.getRedirectPath().subscribe(redirPath => {
+      if (redirPath != environment.playRoute) {
+        this.router.navigate([redirPath]);
 
-    var redirPath: string = await this.player.getRedirectPath();
-
-    if (redirPath != environment.playRoute) {
-      this.router.navigate([redirPath]);
-
-      if (environment.production == false) {
-        console.log("Redirecting");
+        if (environment.production == false) {
+          console.log("Redirecting");
+          this.pathSub?.unsubscribe();
+        }
       }
-    }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.pathSub?.unsubscribe();
   }
 
   increment() {
@@ -64,15 +68,12 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    this.player.joinRoomObservable(this.token.token as string, '', this.isPublic, this.playerLimit.value)
+    this.player.joinRoomObservable('', this.isPublic, this.playerLimit.value)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);
         }
-        if (data.successful == true) {
-          var path = await this.player.getRedirectPath();
-          this.router.navigate([path]);
-        } else {
+        if (data.successful == false) {
           this.blockInput = false;
         }
       }, err => {

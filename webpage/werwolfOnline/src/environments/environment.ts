@@ -40,6 +40,11 @@ export const environment = {
         route: '/generate',
         directAccess: true,
         requiresJWT: false
+      },
+      identityInformation: {
+        route: '/getIdentity',
+        directAccess: true,
+        requiresJWT: true
       }
     },
     room: {

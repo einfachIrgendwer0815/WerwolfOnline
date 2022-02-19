@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-play-main',
@@ -16,27 +16,31 @@ import { Observable } from 'rxjs';
 })
 export class PlayMainComponent implements OnInit {
   ready: boolean = false;
+  private pathSub?: Subscription;
 
   constructor(private player: PlayerManagementService, private linkService: LinkService, private cookieService: CookieService, private router: Router) {
     this.linkService.setLink("/");
   }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     if (environment.production == false) {
-      console.log( await this.player.getRedirectPath());
     }
 
-    var redirPath: string = await this.player.getRedirectPath();
+    this.pathSub = this.player.getRedirectPath().subscribe(redirPath => {
+      if (redirPath != environment.playRoute) {
+        this.router.navigate([redirPath]);
 
-    if (redirPath != environment.playRoute) {
-      this.router.navigate([redirPath]);
-
-      if (environment.production == false) {
-        console.log("Redirecting");
+        if (environment.production == false) {
+          console.log("Redirecting");
+          this.pathSub?.unsubscribe();
+        }
+      } else {
+        this.ready = true;
       }
-    } else {
-      this.ready = true;
-    }
+    });
   }
 
+  ngOnDestroy(): void {
+    this.pathSub?.unsubscribe();
+  }
 }

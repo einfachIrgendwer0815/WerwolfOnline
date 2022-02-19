@@ -13,6 +13,8 @@ import { publics, doesRoomExist } from '../../../apiInterfaces/room';
 
 import { FormControl, Validators } from '@angular/forms';
 
+import { Observable, Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-join',
   templateUrl: './join.component.html',
@@ -31,28 +33,29 @@ export class JoinComponent implements OnInit {
     Validators.maxLength(this.maxCodeLength)
   ]);
 
+  private pathSub?: Subscription;
+
   constructor(private player: PlayerManagementService, private linkService: LinkService, private router: Router, private client: HttpClient, private token: TokenStorageService) {
     this.linkService.setLink("/play");
   }
 
-  async ngOnInit(): Promise<void> {
-    if (environment.production == false) {
-      console.log( await this.player.getRedirectPath());
-    }
+  ngOnInit(): void {
+    this.pathSub = this.player.getRedirectPath().subscribe(redirPath => {
+      if (redirPath != environment.playRoute) {
+        this.router.navigate([redirPath]);
 
-    var redirPath: string = await this.player.getRedirectPath();
-
-    if (redirPath != environment.playRoute) {
-      this.router.navigate([redirPath]);
-
-      if (environment.production == false) {
-        console.log("Redirecting");
+        if (environment.production == false) {
+          console.log("Redirecting");
+          this.pathSub?.unsubscribe();
+        }
       }
-
-      return;
-    }
+    });
 
     this.loadPublicList();
+  }
+
+  ngOnDestroy(): void {
+    this.pathSub?.unsubscribe();
   }
 
   loadPublicList(): void {
@@ -72,15 +75,12 @@ export class JoinComponent implements OnInit {
       return;
     }
 
-    this.player.joinRoomObservable(this.token.token as string, code)
+    this.player.joinRoomObservable(code)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);
         }
-        if (data.successful == true) {
-          var path = await this.player.getRedirectPath();
-          this.router.navigate([path]);
-        } else {
+        if (data.successful == false) {
           this.blockInput = false;
         }
       }, err => {
@@ -119,15 +119,12 @@ export class JoinComponent implements OnInit {
   }
 
   async doPrivateJoin() {
-    this.player.joinRoomObservable(this.token.token as string, this.code.value)
+    this.player.joinRoomObservable(this.code.value)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);
         }
-        if (data.successful == true) {
-          var path = await this.player.getRedirectPath();
-          this.router.navigate([path]);
-        } else {
+        if (data.successful == false) {
           this.blockInput = false;
         }
       }, err => {
