@@ -22,7 +22,6 @@ import { SettingsComponent } from './play/settings/settings.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { LinkService } from './services/linkService/link.service';
-import { TokenStorageService } from './services/tokenStorage/token-storage.service';
 import { PlayerManagementService } from './services/playerManagement/player-management.service';
 import { ImprintComponent } from './imprint/imprint.component';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
@@ -51,7 +50,7 @@ import { ProfileSettingsComponent } from './profile-settings/profile-settings.co
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [LinkService, CookieService, TokenStorageService, PlayerManagementService],
+  providers: [LinkService, CookieService, PlayerManagementService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

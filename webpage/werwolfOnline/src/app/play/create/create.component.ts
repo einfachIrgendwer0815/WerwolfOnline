@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { LinkService } from '../../services/linkService/link.service';
 
 import { PlayerManagementService } from '../../services/playerManagement/player-management.service';
-import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -27,7 +26,7 @@ export class CreateComponent implements OnInit {
   ]);
   private pathSub?: Subscription;
 
-  constructor(private player: PlayerManagementService, private token: TokenStorageService, private linkService: LinkService, private cookieService: CookieService, private router: Router) {
+  constructor(private player: PlayerManagementService, private linkService: LinkService, private cookieService: CookieService, private router: Router) {
     this.linkService.setLink("/play");
   }
 

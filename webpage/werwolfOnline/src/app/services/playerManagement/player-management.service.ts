@@ -6,7 +6,6 @@ import { environment } from '../../../environments/environment';
 
 import { HttpClient } from '@angular/common/http';
 
-import { TokenStorageService } from '../tokenStorage/token-storage.service';
 import { CookieService } from 'ngx-cookie-service';
 
 import { generateToken, identityInformation } from '../../../apiInterfaces/token';
@@ -30,7 +29,7 @@ export class PlayerManagementService {
   private playerInformationAvailable: boolean = false;
   private roomInformation?: { [id: string]: string|number|boolean };
 
-  constructor(private client: HttpClient, private cookieService: CookieService, private tokenStorage: TokenStorageService) {
+  constructor(private client: HttpClient, private cookieService: CookieService) {
     this.initialize();
     if(environment.production == false) {
       console.log(this);

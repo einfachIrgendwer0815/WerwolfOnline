@@ -5,7 +5,6 @@ import { FormControl, Validators } from '@angular/forms';
 
 import { environment } from '../../../environments/environment';
 import { LinkService } from '../../services/linkService/link.service';
-import { TokenStorageService } from '../../services/tokenStorage/token-storage.service';
 import { PlayerManagementService } from '../../services/playerManagement/player-management.service';
 
 import { HttpClient } from '@angular/common/http';
@@ -39,7 +38,6 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private player: PlayerManagementService,
-    private tokenStorage: TokenStorageService,
     private linkService: LinkService,
     private cookieService: CookieService,
     private router: Router
