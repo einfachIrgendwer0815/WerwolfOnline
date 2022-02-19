@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { PlayerManagementService } from '../services/playerManagement/player-management.service';
+
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,13 +14,13 @@ export class ProfileSettingsComponent implements OnInit {
   name?: string;
   popupOpen: boolean = false;
 
-  constructor() { }
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.name = "NAME";
-    }, 50);
+  constructor(private player: PlayerManagementService) {
+    this.player.getNickname().subscribe((data) => {
+      this.name = data;
+    })
   }
+
+  ngOnInit(): void { }
 
   isPopupOpen(): string {
     if (this.popupOpen) {
