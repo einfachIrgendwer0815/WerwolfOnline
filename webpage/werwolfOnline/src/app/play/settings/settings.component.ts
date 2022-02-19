@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { FormControl, Validators } from '@angular/forms';
 
@@ -35,6 +35,7 @@ export class SettingsComponent implements OnInit {
   volume = new FormControl(0);
 
   popupOpen = false;
+  private pathSub?: Subscription;
 
   constructor(
     private player: PlayerManagementService,
@@ -46,20 +47,21 @@ export class SettingsComponent implements OnInit {
     this.linkService.setLink("/");
   }
 
-  async ngOnInit(): Promise<void> {
-    if (environment.production == false) {
-      console.log( await this.player.getRedirectPath());
-    }
+  ngOnInit(): void {
+    this.pathSub = this.player.getRedirectPath().subscribe(redirPath => {
+      if (redirPath != environment.playerSettingsRoute) {
+        this.router.navigate([redirPath]);
 
-    var redirPath: string = await this.player.getRedirectPath();
-
-    if (redirPath != environment.playerSettingsRoute) {
-      this.router.navigate([redirPath]);
-
-      if (environment.production == false) {
-        console.log("Redirecting");
+        if (environment.production == false) {
+          console.log("Redirecting");
+          this.pathSub?.unsubscribe();
+        }
       }
-    }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.pathSub?.unsubscribe();
   }
 
   async save(): Promise<void> {

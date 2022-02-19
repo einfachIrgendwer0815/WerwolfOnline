@@ -63,7 +63,7 @@ export class PlayerManagementService {
     });
   }
 
-  public getRedirectPath_(): Observable<string> {
+  public getRedirectPath(): Observable<string> {
     return new Observable<string>((observer: Observer<string>) => {
       var oldPath: string = '';
       var newPath: string = '';
@@ -311,27 +311,5 @@ export class PlayerManagementService {
     }
     var req = this.client.post<joinRoom>(url, {roomName: roomCode, roomIsPublic: isPublic, roomPlayerLimit: playerLimit}, {observe: 'body', responseType: 'json'});
     return req;
-  }
-
-  async getRedirectPath(): Promise<string> {
-    await this.tokenStorage.validateTokenFromCookie();
-
-    if (this.tokenStorage.token_valid != true) {
-      return environment.playerSettingsRoute;
-    } else {
-      var info: void | registrationInformation = await this.getRegistrationInformation(this.tokenStorage.token as string)
-        .catch(err => { });
-
-      if (info == null) {
-        return environment.homePage;
-      }
-      if (info.inRoom == true) {
-        return environment.gameRoute;
-      } else {
-        return environment.playRoute;
-      }
-    }
-
-
   }
 }
