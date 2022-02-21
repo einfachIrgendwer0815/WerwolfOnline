@@ -72,7 +72,12 @@ export class SettingsComponent implements OnInit {
     this.authenticated = true;
 
     this.player.register(this.nickname.value, this.volume.value)
-      .subscribe();
+      .subscribe(null,
+        () => {
+          this.openPopup();
+          this.authenticated = false;
+        }
+      );
   }
 
   openPopup() {
