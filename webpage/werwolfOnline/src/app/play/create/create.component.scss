@@ -184,3 +184,49 @@
     margin-left: 10%;
   }
 }
+
+@media screen and (max-width: 1800px) {
+  #playCreate {
+    .form {
+      width: 30%;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #playCreate {
+    .form {
+      width: 40%;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  #playCreate {
+    .form {
+      width: 50%;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #playCreate {
+    .form {
+      width: 70%;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #playCreate {
+    .form {
+      width: 98%;
+    }
+
+    .headline {
+      font: {
+        size: 9.5vw;
+      }
+    }
+  }
+}
