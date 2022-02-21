@@ -3,7 +3,9 @@
 
 .profileSettings {
   z-index: 10;
-  width: 10em;
+  min-width: 10em;
+  max-width: 75vw;
+
   height: 3em;
 
   color: white;
@@ -14,6 +16,11 @@
   .inner {
     width: 0%;
     height: 100%;
+
+    padding: {
+      left: 0.5em;
+      right: 0.5em;
+    }
 
     border-left-style: solid;
     border-left-color: #333;
@@ -27,6 +34,10 @@
 
     span {
       opacity: 0;
+
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       font: {
         family: 'Roboto';
@@ -119,5 +130,11 @@
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .profileSettings {
+    min-width: 5em;
   }
 }
