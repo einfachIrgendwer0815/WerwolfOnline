@@ -74,6 +74,20 @@
               "sourceMap": true,
               "namedChunks": true
             },
+            "developmentOnAllInterfaces": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.allIFaces.ts"
+                }
+              ]
+            },
             "de": {
               "buildOptimizer": false,
               "optimization": false,
@@ -103,6 +117,10 @@
             },
             "development": {
               "browserTarget": "werwolfOnline:build:development"
+            },
+            "developmentOnAllInterfaces": {
+              "browserTarget": "werwolfOnline:build:developmentOnAllInterfaces",
+              "host": "0.0.0.0"
             },
             "de": {
               "browserTarget": "werwolfOnline:build:de"
