@@ -7,16 +7,14 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 import { TokenStorageService } from '../tokenStorage/token-storage.service';
-import { CookieService } from 'ngx-cookie-service';
 
 import { generateToken, identityInformation } from '../../../apiInterfaces/token';
 import { fullRegister, registrationInformation } from '../../../apiInterfaces/player';
 import { joinRoom } from '../../../apiInterfaces/room';
 
-const TOKEN_ACCESS_COOKIE_NAME: string = "token";
-const TOKEN_REFRESH_COOKIE_NAME: string = "token_refresh";
-const TOKEN_PATH: string = "/";
-const DELETE_COOKIE_ON_ERROR: boolean = false;
+const TOKEN_ACCESS_KEY_NAME: string = "token";
+const TOKEN_REFRESH_KEY_NAME: string = "token_refresh";
+const DELETE_DATA_ON_ERROR: boolean = false;
 
 @Injectable({
   providedIn: 'root'
@@ -24,13 +22,13 @@ const DELETE_COOKIE_ON_ERROR: boolean = false;
 export class PlayerManagementService {
   private token_access?: string;
   private token_refresh?: string;
-  private tokenInCookie: boolean = false;
+  private tokenInStorage: boolean = false;
   private skipValidation: boolean = false;
   private playerInformation: { [id: string]: string|number|boolean } = {};
   private playerInformationAvailable: boolean = false;
   private roomInformation?: { [id: string]: string|number|boolean };
 
-  constructor(private client: HttpClient, private cookieService: CookieService, private tokenStorage: TokenStorageService) {
+  constructor(private client: HttpClient, private tokenStorage: TokenStorageService) {
     this.initialize();
     if(environment.production == false) {
       console.log(this);
@@ -97,13 +95,13 @@ export class PlayerManagementService {
     var onErr = (err: any) => {
       this.token_access = undefined;
       this.token_refresh = undefined;
-      this.tokenInCookie = false;
+      this.tokenInStorage = false;
       this.playerInformation['registered'] = false;
       this.roomInformation = undefined;
-      if(DELETE_COOKIE_ON_ERROR) this.clearCookies();
+      if(DELETE_DATA_ON_ERROR) this.clearStorage();
     };
 
-    this.readTokensFromCookie();
+    this.readTokensFromStorage();
 
     if(this.tokensAvailable() && !this.skipValidation) {
       this.validateToken(onSucess, onErr);
@@ -162,7 +160,7 @@ export class PlayerManagementService {
       req = this.applyRetry(req, 5, 5000);
 
       req.subscribe(data => {
-        this.saveTokensAsCookie();
+        this.saveTokensToStorage();
         this.skipValidation = false;
 
         observer.next(data);
@@ -204,39 +202,39 @@ export class PlayerManagementService {
     return req;
   }
 
-  private readTokensFromCookie(): void {
-    if(this.cookiesAvailable()) {
-      this.token_access = this.cookieService.get(TOKEN_ACCESS_COOKIE_NAME);
-      this.token_refresh = this.cookieService.get(TOKEN_REFRESH_COOKIE_NAME);
-      this.tokenInCookie = true;
+  private readTokensFromStorage(): void {
+    if(this.storageAvailable()) {
+      this.token_access = localStorage.getItem(TOKEN_ACCESS_KEY_NAME) as string;
+      this.token_refresh = localStorage.getItem(TOKEN_REFRESH_KEY_NAME) as string;
+      this.tokenInStorage = true;
     }
   }
 
-  private setTokens(access: string, refresh: string, saveToCookie: boolean = false): void {
+  private setTokens(access: string, refresh: string, saveToStorage: boolean = false): void {
     this.token_access = access;
     this.token_refresh = refresh;
 
-    if(saveToCookie) {
-      this.saveTokensAsCookie();
+    if(saveToStorage) {
+      this.saveTokensToStorage();
     } else {
-      this.tokenInCookie = false;
+      this.tokenInStorage = false;
     }
   }
 
-  private saveTokensAsCookie(): void {
+  private saveTokensToStorage(): void {
     if(this.tokensAvailable()) {
-      this.cookieService.set(TOKEN_ACCESS_COOKIE_NAME, this.token_access as string, { path: TOKEN_PATH });
-      this.cookieService.set(TOKEN_REFRESH_COOKIE_NAME, this.token_refresh as string, { path: TOKEN_PATH });
-      this.tokenInCookie = true;
+      localStorage.setItem(TOKEN_ACCESS_KEY_NAME, this.token_access as string);
+      localStorage.setItem(TOKEN_REFRESH_KEY_NAME, this.token_refresh as string);
+      this.tokenInStorage = true;
     }
   }
-  private clearCookies() {
-    this.cookieService.delete(TOKEN_ACCESS_COOKIE_NAME, TOKEN_PATH);
-    this.cookieService.delete(TOKEN_REFRESH_COOKIE_NAME, TOKEN_PATH);
+  private clearStorage() {
+    localStorage.removeItem(TOKEN_ACCESS_KEY_NAME);
+    localStorage.removeItem(TOKEN_REFRESH_KEY_NAME);
   }
 
-  private cookiesAvailable(): boolean {
-    return this.cookieService.check(TOKEN_ACCESS_COOKIE_NAME) && this.cookieService.check(TOKEN_REFRESH_COOKIE_NAME);
+  private storageAvailable(): boolean {
+    return (localStorage.getItem(TOKEN_ACCESS_KEY_NAME) != null) && (localStorage.getItem(TOKEN_REFRESH_KEY_NAME) != null);
   }
 
   private tokensAvailable(): boolean {
