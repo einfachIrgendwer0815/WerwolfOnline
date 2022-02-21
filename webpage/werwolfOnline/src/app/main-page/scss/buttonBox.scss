@@ -149,10 +149,10 @@
           box-sizing: border-box;
           width: 100%;
 
-          $space: 1em;
+          $space: 0.5em;
           margin: {
             top: math.div($space, 2);
-            botton: math.div($space, 2);
+            bottom: math.div($space, 2);
             left: 0;
             right: 0;
           }
