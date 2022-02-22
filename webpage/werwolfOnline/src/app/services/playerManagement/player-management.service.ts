@@ -22,27 +22,32 @@ const DELETE_DATA_ON_ERROR: boolean = false;
 export class PlayerManagementService {
   private token_access?: string;
   private token_refresh?: string;
+  private token_valid: boolean = false;
   private tokenInStorage: boolean = false;
-  private skipValidation: boolean = false;
   private playerInformation: { [id: string]: string|number|boolean } = {};
   private playerInformationAvailable: boolean = false;
   private roomInformation?: { [id: string]: string|number|boolean };
 
+  private intervals: { [id: string]: number } = {};
+  private initDone: boolean = false;
+
   constructor(private client: HttpClient, private tokenStorage: TokenStorageService) {
-    this.initialize();
-    if(environment.production == false) {
-      console.log(this);
-
-      setInterval(() => {
-        console.log(this);
-        console.log(this.playerInformation);
-      }, 5000);
-
+    if(!environment.production) {
+      this.setLoggingInterval();
     }
+  }
 
-    setInterval(() => {
-      this.initialize();
-    }, 10000)
+  private setLoggingInterval() {
+    this.intervals.logging = setInterval(() => {
+      console.log(this);
+      console.log(this.playerInformation);
+    }, 5000);
+  }
+
+  private setFetchPlayerInformationInterval() {
+    this.intervals.player = setInterval(() => {
+      this.loadPlayerInformation();
+    }, 5000);
   }
 
   public getNickname(): Observable<string> {
@@ -87,7 +92,9 @@ export class PlayerManagementService {
     });
   }
 
-  private initialize() {
+  public initialize() {
+    if(this.initDone) return;
+
     var onSucess = (data: identityInformation) => {
       this.loadPlayerInformation();
     };
@@ -103,15 +110,19 @@ export class PlayerManagementService {
 
     this.readTokensFromStorage();
 
-    if(this.tokensAvailable() && !this.skipValidation) {
+    if(this.tokensAvailable()) {
       this.validateToken(onSucess, onErr);
     } else {
       onErr(null);
     }
+
+    this.setFetchPlayerInformationInterval();
+    this.initDone = true;
   }
 
-  private validateToken(onValid: any, onInvalid: any): void {
+  private validateToken(onValid?: any, onInvalid?: any): void {
     if (!this.tokensAvailable()) {
+      this.token_valid = false;
       onInvalid();
     }
 
@@ -121,14 +132,16 @@ export class PlayerManagementService {
     resp = this.applyRetry(resp, 2, 5000);
 
     resp.subscribe(data => {
+      this.token_valid = true;
       onValid(data);
     }, err => {
+      this.token_valid = false;
       onInvalid(err);
     });
   }
 
   private loadPlayerInformation(): void {
-    if (!this.tokensAvailable()) {
+    if (!this.tokensAvailable() || !this.token_valid) {
       return;
     }
 
@@ -149,7 +162,7 @@ export class PlayerManagementService {
 
       this.playerInformationAvailable = true;
     }, err => {
-      this.playerInformationAvailable = false;
+      this.validateToken();
     });
 
   }
@@ -161,13 +174,11 @@ export class PlayerManagementService {
 
       req.subscribe(data => {
         this.saveTokensToStorage();
-        this.skipValidation = false;
 
         observer.next(data);
         observer.complete();
       }, err => {
         observer.error(err);
-        this.skipValidation = false;
       });
     }
 
@@ -175,8 +186,9 @@ export class PlayerManagementService {
       if(!this.tokensAvailable() && true) {
         this.generateTokens_()
           .subscribe(data => {
-            this.skipValidation = true;
             this.setTokens(data.access_token, data.refresh_token);
+            this.token_valid = true;
+
             execFullRegister(observer);
           }, err => {
             observer.error('Could not generate tokens.');

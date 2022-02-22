@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from  '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,6 +27,8 @@ import { PlayerManagementService } from './services/playerManagement/player-mana
 import { ImprintComponent } from './imprint/imprint.component';
 import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 
+import { initializePlayerManagementService } from './services/playerManagement/player-management-factory';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +53,18 @@ import { ProfileSettingsComponent } from './profile-settings/profile-settings.co
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [LinkService, CookieService, TokenStorageService, PlayerManagementService],
+  providers: [
+    LinkService,
+    CookieService,
+    TokenStorageService,
+    PlayerManagementService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializePlayerManagementService,
+      deps: [PlayerManagementService],
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
