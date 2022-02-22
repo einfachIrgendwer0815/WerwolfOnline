@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer, of } from 'rxjs';
+import { Observable, Observer, of, Subject } from 'rxjs';
 import { retryWhen, flatMap, delay } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
@@ -28,42 +28,57 @@ export class PlayerManagementService {
   private playerInformationAvailable: boolean = false;
   private roomInformation?: { [id: string]: string|number|boolean };
 
+  private subjects: { [id: string ]: Subject<any> } = {};
+
   private intervals: { [id: string]: number } = {};
   private initDone: boolean = false;
 
   constructor(private client: HttpClient, private tokenStorage: TokenStorageService) {
-    if(!environment.production) {
-      this.setLoggingInterval();
-    }
+    this.setAllIntervals();
+    this.createSubjects();
   }
 
-  private setLoggingInterval() {
-    this.intervals.logging = setInterval(() => {
-      console.log(this);
-      console.log(this.playerInformation);
-    }, 5000);
+  private createSubjects(): void {
+    this.subjects.nickname = new Subject<string>();
+    this.subjects.path = new Subject<string>();
   }
 
-  private setFetchPlayerInformationInterval() {
-    this.intervals.player = setInterval(() => {
+  private setAllIntervals(): void {
+    this.setFiveSecondInterval();
+    this.setFiveHundredMilliSecondInterval();
+  }
+
+  private setFiveSecondInterval(): void {
+    this.intervals.fiveS = setInterval(() => {
+      if(!environment.production) {
+        console.log(this);
+        console.log(this.playerInformation);
+      }
+
       this.loadPlayerInformation();
     }, 5000);
   }
 
-  public getNickname(): Observable<string> {
-    return new Observable<string>((observer: Observer<string>) => {
-      var returnIfAvailable = (interval?: number) => {
-        if(this.playerInformation.nickname != undefined) {
-          observer.next(this.playerInformation.nickname as string);
+  private setFiveHundredMilliSecondInterval(): void {
+    this.intervals.fiveHundredMS = setInterval(() => {
+      this.sendNickname(this.subjects.nickname);
 
-          if(interval != undefined) {
-            clearInterval(interval);
-          }
-        }
-      };
+      this.sendRedirectPath(this.subjects.path);
+    }, 500);
+  }
 
-      var interval = setInterval(() => { returnIfAvailable(interval); }, 50);
-    });
+  private sendNickname(subject: Subject<string>): void {
+    if(this.playerInformation.nickname != undefined) {
+      subject.next(this.playerInformation.nickname as string);
+    }
+  }
+
+  public getNickname(): Subject<string> {
+    return this.subjects.nickname;
+  }
+
+  private sendRedirectPath(subject: Subject<string>): void {
+
   }
 
   public getRedirectPath(): Observable<string> {
@@ -116,7 +131,6 @@ export class PlayerManagementService {
       onErr(null);
     }
 
-    this.setFetchPlayerInformationInterval();
     this.initDone = true;
   }
 
