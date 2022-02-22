@@ -1,8 +1,8 @@
 <div id="mainPage">
   <div class="headlines">
     <span class="headline no1">
-      <span style="display: none" #wordobj count=7 i18n="@@gameName" i18n-count="@@gameNameLength">Werwolf</span>
-      <span *ngFor="let e of [].constructor(parseInt(wordobj.getAttribute('count'))); let i = index" class="lower" [class]="genAnimClass()">{{ wordobj.innerText[i] }}</span>
+      <span style="display: none" id="mainPage-wordobj" #wordobj count=7 i18n="@@gameName" i18n-count="@@gameNameLength">Werwolf</span>
+      <span *ngFor="let e of [].constructor(parseInt(wordobj.getAttribute('count'))); let i = index" class="lower" [class]="animClasses[i]">{{ wordobj.innerText[i] }}</span>
     </span>
     <span class="headline no2" i18n>- für den Browser -</span>
   </div>

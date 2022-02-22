@@ -6,9 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-page.component.scss', './scss/headlines.scss', './scss/headlines/no1.scss', './scss/buttonBox.scss']
 })
 export class MainPageComponent implements OnInit {
+  public animClasses: string[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+    var length: number = parseInt(document.getElementById("mainPage-wordobj")?.getAttribute('count') as string);
+
+    for(let i = 0; i < length; i++) {
+      this.animClasses.push(this.genAnimClass());
+    }
   }
 
   genRandomNumber(min: number, max: number): number {
