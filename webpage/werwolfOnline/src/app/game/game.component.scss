@@ -75,6 +75,19 @@
 #gameContainer > section.left {
   border-right: 1px solid #555;
 
+  padding: {
+    top: 5%;
+    bottom: 5%;
+  }
+
+  animation: {
+    name: expandLeft;
+    duration: 1s;
+    delay: 0.5s;
+    timing-function: ease-out;
+    fill-mode: backwards;
+  }
+
   ul {
     height: 100%;
 
@@ -105,9 +118,31 @@
       padding-right: 1em;
       padding-left: 1em;
 
+      animation: {
+        name: appearListitems;
+        duration: 1s;
+        delay: calc(1.8s + var(--item-delay, 0s));
+        fill-mode: backwards;
+      }
+
       &:first-child {
         border-top: 0;
       }
+
+      @keyframes appearListitems {
+        from {
+          opacity: 0;
+        }
+      }
+    }
+  }
+
+  @keyframes expandLeft {
+    from {
+      height: 0;
+      padding: 0;
+
+      margin-top: 100%;
     }
   }
 }
