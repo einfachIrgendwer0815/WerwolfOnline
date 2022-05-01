@@ -51,6 +51,12 @@ export const environment = {
       route: '/room',
       directAccess: false,
 
+      info: {
+        route: '/info',
+        directAccess: true,
+        requiresJWT: true
+      },
+
       publics: {
         route: '/publics',
         directAccess: true,

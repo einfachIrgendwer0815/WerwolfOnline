@@ -83,3 +83,12 @@ def getPublicRooms():
     return jsonify(
         rooms=g.gameControl.getPublicRooms()
     ), 200
+
+@blueprint.route('/info', methods=['GET'])
+@jwt_required()
+def getInfo():
+    return jsonify(
+        code=g.gameControl.getRoomCode(get_jwt_identity()),
+        members=g.gameControl.getRoomMembers(get_jwt_identity()),
+        public=g.gameControl.isRoomPublic(get_jwt_identity())
+    ), 200

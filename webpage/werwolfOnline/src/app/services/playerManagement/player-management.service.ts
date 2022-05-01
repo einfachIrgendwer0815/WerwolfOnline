@@ -10,7 +10,7 @@ import { TokenStorageService } from '../tokenStorage/token-storage.service';
 
 import { generateToken, identityInformation } from '../../../apiInterfaces/token';
 import { fullRegister, registrationInformation } from '../../../apiInterfaces/player';
-import { joinRoom } from '../../../apiInterfaces/room';
+import { joinRoom, info } from '../../../apiInterfaces/room';
 
 const TOKEN_ACCESS_KEY_NAME: string = "token";
 const TOKEN_REFRESH_KEY_NAME: string = "token_refresh";
@@ -26,7 +26,7 @@ export class PlayerManagementService {
   private tokenInStorage: boolean = false;
   private playerInformation: { [id: string]: string|number|boolean } = {};
   private playerInformationAvailable: boolean = false;
-  private roomInformation?: { [id: string]: string|number|boolean };
+  private roomInformation?: { [id: string]: string|number|boolean| {identity:string, nickname: string}[] };
 
   private subjects: { [id: string ]: Subject<any> } = {};
 
@@ -55,7 +55,15 @@ export class PlayerManagementService {
         console.log(this.playerInformation);
       }
 
-      this.loadPlayerInformation();
+      var resp = this.loadPlayerInformation();
+
+      if(resp !== undefined) {
+        resp.subscribe(null, null, () => {
+          if(this.playerInformation.inRoom == true) {
+            this.loadRoomInformation();
+          }
+        });
+      }
     }, 5000);
   }
 
@@ -154,7 +162,7 @@ export class PlayerManagementService {
     });
   }
 
-  private loadPlayerInformation(): void {
+  private loadPlayerInformation(): Observable<registrationInformation> | void {
     if (!this.tokensAvailable() || !this.token_valid) {
       return;
     }
@@ -179,6 +187,25 @@ export class PlayerManagementService {
       this.validateToken();
     });
 
+    return resp;
+  }
+
+  private loadRoomInformation(): void {
+    if (!this.tokensAvailable() || !this.token_valid) {
+      return;
+    }
+
+    var url: string = environment.serverName + environment.api.route + environment.api.room.route + environment.api.room.info.route;
+    url += '?jwt=' + this.token_access;
+    var resp: Observable<info> = this.client.get<info>(url, {observe: 'body', responseType: 'json'});
+    resp = this.applyRetry(resp, 5, 5000);
+
+    resp.subscribe(data => {
+      this.roomInformation = {};
+      this.roomInformation["code"] = data["code"];
+      this.roomInformation["members"] = data["members"];
+      this.roomInformation["public"] = data["public"];
+    });
   }
 
   public register(nickname: string, volume: number): Observable<fullRegister> {
