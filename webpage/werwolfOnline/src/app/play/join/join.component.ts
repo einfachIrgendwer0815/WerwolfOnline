@@ -75,7 +75,7 @@ export class JoinComponent implements OnInit {
       return;
     }
 
-    this.player.joinRoomObservable(code)
+    this.player.joinRoom(code)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);
@@ -119,7 +119,7 @@ export class JoinComponent implements OnInit {
   }
 
   async doPrivateJoin() {
-    this.player.joinRoomObservable(this.code.value)
+    this.player.joinRoom(this.code.value)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);

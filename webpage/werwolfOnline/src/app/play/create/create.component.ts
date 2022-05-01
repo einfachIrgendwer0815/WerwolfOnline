@@ -68,7 +68,7 @@ export class CreateComponent implements OnInit {
       return;
     }
 
-    this.player.joinRoomObservable('', this.isPublic, this.playerLimit.value)
+    this.player.joinRoom('', this.isPublic, this.playerLimit.value)
       .subscribe(async data => {
         if (environment.production == false) {
           console.log(data);

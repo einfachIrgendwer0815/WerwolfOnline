@@ -63,6 +63,12 @@ export const environment = {
         requiresJWT: true
       },
 
+      leave: {
+        route: '/leave',
+        directAccess: true,
+        requiresJWT: true
+      },
+
       doesRoomExist: {
         route: '/doesRoomExist',
         directAccess: true,
