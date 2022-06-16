@@ -41,6 +41,7 @@ export class PlayerManagementService {
   private createSubjects(): void {
     this.subjects.nickname = new Subject<string>();
     this.subjects.path = new Subject<string>();
+    this.subjects.roomInfo = new Subject<{ [id: string]: string|number|boolean| {identity:string, nickname: string}[] }>();
   }
 
   private setAllIntervals(): void {
@@ -72,6 +73,8 @@ export class PlayerManagementService {
       this.sendNickname(this.subjects.nickname);
 
       this.sendRedirectPath(this.subjects.path);
+
+      this.sendRoomInfo(this.subjects.roomInfo)
     }, 500);
   }
 
@@ -81,8 +84,18 @@ export class PlayerManagementService {
     }
   }
 
+  private sendRoomInfo(subject: Subject<{ [id: string]: string|number|boolean| {identity:string, nickname: string}[] }>): void {
+    if(this.roomInformation != undefined && this.playerInformation.inRoom == true) {
+      subject.next(this.roomInformation);
+    }
+  }
+
   public getNickname(): Subject<string> {
     return this.subjects.nickname;
+  }
+
+  public getRoomInfo(): Subject<{ [id: string]: string|number|boolean| {identity:string, nickname: string}[] }> {
+    return this.subjects.roomInfo;
   }
 
   private sendRedirectPath(subject: Subject<string>): void {
