@@ -1,0 +1,177 @@
+@use "sass:math";
+
+@import '../../../scss/vendorPrefix';
+
+#mainPage .buttonBox {
+  position: absolute;
+  $bottom: 18%;
+  bottom: $bottom;
+  left: 50%;
+
+  $transform: translate(-50%, -50%);
+  @include vendorPrefix(transform, $transform);
+
+  ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+
+    li {
+      float: left;
+
+      & > a {
+        color: white;
+      }
+
+      margin: {
+        left: 2em;
+      }
+
+      &:first-child {
+        margin: {
+          left: 0;
+        }
+      }
+
+      $innerPadding: 0.6em;
+      $innerPaddingLR: $innerPadding + math.div($innerPadding, 4);
+      padding: {
+        top: $innerPadding;
+        bottom: $innerPadding;
+        left: $innerPaddingLR;
+        right: $innerPaddingLR;
+      }
+
+      border: {
+        radius: 3px;
+      }
+
+      background-color: green;
+
+      box: {
+        shadow: 0px 0px 4px green,
+                0px 0px 10px green,
+                1px 1px 3px black;
+      }
+
+      font: {
+        family: 'Roboto';
+        size: 1.1em;
+      }
+
+      $transition: transform 250ms, background-color 500ms, box-shadow 500ms;
+      @include vendorPrefix(transition, $transition);
+
+      &:hover {
+        $transform: scale(1.15);
+        @include vendorPrefix(transform, $transform);
+
+        background-color: black;
+
+        box-shadow: 0px 0px 4px black, 0px 0px 10px black;
+      }
+
+      &:active {
+        $transform: scale(1.05);
+        @include vendorPrefix(transform, $transform);
+      }
+
+      @keyframes flyInDelayed {
+        from {
+          @include vendorPrefix(transform, #{translateY(50%)});
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      &:first-child, &:last-child {
+        //@include vendorPrefix(transform, #{translateY(50%)})
+        animation: {
+          name: flyInDelayed;
+          duration: 1s;
+          delay: 2s;
+          timing-function: ease-out;
+          fill-mode: backwards;
+        }
+      }
+    }
+  }
+
+  @keyframes flyInButtons {
+    0% {
+      bottom: 2%;
+      opacity: 0;
+    }
+    60% {
+      bottom: $bottom;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  animation: {
+    name: flyInButtons;
+    duration: 1.8s;
+    fill-mode: backwards;
+    delay: 2s;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #mainPage .buttonBox {
+    width: 40%;
+
+    $bottom: 20vh;
+    bottom: $bottom;
+
+    @keyframes flyInButtons {
+      0% {
+        bottom: 2%;
+        opacity: 0;
+      }
+      60% {
+        bottom: $bottom;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    ul {
+      width: 100%;
+
+      li {
+        box-sizing: border-box;
+        width: 100%;
+
+        $space: 0.5em;
+        margin: {
+          top: math.div($space, 2);
+          bottom: math.div($space, 2);
+          left: 0;
+          right: 0;
+        }
+
+        font-size: 2.5vh;
+
+        text-align: center;
+
+        &:first-child {
+          margin-top: 0;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        &:first-child, &:last-child {
+          animation: none;
+        }
+      }
+    }
+  }
+}

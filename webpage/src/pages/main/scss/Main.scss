@@ -1,0 +1,46 @@
+@use "sass:math";
+
+@import '../../../scss/vendorPrefix';
+
+#mainPage {
+  width: 100%;
+  min-height: 100vh;
+
+  background: {
+    color: black;
+    image: url('/background.jpg');
+    size: cover;
+    position: bottom center;
+  }
+
+  position: relative;
+
+  .imprintButton {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+
+    @include vendorPrefix(transform, #{translate(-50%, -150%)});
+
+    font: {
+      family: 'Roboto';
+    }
+
+    & > a {
+      color: white;
+    }
+
+    @keyframes imprintButtonDelayedIn {
+      from {
+        opacity: 0%;
+      }
+    }
+
+    animation: {
+      name: imprintButtonDelayedIn;
+      duration: 2s;
+      delay: 3s;
+      fill-mode: backwards;
+    }
+  }
+}
