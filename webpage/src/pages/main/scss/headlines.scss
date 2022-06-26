@@ -135,7 +135,7 @@
   }
 }
 
-#mainPage .headlines .headline.no1 .animate {
+#mainPage .headlines .headline.no1 span {
   $transition: opacity 100ms;
   @include vendorPrefix (transition, $transition);
 
