@@ -39,17 +39,17 @@ class Page_Main extends React.Component {
           <span className="headline no1">
             {this.generateLetters()}
           </span>
-          <span className="headline no2">- für den Browser -</span>
+          <span className="headline no2">- for browsers -</span>
         </div>
         <div className="buttonBox">
           <ul>
-            <li><Link to="/howToPlay">Regeln</Link></li>
-            <li><Link to="/play">Spielen</Link></li>
-            <li><Link to="/about">Über</Link></li>
+            <li><Link to="/howToPlay">Rules</Link></li>
+            <li><Link to="/play">Play</Link></li>
+            <li><Link to="/about">About</Link></li>
           </ul>
         </div>
 
-        <span className="imprintButton"><Link to="imprint">Impressum</Link></span>
+        <span className="imprintButton"><Link to="imprint">Imprint</Link></span>
 
       </div>
 
