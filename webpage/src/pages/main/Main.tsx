@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { withTranslation } from 'react-i18next';
+
 import './scss/Main.scss';
 import './scss/buttonBox.scss';
 import './scss/headlines.scss';
@@ -11,7 +13,7 @@ class Page_Main extends React.Component {
   }
 
   private generateLetters() {
-    var word: string = "Werewolf";
+    var word: string = this.props.t('pages.main.title');
 
     var letters = [];
 
@@ -39,17 +41,17 @@ class Page_Main extends React.Component {
           <span className="headline no1">
             {this.generateLetters()}
           </span>
-          <span className="headline no2">- for browsers -</span>
+          <span className="headline no2">- { this.props.t('pages.main.subtitle') } -</span>
         </div>
         <div className="buttonBox">
           <ul>
-            <li><Link to="/howToPlay">Rules</Link></li>
-            <li><Link to="/play">Play</Link></li>
-            <li><Link to="/about">About</Link></li>
+            <li><Link to="/howToPlay">{this.props.t('pages.main.buttonBox.howToPlay')}</Link></li>
+            <li><Link to="/play">{this.props.t('pages.main.buttonBox.play')}</Link></li>
+            <li><Link to="/about">{this.props.t('pages.main.buttonBox.about')}</Link></li>
           </ul>
         </div>
 
-        <span className="imprintButton"><Link to="imprint">Imprint</Link></span>
+        <span className="imprintButton"><Link to="imprint">{this.props.t('pages.main.imprintButton')}</Link></span>
 
       </div>
 
@@ -57,4 +59,4 @@ class Page_Main extends React.Component {
   }
 }
 
-export default Page_Main;
+export default withTranslation()(Page_Main);

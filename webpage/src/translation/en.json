@@ -1,0 +1,18 @@
+{
+  "en": {
+    "translation": {
+      "pages": {
+        "main": {
+          "title": "Werewolf",
+          "subtitle": "for browsers",
+          "buttonBox": {
+            "howToPlay": "Rules",
+            "play": "Play",
+            "about": "About"
+          },
+          "imprintButton": "Imprint"
+        }
+      }
+    }
+  }
+}

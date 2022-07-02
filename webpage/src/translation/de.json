@@ -1,0 +1,18 @@
+{
+  "de": {
+    "translation": {
+      "pages": {
+        "main": {
+          "title": "Werwolf",
+          "subtitle": "für den Browsers",
+          "buttonBox": {
+            "howToPlay": "Regeln",
+            "play": "Spielen",
+            "about": "Über"
+          },
+          "imprintButton": "Impressum"
+        }
+      }
+    }
+  }
+}
