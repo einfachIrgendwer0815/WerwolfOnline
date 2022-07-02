@@ -1,0 +1,163 @@
+@import '../../../scss/vendorPrefix';
+
+#about {
+  //display: inline-block;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: {
+    color: var(--background-color);
+  }
+
+  color: var(--font-color);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .back {
+    position: absolute;
+    top: 1.2em;
+    left: 2%;
+
+    font: {
+      size: 2em;
+    }
+    color: var(--font-color-3);
+
+    @include vendorPrefix(transform, translate(-50%,-50%));
+    @include vendorPrefix(transition, #{color 200ms});
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+      }
+    }
+
+    animation: {
+      name: appear;
+      duration: 1s;
+      delay: 2s;
+      fill-mode: backwards;
+    }
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  span.headline {
+    font: {
+      family: 'Roboto';
+      size: 2.8em;
+      weight: bold;
+    }
+
+    margin-bottom: 4vw;
+
+    text-shadow: 4px 4px 0px #555,
+                 3px 3px 0px #555,
+                 2px 2px 0px #555,
+                 1px 1px 0px #555;
+  }
+
+  .text {
+    font: {
+      family: 'Roboto';
+    }
+
+    max-width: 40%;
+
+    text-align: left;
+
+    line-height: 1.2em;
+
+    span {
+      display: block;
+    }
+
+    .main {
+      font-style: italic;
+      text-indent: 0.75em;
+
+      span.large {
+        display: inline;
+        font: {
+          size: 1.75em;
+        }
+      }
+
+      span:not(.large) {
+        margin-bottom: 0.2em;
+      }
+
+      span:last-child {
+        text-align: center;
+      }
+    }
+
+    .authorNote {
+      text-align: right;
+      margin-top: 1em;
+
+      font: {
+        size: 0.95em;
+      }
+
+      @include vendorPrefix(transform, #{translateX(12%)});
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #about {
+    .back {
+      left: 4%;
+    }
+
+    span.headline {
+      padding-top: 5vh;
+    }
+
+    .text {
+      max-width: 60%;
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  #about {
+    .text {
+      max-width: 80%;
+
+      .authorNote {
+        @include vendorPrefix(transform, #{translateX(5%)});
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #about {
+    .back {
+      left: 7%;
+    }
+
+    span.headline {
+      font-size: 10vw;
+
+      padding-top: 9vh;
+    }
+
+    .text {
+      max-width: 90%;
+
+      .authorNote {
+        @include vendorPrefix(transform, #{translateX(0%)});
+        text-align: center
+      }
+    }
+  }
+}

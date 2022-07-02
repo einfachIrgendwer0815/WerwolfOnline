@@ -11,7 +11,8 @@
             "about": "About"
           },
           "imprintButton": "Imprint"
-        }
+        },
+        "about_no_trans_note": "This page is currently not available in your language."
       }
     }
   }
