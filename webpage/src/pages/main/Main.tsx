@@ -8,6 +8,10 @@ import './scss/buttonBox.scss';
 import './scss/headlines.scss';
 
 class Page_Main extends React.Component {
+  declare public props: {
+    t: (arg0: string) => string,
+  };
+
   private genRandomNumber(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min)) + min;
   }

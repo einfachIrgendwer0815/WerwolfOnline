@@ -2,9 +2,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
+import { IonIcon } from "@ionic/react";
+
 import './scss/About.scss';
 
-function getPageContent(t, i18n) {
+function getPageContent(t: any, i18n: any) {
   if(i18n.exists("pages.about")) {
     return (
       <>
@@ -46,7 +48,7 @@ function Page_About() {
   const navigate = useNavigate();
   return (
     <div id="about">
-      <ion-icon name={iconType} class="back" onClick={ () => {navigate("/")} }></ion-icon>
+      <IonIcon icon={iconType} class="back" onClick={ () => {navigate("/")} } />
       {getPageContent(t, i18n)}
     </div>
   );
