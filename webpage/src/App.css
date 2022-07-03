@@ -16,3 +16,24 @@
 
   --line-color: #DDD;
 }
+
+.fade-enter, .fade-exit {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 10000;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+
+  transition: opacity 200ms;
+}
+
+.fade-exit {
+  z-index: 0;
+}

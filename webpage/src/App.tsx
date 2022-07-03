@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import { BrowserRouter as Router } from 'react-router-dom';
 import Routing from './app-routing';
 
 import i18n from 'i18next';
@@ -10,7 +11,11 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import translation from './translation/translation';
 
 function App() {
-  return Routing;
+  return (
+    <Router>
+      <Routing />
+    </Router>
+  );
 }
 
 i18n
