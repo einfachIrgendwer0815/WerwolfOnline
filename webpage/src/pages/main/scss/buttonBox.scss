@@ -36,13 +36,17 @@
         }
       }
 
-      $innerPadding: 0.6em;
-      $innerPaddingLR: $innerPadding + math.div($innerPadding, 4);
-      padding: {
-        top: $innerPadding;
-        bottom: $innerPadding;
-        left: $innerPaddingLR;
-        right: $innerPaddingLR;
+      a {
+        display: block;
+
+        $innerPadding: 0.6em;
+        $innerPaddingLR: $innerPadding + math.div($innerPadding, 4);
+        padding: {
+          top: $innerPadding;
+          bottom: $innerPadding;
+          left: $innerPaddingLR;
+          right: $innerPaddingLR;
+        }
       }
 
       border: {
