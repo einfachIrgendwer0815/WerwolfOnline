@@ -1,0 +1,58 @@
+@import '../../../scss/vendorPrefix';
+
+#notFound {
+  width: 100%;
+  min-height: 100vh;
+  background: {
+    color: var(--background-color);
+  }
+
+  .headline {
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+
+    margin: {
+      top: 10%;
+      bottom: 5%;
+    }
+
+    font: {
+      size: 6em;
+      family: 'Turret Road';
+      weight: 600;
+    }
+
+    color: var(--font-color);
+  }
+
+  p {
+    text-align: center;
+
+    color: red;
+  }
+
+  .link {
+    position: absolute;
+    left: 50%;
+    @include vendorPrefix(transform, translateX(-50%));
+    display: inline-block;
+    color: var(--font-color);
+
+    font: {
+      family: 'Roboto';
+      weight: 500;
+      size: 1.2em;
+    }
+
+    margin: {
+      top: 2%;
+    }
+
+    @include vendorPrefix(transition, color 200ms);
+
+    &:hover {
+      color: grey;
+    }
+  }
+}

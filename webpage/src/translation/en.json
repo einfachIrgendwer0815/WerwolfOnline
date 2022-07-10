@@ -1,6 +1,7 @@
 {
   "en": {
     "translation": {
+      "gameName": "Werewolf",
       "pages": {
         "main": {
           "title": "Werewolf",
@@ -12,7 +13,11 @@
           },
           "imprintButton": "Imprint"
         },
-        "about_no_trans_note": "This page is currently not available in your language."
+        "about_no_trans_note": "This page is currently not available in your language.",
+        "notFound": {
+          "notFound": "This page could not be found.",
+          "back": "To the homepage"
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 {
   "de": {
     "translation": {
+      "gameName": "Werwolf",
       "pages": {
         "main": {
           "title": "Werwolf",
@@ -21,6 +22,10 @@
             "p4": "Ich danke allen, die das Spiel hier spielen und genießen.",
             "authorNote": "frei erfunden bei Luk-Erik Leitte, wahrscheinlich nicht ganz nüchtern"
           }
+        },
+        "notFound": {
+          "notFound": "Diese Seite konnte nicht gefunden werden.",
+          "back": "Zur Startseite"
         }
       }
     }
