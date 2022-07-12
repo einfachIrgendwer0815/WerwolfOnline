@@ -1,5 +1,3 @@
-import { React } from "react";
-
 import './scss/Imprint.scss';
 
 function Page_Imprint() {
