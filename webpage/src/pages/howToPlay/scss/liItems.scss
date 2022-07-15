@@ -1,0 +1,5 @@
+@for $i from 1 through 5 {
+  .animate-#{$i} {
+    --item-delay: #{0.5s * ($i - 1)};
+  }
+}
