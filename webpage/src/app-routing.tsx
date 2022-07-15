@@ -20,7 +20,7 @@ export default function Routing() {
           <Route path="/howToPlay" element={<Page_HowToPlay />} />
           <Route path="/imprint" element={<Page_Imprint />} />
 
-          <Route path="/play/*" element={<Page_Play />} />
+          <Route path="/play" element={<Page_Play />} />
 
           <Route path="*" element={<Page_NotFound />} />
         </Routes>

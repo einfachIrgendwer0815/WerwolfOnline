@@ -5,23 +5,13 @@ import Page_NotFound from '../notFound/NotFound';
 import Page_Play_Login from './login/Login';
 import Page_Play_Join from './join/Join';
 import Page_Play_Create from './create/Create';
+import Page_Play_Main from './main/Main';
+
 
 class Page_Play extends React.Component {
-  renderMain() {
-    return (
-      <></>
-    );
-  }
-
   render() {
     return (
-      <Routes>
-        <Route path="login" element={<Page_Play_Login />} />
-        <Route path="join" element={<Page_Play_Join />} />
-        <Route path="create" element={<Page_Play_Create />} />
-
-        <Route path="*" element={this.renderMain()} />
-      </Routes>
+      <></>
     );
   }
 }
